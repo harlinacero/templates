@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebApplication1</name>
+    </assembly>
+    <members>
+        <member name="P:WebApplication1.DomainServices.Entities.EntityBase.Id">
+            <summary>
+            Id Entity
+            </summary>
+        </member>
+        <member name="P:WebApplication1.DomainServices.Entities.EntityBase.UserChange">
+            <summary>
+            user change entity
+            </summary>
+        </member>
+        <member name="P:WebApplication1.DomainServices.Entities.EntityBase.DateModified">
+            <summary>
+            Date modfified Entity
+            </summary>
+        </member>
+    </members>
+</doc>
