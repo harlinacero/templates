@@ -13,9 +13,9 @@ namespace WebApplication1.DataAccess
         private NpgsqlCommand cmdPsql;
         private NpgsqlTransaction trPsql;
         private NpgsqlDataAdapter adCemi;
-        public PostgreSQLConnection()
+        public PostgreSQLConnection(string connectionString)
         {
-            string cnn = "User Id=postgres;Password=1234;Server=localhost;Port=5432;Database=test;Integrated Security=true;Pooling=true;";
+            string cnn = connectionString;
             Conecta(cnn);
         }
 
@@ -128,41 +128,6 @@ namespace WebApplication1.DataAccess
         }
 
 
-        //public string ExecuteQuery(string strSQL)
-        //{
-        //    string strRespuesta = "ERROR";
-        //    try
-        //    {
-        //        try
-        //        {
-        //            cnnPsql.Open();
-        //            trPsql = cnnPsql.BeginTransaction();
-        //            cmdPsql = new NpgsqlCommand(strSQL, cnnPsql, trPsql);
-        //            strRespuesta = cmdPsql.ExecuteScalar().ToString();
-        //            trPsql.Commit();
-        //            cnnPsql.Close();
-        //            return strRespuesta;
-
-        //        }
-        //        catch (Exception e)
-        //        {
-        //            trPsql.Rollback();
-        //            cnnPsql.Close();
-        //            Console.WriteLine(e.Message.ToString());
-        //            Log(e.Message.ToString());
-        //            return strRespuesta;
-        //        }
-        //    }
-        //    catch (Exception et)
-        //    {
-        //        cnnPsql.Close();
-        //        Console.WriteLine(et.Message.ToString());
-        //        Log(et.Message.ToString());
-        //        return strRespuesta;
-        //    }
-        //}
-
-
         //Se establece los parámetros de la consulta y se entrega en fornato JSON
         public List<Dictionary<string, object>> ListAll(string sql) 
         {
@@ -207,6 +172,41 @@ namespace WebApplication1.DataAccess
                 }
 
                 return rows;
+            }
+            //}
+        }
+
+        public DataTable ListAll2(string sql)
+        {
+
+            DataTable dt = new DataTable();
+            using (NpgsqlCommand cmd = new NpgsqlCommand(sql, cnnPsql, trPsql))
+            {
+                try
+                {
+                    NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
+                    da.Fill(dt);
+                    cnnPsql.Close();
+                    return dt;
+                }
+                catch (NpgsqlException e)
+                {
+                    Log(e.Message.ToString());
+                }
+                catch (NullReferenceException e)
+                {
+                    Log(e.Message.ToString());
+                }
+                catch (InvalidOperationException e)
+                {
+                    Log(e.Message.ToString());
+                }
+                finally
+                {
+
+                }
+
+                return dt;
             }
             //}
         }

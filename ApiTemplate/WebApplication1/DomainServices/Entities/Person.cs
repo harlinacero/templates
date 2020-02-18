@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.DomainServices.Entities
 {
-    public class User : EntityBase
+    public class Person : EntityBase
     {
         public int DocumentType { get; set; }
         public string DocumentNumber { get; set; }

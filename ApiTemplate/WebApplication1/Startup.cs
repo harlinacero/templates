@@ -1,26 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.IO;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
-using WebApplication1.AppServices;
-using WebApplication1.AppServices.Contrracts;
-using WebApplication1.DomainServices;
-using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DependendeInjection;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Models;
-using WebApplication1.DomainServices.Entities;
-using WebApplication1.DataAccess.Repository;
+using WebApplication1.DataAccess;
 
 namespace WebApplication1
 {
@@ -36,12 +26,6 @@ namespace WebApplication1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-
-            services.AddSingleton<ISessionDomainService, SessionDomainService>();
-            services.AddSingleton<ISessionAppService, SessionAppService>();
-            services.AddSingleton<IRepository<Role>, Repository<Role>>();
-
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -58,9 +42,11 @@ namespace WebApplication1
                 c.IncludeXmlComments(xmlPath);
             });
 
-           // services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
+            //services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
+            //services.AddDbContext<AppDbContext>(options =>  options.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
+            DependencyInjectionProfile.RegisterProfile(services);
 
         }
 

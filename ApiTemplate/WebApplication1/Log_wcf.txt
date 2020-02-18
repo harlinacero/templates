@@ -1,0 +1,29 @@
+Archivo Creado:
+18/02/2020 9:15:28 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �pruebass�
+Fecha: 18/02/2020 9:15:28 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �pruebass�
+Fecha: 18/02/2020 9:16:00 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «1»
+Fecha: 18/02/2020 1:23:50 p. m.
+-------------------
+Dato: 23505: llave duplicada viola restricción de unicidad «role_pkey»
+Fecha: 18/02/2020 1:31:36 p. m.
+-------------------
+Dato: 23505: llave duplicada viola restricción de unicidad «role_pkey»
+Fecha: 18/02/2020 1:33:41 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 18/02/2020 1:42:20 p. m.
+-------------------
+Dato: 42703: no existe la columna «roleuserchange» en la relación «person»
+Fecha: 18/02/2020 2:34:32 p. m.
+-------------------
+Dato: 42703: no existe la columna «roleuserchange» en la relación «person»
+Fecha: 18/02/2020 2:35:41 p. m.
+-------------------
+Dato: 42601: el nombre no es válido (demasiados puntos): webapplication1.domainservices.entities.person
+Fecha: 18/02/2020 2:52:51 p. m.

@@ -1,8 +1,11 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.DataAccess;
+using WebApplication1.DataAccess.Context;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -12,23 +15,21 @@ namespace WebApplication1.DomainServices
 {
     public class SessionDomainService : ISessionDomainService
     {
-        private readonly PostgreSQLConnection _postgreSQLConnection;
-        //private readonly IRepository<Test> _repo;
 
-
-        public SessionDomainService()
+        
+        private readonly IRepository<Role> _roleRepo;
+        private readonly IRepository<Person> _personRepo;
+        public SessionDomainService(IRepository<Role> roleRepo, IRepository<Person> personRepo)
         {
-            _postgreSQLConnection = new PostgreSQLConnection();
-            
-
+            _roleRepo = roleRepo;
+            _personRepo = personRepo;
         }
 
 
         public RequestResult<Session> Login(Login login)
         {
-            var list = _postgreSQLConnection.ListAll("select * from test");
-            
-            
+
+            var list = _personRepo.ListAll();
             var session = new Session()
             {
                 UserName = "harlin",

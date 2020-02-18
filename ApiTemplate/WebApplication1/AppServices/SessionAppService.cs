@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using WebApplication1.AppServices.Contrracts;
-using WebApplication1.DataAccess;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
 using WebApplication1.Models;
@@ -18,8 +14,6 @@ namespace WebApplication1.AppServices
 
         public SessionAppService(ISessionDomainService sessionDomainService)
         {
-            //UnitOfWork _unitOfWork = new UnitOfWork(context);
-
             _sessionDomainService = sessionDomainService;
         }
 
