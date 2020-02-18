@@ -10,12 +10,12 @@ namespace WebApplication1.Models
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
-        private readonly UnitOfWork _unitOfWork;
-        private readonly AppDbContext _context;
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
-            UnitOfWork _unitOfWork = new UnitOfWork(_context);
-        }
+        //private readonly UnitOfWork _unitOfWork;
+        //private readonly AppDbContext _context;
+        //public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) {
+        //    UnitOfWork _unitOfWork = new UnitOfWork(_context);
+        //}
 
-        public DbSet<Role> TEntity { get; set; }
+        //public DbSet<Role> TEntity { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebApplication1.DataAccess;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -11,18 +12,23 @@ namespace WebApplication1.DomainServices
 {
     public class SessionDomainService : ISessionDomainService
     {
-        //private readonly IRepository<Role> _roleRepo;
+        private readonly PostgreSQLConnection _postgreSQLConnection;
+        //private readonly IRepository<Test> _repo;
 
-        //public SessionDomainService(IRepository<Role> roleRepo)
-        //{
-        //    _roleRepo = roleRepo;
-        //}
+
+        public SessionDomainService()
+        {
+            _postgreSQLConnection = new PostgreSQLConnection();
+            
+
+        }
 
 
         public RequestResult<Session> Login(Login login)
         {
-            //var role = _roleRepo.ListAll();
-
+            var list = _postgreSQLConnection.ListAll("select * from test");
+            
+            
             var session = new Session()
             {
                 UserName = "harlin",
@@ -32,5 +38,10 @@ namespace WebApplication1.DomainServices
             return RequestResult<Session>.CreateSuccesfull(session);
         }
 
+    }
+    public class Test
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }

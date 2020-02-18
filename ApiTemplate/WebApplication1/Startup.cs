@@ -58,7 +58,7 @@ namespace WebApplication1
                 c.IncludeXmlComments(xmlPath);
             });
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
+           // services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
