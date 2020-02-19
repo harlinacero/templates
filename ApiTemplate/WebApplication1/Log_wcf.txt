@@ -27,3 +27,9 @@ Fecha: 18/02/2020 2:35:41 p. m.
 -------------------
 Dato: 42601: el nombre no es válido (demasiados puntos): webapplication1.domainservices.entities.person
 Fecha: 18/02/2020 2:52:51 p. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 18/02/2020 11:40:06 p. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 18/02/2020 11:42:54 p. m.

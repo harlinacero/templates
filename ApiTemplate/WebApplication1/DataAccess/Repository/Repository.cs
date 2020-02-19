@@ -84,9 +84,9 @@ namespace WebApplication1.DataAccess.Repository
         public IEnumerable<T> ListAll()
         {
             List<T> list = new List<T>();
-
             var a = _postgreSQLConnection.ListAll2("SELECT * FROM " + typeof(T).Name);
             list = ConvertDataTable<T>(a);
+
             
             return list;
         }

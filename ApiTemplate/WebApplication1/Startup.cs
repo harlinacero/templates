@@ -33,6 +33,17 @@ namespace WebApplication1
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllHeaders",
+                      builder =>
+                      {
+                          builder.AllowAnyOrigin()
+                                 .AllowAnyHeader()
+                                 .AllowAnyMethod();
+                      });
+            });
+
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
@@ -75,7 +86,7 @@ namespace WebApplication1
                 c.RoutePrefix = string.Empty;
             });
 
-
+            app.UseCors("AllowAllHeaders");
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

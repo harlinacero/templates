@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\harfe\\Documents\\Proyectos\\ApiTemplate\\WebApplication1\\WebApplication1.csproj": {}
+    "C:\\Users\\harfe\\Documents\\Proyectos\\templates\\ApiTemplate\\WebApplication1\\WebApplication1.csproj": {}
   },
   "projects": {
-    "C:\\Users\\harfe\\Documents\\Proyectos\\ApiTemplate\\WebApplication1\\WebApplication1.csproj": {
+    "C:\\Users\\harfe\\Documents\\Proyectos\\templates\\ApiTemplate\\WebApplication1\\WebApplication1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\harfe\\Documents\\Proyectos\\ApiTemplate\\WebApplication1\\WebApplication1.csproj",
+        "projectUniqueName": "C:\\Users\\harfe\\Documents\\Proyectos\\templates\\ApiTemplate\\WebApplication1\\WebApplication1.csproj",
         "projectName": "WebApplication1",
-        "projectPath": "C:\\Users\\harfe\\Documents\\Proyectos\\ApiTemplate\\WebApplication1\\WebApplication1.csproj",
+        "projectPath": "C:\\Users\\harfe\\Documents\\Proyectos\\templates\\ApiTemplate\\WebApplication1\\WebApplication1.csproj",
         "packagesPath": "C:\\Users\\harfe\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\harfe\\Documents\\Proyectos\\ApiTemplate\\WebApplication1\\obj\\",
+        "outputPath": "C:\\Users\\harfe\\Documents\\Proyectos\\templates\\ApiTemplate\\WebApplication1\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
