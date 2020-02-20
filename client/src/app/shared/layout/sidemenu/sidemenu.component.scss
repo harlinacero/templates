@@ -1,0 +1,47 @@
+#sidebar {
+    /* don't forget to add all the previously mentioned styles here too */
+    background: #7386D5;
+    color: #fff;
+    transition: all 0.3s;
+    height: 100%;
+    font-size: 12px;
+    .sidebar-header {
+        background: #fff;
+        height: 50px;
+        text-align: center;
+        padding: 1em;
+        img {
+            width: 80%;
+            height: 35px;
+        }
+    }
+    ul {
+        li {
+            a {
+                color: #fff;
+                padding: 10px;
+                font-size: 1.1em;
+                display: block;
+                .icon {
+                    margin: 5px;
+                    font-size: 1.5em;
+                }
+                .menuText {
+                    margin: 5px;
+                }
+            }
+            a:hover {
+                color: #fff;
+                background: rgb(11, 79, 134);
+                text-decoration: none;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+#sidebar ul li.active>a,
+a[aria-expanded="true"] {
+    color: #fff;
+    // background: #6d7fcc;
+}

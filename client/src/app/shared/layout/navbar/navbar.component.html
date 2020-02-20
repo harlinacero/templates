@@ -1,0 +1,23 @@
+<div class="Header__container">
+    <div class="Header__right-container" (click)="toggleSidebar()">
+        <!-- <img src="https://upload.wikimedia.org/wikipedia/commons/3/34/The_Clorox_Company_logo.svg" alt="Enterprise logo" *ngIf="isExpandSidebar"> -->
+        <i class="{{menuIcon}} menuIcon"></i>
+    </div>
+    <div class="Header__left-container">
+
+        <div>
+            <div class="Avatar__container Avatar__ripple">
+                <div class="Avatar__company-logo">
+                    {{account}}
+                </div>
+
+                <div class="Avatar__company-logo" title="Exit">
+                    <a routerLinkActive="router-link-active" class="button" (click)="logOut()">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>
+                        <span class="menuText"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<app-title [title]="'Facturación'" [icon]="'fa fa-file-text-o'"></app-title>
+
+
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- ['id', 'document', 'names ', 'lastNames', 'email', 'phone', 'roleId']; -->
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="documentType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Documento </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.documentType}} {{row.documentNumber}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="documentNumber">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Documento </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.documentNumber}} </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="firstName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.firstName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="secondName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Segundo Nombre </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.secondName}} </mat-cell>
+        </ng-container>
+
+        <!-- DateBill Column -->
+        <ng-container matColumnDef="lastName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.lastName}}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="secondLastName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Apellidos</mat-header-cell>
+            <mat-cell *matCellDef="let row">{{row.secondLastName}}</mat-cell>
+        </ng-container>
+
+        <!-- Date Aprobate Column -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
+        </ng-container>
+
+        <!-- Date Pay datePay -->
+        <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Teléfono </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.phone}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="roleId">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Rol </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.roleId}} </mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="adduser()">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
+</button>

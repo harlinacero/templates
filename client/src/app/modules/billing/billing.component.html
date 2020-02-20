@@ -1,0 +1,87 @@
+<app-title [title]="'Facturación'" [icon]="'fa fa-file-text-o'"></app-title>
+
+
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> No. Factura</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="reference">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Referencia </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.reference}}% </mat-cell>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <!-- DateBill Column -->
+        <ng-container matColumnDef="dateBill">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateBill | date}} </mat-cell>
+        </ng-container>
+
+        <!-- Date Aprobate Column -->
+        <ng-container matColumnDef="dateAprobate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Aprobación </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateAprobate | date}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Date Pay datePay -->
+        <ng-container matColumnDef="datePay">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Pago </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.datePay | date}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="area">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Área </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.area}} </mat-cell>
+        </ng-container>
+
+        <!-- Value Column -->
+        <ng-container matColumnDef="value">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
+            <mat-cell *matCellDef="let row"> $ {{row.value}} </mat-cell>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+        </ng-container>
+
+        <!-- Indicator Column -->
+        <ng-container matColumnDef="indicator">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.background]="row.color"> {{row.indicator}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<button class="mdc-fab" aria-label="Favorite" (click)="newBilling()" [title]="'Agregar'">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
+</button>

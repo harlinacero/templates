@@ -1,0 +1,15 @@
+<nav id="sidebar" [ngStyle]="{'width': widthSidebar}">
+    <div class="sidebar-header">
+        <img src="https://www.google.de/images/branding/googlelogo/1x/googlelogo_color_272x92dp.png" alt="Empresa">
+    </div>
+
+    <ul class="list-unstyled components">
+        <li *ngFor="let menu of menuItems">
+            <a [routerLink]="[menu.component]" routerLinkActive="router-link-active" class="button">
+                <i class="icon {{menu.icon}}" aria-hidden="true"></i>
+                <span class="menuText" *ngIf="widthSidebar !== '50px'"> {{menu.name}}</span>
+            </a>
+        </li>
+    </ul>
+
+</nav>

@@ -1,0 +1,21 @@
+<div class="loginpage" *ngIf="!session">
+    {{intentos}}
+    <div id="logreg-forms">
+        <form class="form-signin">
+            <!-- <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1> -->
+            <div class="img-enterprise center">
+                <img src="./assets/images/enterpriseImage.png" alt="Empresa ">
+            </div>
+
+            <input type="text" #username name="username" placeholder="Username" class="form-control " required=" " autofocus=" ">
+            <input type="password" #password name="password" placeholder="Password" class="form-control " required=" ">
+
+            <button type="submit" (click)="logIn(username.value, password.value, $event)" id="login-button" class="btn btn-success btn-block">
+            Ingresar
+          </button>
+            <a href="# " id="forgot_pswd ">¿Olvidaste tu contraseña?</a>
+            <hr>
+        </form>
+    </div>
+
+</div>

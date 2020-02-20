@@ -1,0 +1,13 @@
+<div class="table-responsive">
+    <table class="table" id="table">
+        <caption>List of users</caption>
+        <thead>
+            <tr>
+                <th scope="col" *ngFor="let item of datasource.fields"> {{item.name}}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{listData}}
+        </tbody>
+    </table>
+</div>
