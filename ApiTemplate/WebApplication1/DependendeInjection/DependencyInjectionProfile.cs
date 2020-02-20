@@ -23,6 +23,8 @@ namespace WebApplication1.DependendeInjection
                 DbSettings settings = s.GetService<DbSettings>();
                 return new DbClient(settings.ConnectionString);
             });
+
+
             services.AddTransient<DbContext, AppDbContext>(s =>
             {
                 DbSettings settings = s.GetService<DbSettings>();
@@ -30,7 +32,13 @@ namespace WebApplication1.DependendeInjection
             });
 
             services.AddSingleton<ISessionDomainService, SessionDomainService>();
+            services.AddSingleton<IAdminDomainService, AdminDomainService>();
+
+
+
             services.AddSingleton<ISessionAppService, SessionAppService>();
+            services.AddSingleton<IAdminAppService, AdminAppService>();
+
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
     }

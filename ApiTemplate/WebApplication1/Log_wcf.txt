@@ -33,3 +33,131 @@ Fecha: 18/02/2020 11:40:06 p. m.
 -------------------
 Dato: 3D000: no existe la base de datos �test�
 Fecha: 18/02/2020 11:42:54 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_role_id»
+Fecha: 20/02/2020 12:36:49 a. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_role_id»
+Fecha: 20/02/2020 12:37:33 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 12:57:00 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 12:57:15 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 12:57:59 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:06:45 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «'Role'»
+Fecha: 20/02/2020 1:07:15 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:08:14 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.role»
+Fecha: 20/02/2020 1:16:53 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:19:29 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:21:31 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:21:47 a. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_role_id»
+Fecha: 20/02/2020 1:22:15 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:24:56 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:25:18 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:29:30 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:31:30 a. m.
+-------------------
+Dato: Invalid collection name.
+Parameter name: collectionName
+Actual value was public.
+Fecha: 20/02/2020 1:31:30 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:32:03 a. m.
+-------------------
+Dato: 42P01: no existe la relación «role»
+Fecha: 20/02/2020 1:32:33 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:36:46 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:37:05 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:38:07 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:39:01 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:39:56 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:42:46 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:42:46 a. m.
+-------------------
+Dato: 42P01: no existe la relación «person»
+Fecha: 20/02/2020 1:42:47 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:43:04 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:43:39 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:43:42 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:43:47 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:48:01 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:49:26 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.person»
+Fecha: 20/02/2020 1:49:26 a. m.
+-------------------
+Dato: 42P01: no existe la relación «rolegroup»
+Fecha: 20/02/2020 1:54:52 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:54:54 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:56:25 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.person»
+Fecha: 20/02/2020 1:56:33 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:56:37 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.person»
+Fecha: 20/02/2020 1:56:37 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.rolegroup»
+Fecha: 20/02/2020 1:56:51 a. m.

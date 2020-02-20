@@ -9,7 +9,7 @@ namespace WebApplication1.DataAccess
     public class AppDbContext : DbContext
     {
         private string _connectionString;
-        public DbSet<Role> Role { get; set; }
+        public DbSet<RoleGroup> Role { get; set; }
         public DbSet<Person> User { get; set; }
 
 

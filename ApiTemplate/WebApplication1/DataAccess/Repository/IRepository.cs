@@ -9,9 +9,9 @@ namespace WebApplication1.DataAccess.Repository
 {
     public interface IRepository<T> where T : EntityBase
     {
-        T Add(T entity);
+        bool Add(T entity);
         void Remove(T entity);
-        T Update(T entity);
+        bool Update(T entity);
         T GetById(int id);
         IEnumerable<T> ListByParam(Parameters<T> parameters);
         IEnumerable<T> ListAll();

@@ -17,9 +17,9 @@ namespace WebApplication1.DomainServices
     {
 
         
-        private readonly IRepository<Role> _roleRepo;
+        private readonly IRepository<RoleGroup> _roleRepo;
         private readonly IRepository<Person> _personRepo;
-        public SessionDomainService(IRepository<Role> roleRepo, IRepository<Person> personRepo)
+        public SessionDomainService(IRepository<RoleGroup> roleRepo, IRepository<Person> personRepo)
         {
             _roleRepo = roleRepo;
             _personRepo = personRepo;

@@ -102,6 +102,7 @@ namespace WebApplication1.DataAccess
                 try
                 {
                     cmdPsql = new NpgsqlCommand(sql, cnnPsql, trPsql);
+                    
                     cmdPsql.ExecuteNonQuery();
                     trPsql.Commit();
                     cnnPsql.Close();
@@ -184,8 +185,9 @@ namespace WebApplication1.DataAccess
             {
                 try
                 {
+
                     NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
-                    
+                  
                     da.Fill(dt);
                     cnnPsql.Close();
                     return dt;

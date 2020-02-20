@@ -23,7 +23,7 @@ namespace WebApplication1.DataAccess.Repository
             _postgreSQLConnection = new PostgreSQLConnection(connetion);
         }
 
-        public T Add(T entity)
+        public bool Add(T entity)
         {
             List<T> entityList = new List<T>();
             entityList.Add(entity);
@@ -31,12 +31,12 @@ namespace WebApplication1.DataAccess.Repository
             IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties().Where(x => x.Name != "Id"));
             StringBuilder sql = new StringBuilder();
             entity.DateModified = DateTime.Now;
-            sql.Append("INSERT INTO " + type.Name + "(");
+            sql.Append("INSERT INTO public." + type.Name + " (");
             sql.Append(string.Join(", ", props.Select(x => x.Name)));
             sql.Append(") VALUES (");
-            
+
             var values = props.Select(x => x.GetValue(entity, null)).ToList();
-            
+
             for (int i = 0; i < values.Count; i++)
             {
                 if (values[i].GetType().Equals(typeof(string)))
@@ -51,20 +51,17 @@ namespace WebApplication1.DataAccess.Repository
             }
 
             sql.Append(");");
-            _postgreSQLConnection.ExecuteQuery(sql.ToString());
-
-
-            return entity;
+            return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
 
 
-        public T Update(T entity)
+        public bool Update(T entity)
         {
             entity.DateModified = DateTime.Now;
             //_context.Set<T>().Update(entity);
             //_context.SaveChanges();
-            return entity;
+            return true;
         }
 
 
@@ -77,18 +74,25 @@ namespace WebApplication1.DataAccess.Repository
 
         public T GetById(int id)
         {
-            //return _context.Set<T>().FirstOrDefault(x => x.Id == id);
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM " + typeof(T).Name + " WHERE Id = " + id);
+            var list = _postgreSQLConnection.ListAll2(sql.ToString());
+            if(list != null)
+            {
+                var entity = ConvertDataTable<T>(list);
+                return entity.FirstOrDefault();
+            }
             return null;
         }
 
         public IEnumerable<T> ListAll()
         {
-            List<T> list = new List<T>();
-            var a = _postgreSQLConnection.ListAll2("SELECT * FROM " + typeof(T).Name);
-            list = ConvertDataTable<T>(a);
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2("SELECT * FROM public." + typeof(T).Name);
+            listEntity = ConvertDataTable<T>(list);
 
-            
-            return list;
+
+            return listEntity;
         }
 
 
@@ -97,9 +101,11 @@ namespace WebApplication1.DataAccess.Repository
             var orderByClass = ObtenerOrderBy(parameters);
             Expression<Func<T, bool>> whereTrue = x => true;
             var where = parameters.Where ?? whereTrue;
-            List<T> list = new List<T>();
-            
-            return list;
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2("SELECT * FROM " + typeof(T).Name + where);
+            listEntity = ConvertDataTable<T>(list);
+
+            return listEntity;
             //if (orderByClass.IsAscending)
             //{
             //    return _context.Set<T>().Where(where).OrderBy(orderByClass.OrderBy)
@@ -158,7 +164,7 @@ namespace WebApplication1.DataAccess.Repository
             foreach (DataColumn column in dr.Table.Columns)
             {
                 var pro = temp.GetProperties().First(x => x.Name.Equals(column.ColumnName, StringComparison.OrdinalIgnoreCase));
-                if(pro != null)
+                if (pro != null)
                 {
                     pro.SetValue(obj, dr[column.ColumnName], null);
                 }

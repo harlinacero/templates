@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.DomainServices.Entities
 {
-    public class Role : EntityBase
+    public class RoleGroup : EntityBase
     {
         public string Name { get; set; }
         public string Description { get; set; }

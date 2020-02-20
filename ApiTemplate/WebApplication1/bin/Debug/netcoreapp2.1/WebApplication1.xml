@@ -4,6 +4,166 @@
         <name>WebApplication1</name>
     </assembly>
     <members>
+        <member name="M:WebApplication1.AppServices.AdminAppService.GetAllPerson">
+            <summary>
+            Get all person
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.AdminAppService.SavePerson(WebApplication1.DomainServices.Entities.Person)">
+            <summary>
+            Update or add person
+            </summary>
+            <param name="person"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.AdminAppService.GetPersonById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.AdminAppService.GetAllRole">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.AdminAppService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.AdminAppService.GetRoleById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.GetAllPerson">
+            <summary>
+            Get all person
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SavePerson(WebApplication1.DomainServices.Entities.Person)">
+            <summary>
+            Update or add person
+            </summary>
+            <param name="person"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.GetPersonById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.GetAllRole">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.GetRoleById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.GetAllPerson">
+            <summary>
+            Get all person
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.SavePerson(WebApplication1.DomainServices.Entities.Person)">
+            <summary>
+            Update or add person
+            </summary>
+            <param name="person"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.GetPersonById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.GetAllRole">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AdminController.GetRoleById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllPerson">
+            <summary>
+            Get all person
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SavePerson(WebApplication1.DomainServices.Entities.Person)">
+            <summary>
+            Update or add person
+            </summary>
+            <param name="person"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetPersonById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllRole">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="role"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetRoleById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="P:WebApplication1.DomainServices.Entities.EntityBase.Id">
             <summary>
             Id Entity
