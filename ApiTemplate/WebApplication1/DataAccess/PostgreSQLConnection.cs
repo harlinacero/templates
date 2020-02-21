@@ -185,7 +185,6 @@ namespace WebApplication1.DataAccess
             {
                 try
                 {
-
                     NpgsqlDataAdapter da = new NpgsqlDataAdapter(cmd);
                   
                     da.Fill(dt);

@@ -12,5 +12,5 @@ export interface Person {
   rolId: number;
   password: string;
   userChange: number;
-  datemodified: Date;
+  dateModified: Date;
 }

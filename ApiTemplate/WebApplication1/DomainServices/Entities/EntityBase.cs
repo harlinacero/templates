@@ -12,8 +12,6 @@ namespace WebApplication1.DomainServices.Entities
         /// <summary>
         /// Id Entity
         /// </summary>
-        [JsonIgnore]
-        [IgnoreDataMember]
         public int Id { get; set; }
         /// <summary>
         /// user change entity

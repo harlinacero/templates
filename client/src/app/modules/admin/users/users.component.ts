@@ -13,7 +13,7 @@ export class UsersComponent implements OnInit {
   displayedColumns = ['id', 'documentType', 'documentNumber', 'firstName', 'secondName', 'lastName',
     'secondLastName', 'email', 'phone', 'roleId'];
 
-  dataSource: MatTableDataSource<Person[]>;
+  dataSource: MatTableDataSource<any>;
 
   constructor(private userService: AdminService) {
     this.getusers();
@@ -31,8 +31,11 @@ export class UsersComponent implements OnInit {
   getusers() {
     this.userService.getAllUsers().subscribe(res => {
       if (res.isSuccesfull) {
+        // const persons = res.result.map(person => {
+        //   person.datemodified = new Date(person.datemodified);
+        //   return person;
+        // });
         this.dataSource = new MatTableDataSource(res.result);
-        console.log(res.result);
       }
     });
   }
@@ -40,7 +43,7 @@ export class UsersComponent implements OnInit {
   adduser() {
     const person: Person = {
       address: 'Calle 2',
-      datemodified: new Date(),
+      dateModified: new Date(),
       documentNumber: '31321',
       documentType: 1,
       email: 'harlin@mail.com',

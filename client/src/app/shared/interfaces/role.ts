@@ -3,5 +3,5 @@ export interface Role {
   name: string;
   description: string;
   userChange: number;
-  datemodified: Date;
+  dateModified: Date;
 }

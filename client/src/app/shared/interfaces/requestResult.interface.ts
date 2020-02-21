@@ -1,5 +1,5 @@
 export interface RequestResult<T> {
   isSuccesfull: string;
-  result: any;
+  result: T;
   message: string;
 }
