@@ -66,7 +66,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllRole")]
-        public RequestResult<IEnumerable<RoleGroup>> GetAllRole()
+        public RequestResult<IEnumerable<Role>> GetAllRole()
         {
             return _adminAppService.GetAllRole();
         }
@@ -77,7 +77,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("SaveRole")]
-        public RequestResult<RoleGroup> SaveRole(RoleGroup role)
+        public RequestResult<Role> SaveRole(Role role)
         {
             return _adminAppService.SaveRole(role);
         }
@@ -88,7 +88,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetRoles")]
-        public RequestResult<RoleGroup> GetRoleById(int Id)
+        public RequestResult<Role> GetRoleById(int Id)
         {
             return _adminAppService.GetRoleById(Id);
         }

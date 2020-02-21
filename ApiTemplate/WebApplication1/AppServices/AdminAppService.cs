@@ -77,7 +77,7 @@ namespace WebApplication1.AppServices
         /// Get all roles
         /// </summary>
         /// <returns></returns>
-        public RequestResult<IEnumerable<RoleGroup>> GetAllRole()
+        public RequestResult<IEnumerable<Role>> GetAllRole()
         {
             try
             {
@@ -86,7 +86,7 @@ namespace WebApplication1.AppServices
             catch (Exception ex )
             {
 
-                return RequestResult<IEnumerable<RoleGroup>>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<Role>>.CreateUnSuccesfull(ex.Message);
             }
         }
         /// <summary>
@@ -94,7 +94,7 @@ namespace WebApplication1.AppServices
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public RequestResult<RoleGroup> SaveRole(RoleGroup role)
+        public RequestResult<Role> SaveRole(Role role)
         {
             try
             {
@@ -102,7 +102,7 @@ namespace WebApplication1.AppServices
             }
             catch (Exception ex )
             {
-                return RequestResult<RoleGroup>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<Role>.CreateUnSuccesfull(ex.Message);
             }
         }
         /// <summary>
@@ -110,7 +110,7 @@ namespace WebApplication1.AppServices
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        public RequestResult<RoleGroup> GetRoleById(int Id)
+        public RequestResult<Role> GetRoleById(int Id)
         {
             try
             {
@@ -119,7 +119,7 @@ namespace WebApplication1.AppServices
             catch (Exception ex)
             {
 
-                return RequestResult<RoleGroup>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<Role>.CreateUnSuccesfull(ex.Message);
             }
         }
         #endregion

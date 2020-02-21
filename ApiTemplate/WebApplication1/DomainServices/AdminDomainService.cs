@@ -13,12 +13,12 @@ namespace WebApplication1.DomainServices
     {
         #region Fields
         private readonly IRepository<Person> _personRepo;
-        private readonly IRepository<RoleGroup> _roleRepo;
+        private readonly IRepository<Role> _roleRepo;
 
         #endregion
 
         #region Builder
-        public AdminDomainService(IRepository<Person> personRepo, IRepository<RoleGroup> roleRepo)
+        public AdminDomainService(IRepository<Person> personRepo, IRepository<Role> roleRepo)
         {
             _personRepo = personRepo;
             _roleRepo = roleRepo;
@@ -71,24 +71,24 @@ namespace WebApplication1.DomainServices
 
 
         #region RoleGroup
-        public RequestResult<IEnumerable<RoleGroup>> GetAllRole()
+        public RequestResult<IEnumerable<Role>> GetAllRole()
         {
             var list = _roleRepo.ListAll();
-            return RequestResult<IEnumerable<RoleGroup>>.CreateSuccesfull(list);
+            return RequestResult<IEnumerable<Role>>.CreateSuccesfull(list);
         }
 
 
-        public RequestResult<RoleGroup> GetRoleById(int Id)
+        public RequestResult<Role> GetRoleById(int Id)
         {
             var role = _roleRepo.GetById(Id);
             if (role != null)
             {
-                return RequestResult<RoleGroup>.CreateSuccesfull(role);
+                return RequestResult<Role>.CreateSuccesfull(role);
             }
-            return RequestResult<RoleGroup>.CreateUnSuccesfull("No se encontró el valor indicado");
+            return RequestResult<Role>.CreateUnSuccesfull("No se encontró el valor indicado");
         }
 
-        public RequestResult<RoleGroup> SaveRole(RoleGroup role)
+        public RequestResult<Role> SaveRole(Role role)
         {
             var roleEntity = _roleRepo.GetById(role.Id);
             if (roleEntity != null)
@@ -97,18 +97,18 @@ namespace WebApplication1.DomainServices
             return Addrole(role);
         }
 
-        private RequestResult<RoleGroup> UpdateRole(RoleGroup role)
+        private RequestResult<Role> UpdateRole(Role role)
         {
             if (_roleRepo.Update(role))
-                return RequestResult<RoleGroup>.CreateSuccesfull(role);
-            return RequestResult<RoleGroup>.CreateUnSuccesfull("No se pudo crear");
+                return RequestResult<Role>.CreateSuccesfull(role);
+            return RequestResult<Role>.CreateUnSuccesfull("No se pudo crear");
         }
 
-        private RequestResult<RoleGroup> Addrole(RoleGroup role)
+        private RequestResult<Role> Addrole(Role role)
         {
             if (_roleRepo.Add(role))
-                return RequestResult<RoleGroup>.CreateSuccesfull(role);
-            return RequestResult<RoleGroup>.CreateUnSuccesfull("No se pudo crear");
+                return RequestResult<Role>.CreateSuccesfull(role);
+            return RequestResult<Role>.CreateUnSuccesfull("No se pudo crear");
         }
 
 

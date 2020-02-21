@@ -36,19 +36,19 @@ namespace WebApplication1.AppServices.Contrracts
         /// Get all roles
         /// </summary>
         /// <returns></returns>
-        RequestResult<IEnumerable<RoleGroup>> GetAllRole();
+        RequestResult<IEnumerable<Role>> GetAllRole();
         /// <summary>
         /// Update or add role
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        RequestResult<RoleGroup> SaveRole(RoleGroup role);
+        RequestResult<Role> SaveRole(Role role);
         /// <summary>
         /// Get person by Id
         /// </summary>
         /// <param name="Id"></param>
         /// <returns></returns>
-        RequestResult<RoleGroup> GetRoleById(int Id);
+        RequestResult<Role> GetRoleById(int Id);
         #endregion
 
     }

@@ -30,7 +30,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.AppServices.AdminAppService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+        <member name="M:WebApplication1.AppServices.AdminAppService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
             <summary>
             Update or add role
             </summary>
@@ -70,7 +70,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
             <summary>
             Update or add role
             </summary>
@@ -110,7 +110,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.AdminController.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+        <member name="M:WebApplication1.Controllers.AdminController.SaveRole(WebApplication1.DomainServices.Entities.Role)">
             <summary>
             Update or add role
             </summary>
@@ -150,7 +150,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SaveRole(WebApplication1.DomainServices.Entities.RoleGroup)">
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
             <summary>
             Update or add role
             </summary>

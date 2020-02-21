@@ -161,3 +161,9 @@ Fecha: 20/02/2020 1:56:37 a. m.
 -------------------
 Dato: 42P01: no existe la relación «public.rolegroup»
 Fecha: 20/02/2020 1:56:51 a. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 20/02/2020 7:37:33 a. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 20/02/2020 7:38:30 a. m.
