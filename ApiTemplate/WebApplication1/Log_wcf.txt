@@ -167,3 +167,6 @@ Fecha: 20/02/2020 7:37:33 a. m.
 -------------------
 Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
 Fecha: 20/02/2020 7:38:30 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «DateModified»
+Fecha: 21/02/2020 11:10:46 p. m.

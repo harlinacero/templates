@@ -10,27 +10,37 @@ import { AdminService } from '../../admin.service';
 })
 export class PopupComponent {
   title = 'Agregar Rol';
+  currentUser: string;
+  data: Role;
 
   constructor(
     public dialogRef: MatDialogRef<PopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Role, private userService: AdminService, ) { }
+    @Inject(MAT_DIALOG_DATA) public role: Role, private userService: AdminService) {
+    this.data = role;
+
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   save() {
-    const role: Role = {
-      dateModified: new Date(),
-      description: this.data.description,
-      name: this.data.name,
-      userChange: 1,
-      id: 0
-    };
+    const role: Role = this.getRole(this.data.id, this.data.name, this.data.description);
     this.userService.saveRole(role).subscribe(res => {
       if (res.isSuccesfull) {
         alert(res.isSuccesfull);
       }
     });
+  }
+
+
+  getRole(id: number, name: string, description: string): Role {
+    return {
+      dateModified: new Date(),
+      description,
+      name,
+      userChange: 1,
+      id
+    };
   }
 }

@@ -1,0 +1,58 @@
+<h1 mat-dialog-title>{{title}}</h1>
+<div mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Tipo Documento</mat-label>
+        <input matInput [(ngModel)]="data.documentType">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Número Documento</mat-label>
+        <input matInput [(ngModel)]="data.documentType">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Primer Nombre</mat-label>
+        <input matInput [(ngModel)]="data.firstName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Segundo Nombre</mat-label>
+        <input matInput [(ngModel)]="data.secondName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Primer Apellido</mat-label>
+        <input matInput [(ngModel)]="data.lastName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Segundo Apellido</mat-label>
+        <input matInput [(ngModel)]="data.secondLastName">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Rol</mat-label>
+        <input matInput [(ngModel)]="data.rolId">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Diección</mat-label>
+        <input matInput [(ngModel)]="data.address">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Teléfono</mat-label>
+        <input matInput [(ngModel)]="data.phone">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Contraseña</mat-label>
+        <input matInput [(ngModel)]="data.password">
+    </mat-form-field>
+
+
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Cancelar</button>
+    <button mat-button (click)="save()" [mat-dialog-close]="data.documentNumber" cdkFocusInitial>Guardar</button>
+</div>

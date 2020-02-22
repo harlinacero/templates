@@ -1,6 +1,7 @@
+import { PopupUsersComponent } from './popup-users/popup-users.component';
 import { Person } from './../../../shared/interfaces/person';
 import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material';
+import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AdminService } from '../admin.service';
 
 @Component({
@@ -14,8 +15,10 @@ export class UsersComponent implements OnInit {
     'secondLastName', 'email', 'phone', 'roleId'];
 
   dataSource: MatTableDataSource<any>;
+  persons: Person[];
+  person: Person;
 
-  constructor(private userService: AdminService) {
+  constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getusers();
   }
 
@@ -31,37 +34,66 @@ export class UsersComponent implements OnInit {
   getusers() {
     this.userService.getAllUsers().subscribe(res => {
       if (res.isSuccesfull) {
-        // const persons = res.result.map(person => {
-        //   person.datemodified = new Date(person.datemodified);
-        //   return person;
-        // });
+        this.persons = res.result.map(person => {
+          person.dateModified = new Date(person.dateModified);
+          return person;
+        });
         this.dataSource = new MatTableDataSource(res.result);
       }
     });
   }
 
   adduser() {
-    const person: Person = {
-      address: 'Calle 2',
-      dateModified: new Date(),
-      documentNumber: '31321',
-      documentType: 1,
-      email: 'harlin@mail.com',
-      firstName: 'harlin',
-      secondName: 'fer',
-      lastName: 'Acero',
-      phone: '2121',
-      password: 'asdfasdf',
-      rolId: 1,
-      secondLastName: 'Acero',
-      userChange: 1,
-      id: null
-    };
-
-    this.userService.saveUser(person).subscribe(res => {
-      if (res.isSuccesfull) {
-        console.log(res.result);
-      }
+    const person: Person = this.getPerson(0, '', '', 1, '', '', '', '', '', '', '', 1);
+    const dialogRef = this.dialog.open(PopupUsersComponent, {
+      height: 'auto',
+      width: 'auto',
+      data: this.person
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.person = result;
+      this.persons.push(this.person);
+    });
+  }
+
+  updatePerson(event) {
+    const person: Person = event;
+    person.userChange = 1;
+
+    const dialogRef = this.dialog.open(PopupUsersComponent, {
+      height: 'auto',
+      width: 'auto',
+      data: this.person
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.person = result;
+      this.persons.push(this.person);
+    });
+  }
+
+
+  getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
+            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+            password: string, rolId: number, ): Person {
+    return {
+      id: null,
+      address,
+      dateModified: new Date(),
+      documentNumber,
+      documentType,
+      email,
+      firstName,
+      secondName,
+      lastName,
+      secondLastName,
+      phone,
+      password,
+      rolId,
+      userChange: 1
+    };
   }
 }

@@ -14,8 +14,8 @@ export class RolesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   roles: Role[];
   role: Role;
-  name: string;
-  description: string;
+  // name: string;
+  // description: string;
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getRoles();
@@ -43,10 +43,11 @@ export class RolesComponent implements OnInit {
   }
 
   openDialog(): void {
+    this.role = this.getRole(0, '', '');
     const dialogRef = this.dialog.open(PopupComponent, {
       height: '400px',
       width: '300px',
-      data: [{ name: this.name, description: this.description }]
+      data: this.role
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -56,16 +57,29 @@ export class RolesComponent implements OnInit {
     });
   }
 
-  // addRol() {
-  //   const role: Role = {
-  //     dateModified: new Date(),
-  //     description: '',
-  //     name: 'SuperAdmin',
-  //     userChange: 1,
-  //     id: null
-  //   };
+  updateRol(event) {
+    this.role = this.getRole(event.id, event.name, event.description);
+    const dialogRef = this.dialog.open(PopupComponent, {
+      height: '400px',
+      width: '300px',
+      data: this.role
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.role = result;
+    });
 
-  // }
+  }
+
+  getRole(id: number, name: string, description: string): Role {
+    return {
+      dateModified: new Date(),
+      description,
+      name,
+      userChange: 1,
+      id
+    };
+  }
 
 }

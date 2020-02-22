@@ -58,10 +58,29 @@ namespace WebApplication1.DataAccess.Repository
 
         public bool Update(T entity)
         {
+            StringBuilder sql = new StringBuilder();
             entity.DateModified = DateTime.Now;
-            //_context.Set<T>().Update(entity);
-            //_context.SaveChanges();
-            return true;
+            List<T> entityList = new List<T>();
+            entityList.Add(entity);
+            var type = entity.GetType();
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties());
+            entity.DateModified = DateTime.Now;
+            sql.Append("UPDATE " + type.Name + " SET ");
+            for (int i = 0; i < props.Count; i++)
+            {
+                var newValue = props[i].GetValue(entity, null);
+                if (newValue.GetType().Equals(typeof(string)))
+                    sql.Append(props[i].Name  + " = '" + newValue + "'");
+                if (newValue.GetType().Equals(typeof(int)))
+                    sql.Append(props[i].Name +" = " + newValue); 
+                if (newValue.GetType().Equals(typeof(DateTime)))
+                    sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
+
+                if (i < props.Count - 1)
+                    sql.Append(", ");
+            }
+            sql.Append(" WHERE Id = " + entity.Id + ";");
+            return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
 
