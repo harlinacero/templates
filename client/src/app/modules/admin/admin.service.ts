@@ -1,12 +1,11 @@
 import { Urls } from './../../shared/interfaces/urls';
-import { Person } from './../../shared/interfaces/person';
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
-
 import { ServiceBase } from 'src/app/shared/services/service.base';
 
 import { RequestResult } from 'src/app/shared/interfaces/requestResult.interface';
+import { Person, DocumentType } from './../../shared/interfaces/person';
 import { Role } from 'src/app/shared/interfaces/role';
 
 
@@ -48,4 +47,7 @@ export class AdminService {
     return this.http.get<RequestResult<Role>>(`${this.urls.urlbase}Admin/GetRoles?id=${id}`);
   }
 
+  getDocumentTypes() {
+    return this.http.get<RequestResult<DocumentType[]>>(`${this.urls.urlbase}Admin/GetDocumentTypes`);
+  }
 }

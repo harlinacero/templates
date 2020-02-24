@@ -50,6 +50,7 @@ namespace WebApplication1.DomainServices.Contracts
         /// <param name="Id"></param>
         /// <returns></returns>
         RequestResult<Role> GetRoleById(int Id);
+        RequestResult<IEnumerable<DocumentType>> GetDocumentTypes();
 
         #endregion
 

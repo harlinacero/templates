@@ -94,5 +94,15 @@ namespace WebApplication1.Controllers
         }
         #endregion
 
+        #region Document type
+
+        [HttpGet]
+        [Route("GetDocumentTypes")]
+        public RequestResult<IEnumerable<DocumentType>> GetDocumentTypes()
+        {
+            return _adminAppService.GetDocumentTypes();
+        }
+        #endregion
+
     }
 }

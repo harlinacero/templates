@@ -122,6 +122,18 @@ namespace WebApplication1.AppServices
                 return RequestResult<Role>.CreateUnSuccesfull(ex.Message);
             }
         }
+
+        public RequestResult<IEnumerable<DocumentType>> GetDocumentTypes()
+        {
+            try
+            {
+                return _adminDomainService.GetDocumentTypes();
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<IEnumerable<DocumentType>>.CreateUnSuccesfull(ex.Message);
+            }
+        }
         #endregion
     }
 }

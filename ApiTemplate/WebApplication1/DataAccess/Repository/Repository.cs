@@ -28,10 +28,10 @@ namespace WebApplication1.DataAccess.Repository
             List<T> entityList = new List<T>();
             entityList.Add(entity);
             var type = entity.GetType();
-            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties().Where(x => x.Name != "Id"));
+            IList<PropertyInfo> props = new List<PropertyInfo>(type.GetProperties().Where(x => x.Name != "Id" && x.GetValue(entity, null) != null));
             StringBuilder sql = new StringBuilder();
             entity.DateModified = DateTime.Now;
-            sql.Append("INSERT INTO public." + type.Name + " (");
+            sql.Append("INSERT INTO " + type.Name + " (");
             sql.Append(string.Join(", ", props.Select(x => x.Name)));
             sql.Append(") VALUES (");
 
@@ -39,12 +39,15 @@ namespace WebApplication1.DataAccess.Repository
 
             for (int i = 0; i < values.Count; i++)
             {
-                if (values[i].GetType().Equals(typeof(string)))
-                    sql.Append("'" + values[i] + "'");
-                if (values[i].GetType().Equals(typeof(int)))
-                    sql.Append(values[i]);
-                if (values[i].GetType().Equals(typeof(DateTime)))
-                    sql.Append("TO_TIMESTAMP('" + DateTime.Parse(values[i].ToString()) + "', 'DD/MM/YYYY HH:MI')");
+                var typeValue = values[i].GetType();
+                var valueField = values[i];
+
+                if (typeValue.Equals(typeof(string)))
+                    sql.Append("'" + valueField + "'");
+                if (typeValue.Equals(typeof(int)))
+                    sql.Append(valueField);
+                if (typeValue.Equals(typeof(DateTime)))
+                    sql.Append("TO_TIMESTAMP('" + DateTime.Parse(valueField.ToString()) + "', 'DD/MM/YYYY HH:MI')");
 
                 if (i < values.Count - 1)
                     sql.Append(",");

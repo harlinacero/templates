@@ -14,8 +14,6 @@ export class RolesComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   roles: Role[];
   role: Role;
-  // name: string;
-  // description: string;
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getRoles();
@@ -51,9 +49,7 @@ export class RolesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.role = result;
-      this.roles.push(this.role);
+      this.getRoles();
     });
   }
 

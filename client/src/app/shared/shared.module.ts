@@ -10,7 +10,7 @@ import { MaterialModule } from './material/material.module';
 
 import { ServiceBase } from './services/service.base';
 import { ModalComponent } from './components/modal/modal.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +24,7 @@ import { FormsModule } from '@angular/forms';
     HttpClientModule,
     LayoutModule,
     MaterialModule,
+    ReactiveFormsModule ,
     RouterModule
   ],
   exports: [
@@ -31,6 +32,7 @@ import { FormsModule } from '@angular/forms';
     LayoutModule,
     MaterialModule,
     TablesComponent,
+    ReactiveFormsModule,
     RouterModule
   ],
   entryComponents: [

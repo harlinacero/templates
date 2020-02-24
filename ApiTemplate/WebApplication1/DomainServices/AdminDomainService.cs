@@ -14,14 +14,15 @@ namespace WebApplication1.DomainServices
         #region Fields
         private readonly IRepository<Person> _personRepo;
         private readonly IRepository<Role> _roleRepo;
-
+        private readonly IRepository<DocumentType> _documentRepo;
         #endregion
 
         #region Builder
-        public AdminDomainService(IRepository<Person> personRepo, IRepository<Role> roleRepo)
+        public AdminDomainService(IRepository<Person> personRepo, IRepository<Role> roleRepo, IRepository<DocumentType> documentRepo)
         {
             _personRepo = personRepo;
             _roleRepo = roleRepo;
+            _documentRepo = documentRepo;
         }
         #endregion
 
@@ -97,6 +98,14 @@ namespace WebApplication1.DomainServices
             return Addrole(role);
         }
 
+        public RequestResult<IEnumerable<DocumentType>> GetDocumentTypes()
+        {
+            var list = _documentRepo.ListAll();
+            return RequestResult<IEnumerable<DocumentType>>.CreateSuccesfull(list);
+        }
+
+
+
         private RequestResult<Role> UpdateRole(Role role)
         {
             if (_roleRepo.Update(role))
@@ -110,6 +119,8 @@ namespace WebApplication1.DomainServices
                 return RequestResult<Role>.CreateSuccesfull(role);
             return RequestResult<Role>.CreateUnSuccesfull("No se pudo crear");
         }
+
+
 
 
         #endregion

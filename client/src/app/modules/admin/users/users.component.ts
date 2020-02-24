@@ -1,8 +1,8 @@
-import { PopupUsersComponent } from './popup-users/popup-users.component';
-import { Person } from './../../../shared/interfaces/person';
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AdminService } from '../admin.service';
+import { PopupUsersComponent } from './popup-users/popup-users.component';
+import { Person, DocumentType } from './../../../shared/interfaces/person';
 
 @Component({
   selector: 'app-users',
@@ -10,16 +10,17 @@ import { AdminService } from '../admin.service';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-
   displayedColumns = ['id', 'documentType', 'documentNumber', 'firstName', 'secondName', 'lastName',
     'secondLastName', 'email', 'phone', 'roleId'];
 
   dataSource: MatTableDataSource<any>;
   persons: Person[];
   person: Person;
+  documents: DocumentType[];
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getusers();
+    this.getDocuments();
   }
 
   ngOnInit() {
@@ -43,6 +44,15 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  getDocuments() {
+    this.userService.getDocumentTypes().subscribe(res => {
+      if (res.isSuccesfull) {
+        this.documents = res.result;
+      }
+    });
+  }
+
+
   adduser() {
     const person: Person = this.getPerson(0, '', '', 1, '', '', '', '', '', '', '', 1);
     const dialogRef = this.dialog.open(PopupUsersComponent, {
@@ -52,16 +62,12 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.person = result;
-      this.persons.push(this.person);
+      this.getusers();
     });
   }
 
   updatePerson(event) {
-    const person: Person = event;
-    person.userChange = 1;
-
+    this.person = event;
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
       width: 'auto',
@@ -69,18 +75,16 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
-      this.person = result;
-      this.persons.push(this.person);
+      this.getusers();
     });
   }
 
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-            password: string, rolId: number, ): Person {
+    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+    password: string, roleId: number, ): Person {
     return {
-      id: null,
+      id,
       address,
       dateModified: new Date(),
       documentNumber,
@@ -92,7 +96,7 @@ export class UsersComponent implements OnInit {
       secondLastName,
       phone,
       password,
-      rolId,
+      roleId,
       userChange: 1
     };
   }

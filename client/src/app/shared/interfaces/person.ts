@@ -9,8 +9,17 @@ export interface Person {
   email: string;
   phone: string;
   address: string;
-  rolId: number;
+  roleId: number;
   password: string;
   userChange: number;
   dateModified: Date;
+}
+
+export interface DocumentType {
+  id: number;
+  resume: string;
+  name: string;
+  description: string;
+  userchange: number;
+  datemodified: Date;
 }

@@ -49,6 +49,8 @@ namespace WebApplication1.AppServices.Contrracts
         /// <param name="Id"></param>
         /// <returns></returns>
         RequestResult<Role> GetRoleById(int Id);
+
+        RequestResult<IEnumerable<DocumentType>> GetDocumentTypes();
         #endregion
 
     }

@@ -1,58 +1,77 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<div mat-dialog-content>
-    <mat-form-field>
-        <mat-label>Tipo Documento</mat-label>
-        <input matInput [(ngModel)]="data.documentType">
-    </mat-form-field>
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
 
-    <mat-form-field>
-        <mat-label>Número Documento</mat-label>
-        <input matInput [(ngModel)]="data.documentType">
-    </mat-form-field>
+    <form class="example-form">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo Documento</mat-label>
+                <input matInput [(ngModel)]="data.documentType" name="documentType">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Primer Nombre</mat-label>
-        <input matInput [(ngModel)]="data.firstName">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Número Documento</mat-label>
+                <input matInput [(ngModel)]="data.documentNumber" name="documentNumber">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Segundo Nombre</mat-label>
-        <input matInput [(ngModel)]="data.secondName">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Primer Nombre</mat-label>
+                <input matInput [(ngModel)]="data.firstName" name="firstName">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Primer Apellido</mat-label>
-        <input matInput [(ngModel)]="data.lastName">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Segundo Nombre</mat-label>
+                <input matInput [(ngModel)]="data.secondName" name="secondName">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Segundo Apellido</mat-label>
-        <input matInput [(ngModel)]="data.secondLastName">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Primer Apellido</mat-label>
+                <input matInput [(ngModel)]="data.lastName" name="lastname">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Rol</mat-label>
-        <input matInput [(ngModel)]="data.rolId">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Segundo Apellido</mat-label>
+                <input matInput [(ngModel)]="data.secondLastName" name="secontLastName">
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Diección</mat-label>
-        <input matInput [(ngModel)]="data.address">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Rol</mat-label>
+                <mat-select [(value)]="data.roleId" [(ngModel)]="data.roleId" name="roleId">
+                    <mat-option *ngFor="let rol of roles" [(value)]="rol.id">
+                        {{rol.name}}
+                    </mat-option>
+                </mat-select>
+                <!-- <input matInput [(ngModel)]="data.rolId"> -->
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Teléfono</mat-label>
-        <input matInput [(ngModel)]="data.phone">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="pat@example.com" [(ngModel)]="data.email" name="email" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Contraseña</mat-label>
-        <input matInput [(ngModel)]="data.password">
-    </mat-form-field>
+            <mat-form-field class="example-full-width">
+                <mat-label>Diección</mat-label>
+                <input matInput [(ngModel)]="data.address" name="address">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput [(ngModel)]="data.phone" name="phone">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput [(ngModel)]="data.password" name="password">
+            </mat-form-field>
 
 
-</div>
-<div mat-dialog-actions>
-    <button mat-button (click)="onNoClick()">Cancelar</button>
-    <button mat-button (click)="save()" [mat-dialog-close]="data.documentNumber" cdkFocusInitial>Guardar</button>
-</div>
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+            <button mat-button (click)="save()" [mat-dialog-close]="data.documentNumber" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

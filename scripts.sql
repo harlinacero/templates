@@ -39,7 +39,7 @@ CREATE TABLE person
   secondname character varying(20),
   lastname character varying(20),
   secondlastname character varying(20),
-  email character varying(20),
+  email character varying(40),
   phone character varying(40),
   address character varying(40),
   roleid integer,
@@ -55,4 +55,24 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE person
+  OWNER TO postgres;
+
+-- Table: documenttype
+
+-- DROP TABLE documenttype;
+
+CREATE TABLE documenttype
+(
+  id serial NOT NULL,
+  resume character varying(3),
+  name character varying(40),
+  description character varying(40),
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT documenttype_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE documenttype
   OWNER TO postgres;

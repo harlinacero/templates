@@ -170,3 +170,42 @@ Fecha: 20/02/2020 7:38:30 a. m.
 -------------------
 Dato: 42601: error de sintaxis en o cerca de «DateModified»
 Fecha: 21/02/2020 11:10:46 p. m.
+-------------------
+Dato: 42601: INSERT tiene más columnas de destino que expresiones
+Fecha: 23/02/2020 6:50:13 p. m.
+-------------------
+Dato: 42601: INSERT tiene más columnas de destino que expresiones
+Fecha: 23/02/2020 6:53:08 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 6:56:42 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 7:16:17 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 23/02/2020 7:30:48 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 7:30:48 p. m.
+-------------------
+Dato: 42601: INSERT tiene más columnas de destino que expresiones
+Fecha: 23/02/2020 7:42:17 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 7:51:09 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 7:54:45 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 23/02/2020 8:27:20 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 23/02/2020 8:27:24 p. m.
+-------------------
+Dato: 22001: el valor es demasiado largo para el tipo character varying(20)
+Fecha: 23/02/2020 8:33:59 p. m.
+-------------------
+Dato: 22001: el valor es demasiado largo para el tipo character varying(20)
+Fecha: 23/02/2020 8:42:13 p. m.

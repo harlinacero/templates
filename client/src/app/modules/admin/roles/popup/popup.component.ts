@@ -1,6 +1,6 @@
 import { Role } from 'src/app/shared/interfaces/role';
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AdminService } from '../../admin.service';
 
 @Component({
@@ -28,7 +28,7 @@ export class PopupComponent {
     const role: Role = this.getRole(this.data.id, this.data.name, this.data.description);
     this.userService.saveRole(role).subscribe(res => {
       if (res.isSuccesfull) {
-        alert(res.isSuccesfull);
+        alert('Rol Creado');
       }
     });
   }
