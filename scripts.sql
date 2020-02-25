@@ -66,7 +66,6 @@ CREATE TABLE documenttype
   id serial NOT NULL,
   resume character varying(3),
   name character varying(40),
-  description character varying(40),
   userchange integer,
   datemodified timestamp without time zone,
   CONSTRAINT documenttype_pkey PRIMARY KEY (id)

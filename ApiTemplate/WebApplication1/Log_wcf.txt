@@ -209,3 +209,137 @@ Fecha: 23/02/2020 8:33:59 p. m.
 -------------------
 Dato: 22001: el valor es demasiado largo para el tipo character varying(20)
 Fecha: 23/02/2020 8:42:13 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:43:46 p. m.
+-------------------
+Dato: A command is already in progress: 
+SELECT ns.nspname, typ_and_elem_type.*,
+   CASE
+       WHEN typtype IN ('b', 'e', 'p') THEN 0           -- First base types, enums, pseudo-types
+       WHEN typtype = 'r' THEN 1                        -- Ranges after
+       WHEN typtype = 'c' THEN 2                        -- Composites after
+       WHEN typtype = 'd' AND elemtyptype <> 'a' THEN 3 -- Domains over non-arrays after
+       WHEN typtype = 'a' THEN 4                        -- Arrays before
+       WHEN typtype = 'd' AND elemtyptype = 'a' THEN 5  -- Domains over arrays last
+    END AS ord
+FROM (
+    -- Arrays have typtype=b - this subquery identifies them by their typreceive and converts their typtype to a
+    -- We first do this for the type (innerest-most subquery), and then for its element type
+    -- This also returns the array element, range subtype and domain base type as elemtypoid
+    SELECT
+        typ.oid, typ.typnamespace, typ.typname, typ.typtype, typ.typrelid, typ.typnotnull, typ.relkind,
+        elemtyp.oid AS elemtypoid, elemtyp.typname AS elemtypname, elemcls.relkind AS elemrelkind,
+        CASE WHEN elemproc.proname='array_recv' THEN 'a' ELSE elemtyp.typtype END AS elemtyptype
+    FROM (
+        SELECT typ.oid, typnamespace, typname, typrelid, typnotnull, relkind, typelem AS elemoid,
+            CASE WHEN proc.proname='array_recv' THEN 'a' ELSE typ.typtype END AS typtype,
+            CASE
+                WHEN proc.proname='array_recv' THEN typ.typelem
+                WHEN typ.typtype='r' THEN rngsubtype
+                WHEN typ.typtype='d' THEN typ.typbasetype
+            END AS elemtypoid
+        FROM pg_type AS typ
+        LEFT JOIN pg_class AS cls ON (cls.oid = typ.typrelid)
+        LEFT JOIN pg_proc AS proc ON proc.oid = typ.typreceive
+        LEFT JOIN pg_range ON (pg_range.rngtypid = typ.oid)
+    ) AS typ
+    LEFT JOIN pg_type AS elemtyp ON elemtyp.oid = elemtypoid
+    LEFT JOIN pg_class AS elemcls ON (elemcls.oid = elemtyp.typrelid)
+    LEFT JOIN pg_proc AS elemproc ON elemproc.oid = elemtyp.typreceive
+) AS typ_and_elem_type
+JOIN pg_namespace AS ns ON (ns.oid = typnamespace)
+WHERE
+    typtype IN ('b', 'r', 'e', 'd') OR -- Base, range, enum, domain
+    (typtype = 'c' AND relkind='c') OR -- User-defined free-standing composites (not table composites) by default
+    (typtype = 'p' AND typname IN ('record', 'void')) OR -- Some special supported pseudo-types
+    (typtype = 'a' AND (  -- Array of...
+        elemtyptype IN ('b', 'r', 'e', 'd') OR -- Array of base, range, enum, domain
+        (elemtyptype = 'p' AND elemtypname IN ('record', 'void')) OR -- Arrays of special supported pseudo-types
+        (elemtyptype = 'c' AND elemrelkind='c') -- Array of user-defined free-standing composites (not table composites) by default
+    ))
+ORDER BY ord;
+
+-- Load field definitions for (free-standing) composite types
+SELECT typ.oid, att.attname, att.atttypid
+FROM pg_type AS typ
+JOIN pg_namespace AS ns ON (ns.oid = typ.typnamespace)
+JOIN pg_class AS cls ON (cls.oid = typ.typrelid)
+JOIN pg_attribute AS att ON (att.attrelid = typ.typrelid)
+WHERE
+  (typ.typtype = 'c' AND cls.relkind='c') AND
+  attnum > 0 AND     -- Don't load system attributes
+  NOT attisdropped
+ORDER BY typ.oid, att.attnum;
+
+
+-- Load enum fields
+SELECT pg_type.oid, enumlabel
+FROM pg_enum
+JOIN pg_type ON pg_type.oid=enumtypid
+ORDER BY oid, enumsortorder;
+
+Fecha: 24/02/2020 11:45:22 p. m.
+-------------------
+Dato: Object reference not set to an instance of an object.
+Fecha: 24/02/2020 11:45:22 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:45:28 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:47:46 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:51:16 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:51:53 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:52:29 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 24/02/2020 11:54:43 p. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:09:03 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:09:41 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:14:58 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:15:37 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:16:38 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:19:20 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:22:27 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:23:38 a. m.
+-------------------
+Dato: 42P01: no existe la relación «provider»
+Fecha: 25/02/2020 12:24:28 a. m.
+-------------------
+Dato: 42P01: no existe la relación «public.provider»
+Fecha: 25/02/2020 12:24:34 a. m.
+-------------------
+Dato: 42P01: no existe la relación «provider»
+Fecha: 25/02/2020 12:25:55 a. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 25/02/2020 12:25:55 a. m.
+-------------------
+Dato: Exception while reading from stream
+Fecha: 25/02/2020 12:33:29 a. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM public.Role
+Fecha: 25/02/2020 1:02:07 a. m.

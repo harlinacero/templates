@@ -1,0 +1,68 @@
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- 'code', 'businessname', 'nit', 'regimenType', 'economyActivity', 'address', 'email' -->
+        <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.code}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="businessName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Razón Social </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.businessName}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="nit">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nit </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.nit}}
+            </mat-cell>
+        </ng-container>
+
+
+        <!-- Date Aprobate Column -->
+        <ng-container matColumnDef="regimenType">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Régimen </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.reqgimenType}} </mat-cell>
+        </ng-container>
+
+        <!-- Date Pay datePay -->
+        <ng-container matColumnDef="economyActivity">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Actividad Económica </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.economyActivity}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="address">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Dirección </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.address}}</mat-cell>
+        </ng-container>
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Email </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.email}}</mat-cell>
+        </ng-container>
+
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateProvider(row)">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="addProvider()">
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
+</button>

@@ -17,6 +17,7 @@ export class PopupUsersComponent {
   roles: Role[];
   documents: DocumentType[];
   email = new FormControl('', [Validators.required, Validators.email]);
+  disabled = true;
 
   constructor(
     public dialogRef: MatDialogRef<PopupUsersComponent>,
@@ -25,7 +26,7 @@ export class PopupUsersComponent {
     this.data = person;
     this.getRoles();
     this.getDocuments();
-    if (this.data.id !== 0) {
+    if (this.data.id > 0) {
       this.title = 'Modificar Usuario';
     }
   }
@@ -45,11 +46,16 @@ export class PopupUsersComponent {
 
   getDocuments() {
     this.userService.getDocumentTypes()
-    .subscribe(result => {
-      if(result.isSuccesfull) {
-        this.documents = result.result;
-      }
-    })
+      .subscribe(result => {
+        if (result.isSuccesfull) {
+          this.documents = result.result;
+        }
+      });
+  }
+
+
+  validatePassword(event) {
+    console.log(event);
   }
 
 
@@ -60,7 +66,7 @@ export class PopupUsersComponent {
       this.person.roleId);
     this.userService.saveUser(person).subscribe(res => {
       if (res.isSuccesfull) {
-        alert('Usuario creado');
+        alert('Usuario actualizado');
       }
     });
   }
@@ -71,8 +77,8 @@ export class PopupUsersComponent {
   }
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-            password: string, roleId: number): Person {
+    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+    password: string, roleId: number): Person {
     return {
       id,
       address,

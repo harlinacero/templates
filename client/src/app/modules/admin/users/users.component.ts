@@ -3,6 +3,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AdminService } from '../admin.service';
 import { PopupUsersComponent } from './popup-users/popup-users.component';
 import { Person, DocumentType } from './../../../shared/interfaces/person';
+import { Role } from 'src/app/shared/interfaces/role';
 
 @Component({
   selector: 'app-users',
@@ -10,16 +11,17 @@ import { Person, DocumentType } from './../../../shared/interfaces/person';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  displayedColumns = ['id', 'documentType', 'documentNumber', 'firstName', 'secondName', 'lastName',
-    'secondLastName', 'email', 'phone', 'roleId'];
+  displayedColumns = ['id', 'documentType', 'name', 'email', 'phone', 'roleId'];
 
   dataSource: MatTableDataSource<any>;
   persons: Person[];
   person: Person;
   documents: DocumentType[];
+  roles: Role[] = [];
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getusers();
+    this.getRols();
     this.getDocuments();
   }
 
@@ -57,7 +59,7 @@ export class UsersComponent implements OnInit {
     const person: Person = this.getPerson(0, '', '', 1, '', '', '', '', '', '', '', 1);
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: this.person
     });
 
@@ -70,7 +72,7 @@ export class UsersComponent implements OnInit {
     this.person = event;
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: this.person
     });
 
@@ -99,5 +101,33 @@ export class UsersComponent implements OnInit {
       roleId,
       userChange: 1
     };
+  }
+
+  getDocumentName(id: number) {
+    if (!!this.documents) {
+      for (const iterator of this.documents) {
+        if (iterator.id === id) {
+          return iterator;
+        }
+      }
+    }
+  }
+
+  getRols() {
+    this.userService.getAllRoles()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.roles = res.result;
+        }
+      });
+  }
+
+  getRolName(id: number) {
+    // return this.documents.find(x => { x.id === id }).resume;
+    for (const iterator of this.roles) {
+      if (iterator.id === id) {
+        return iterator;
+      }
+    }
   }
 }

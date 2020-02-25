@@ -186,12 +186,20 @@ namespace WebApplication1.DataAccess.Repository
             foreach (DataColumn column in dr.Table.Columns)
             {
                 var pro = temp.GetProperties().First(x => x.Name.Equals(column.ColumnName, StringComparison.OrdinalIgnoreCase));
+                var columnName = dr[column.ColumnName];
+                var columValdiate = (columnName == DBNull.Value) ? string.Empty : columnName;
+
                 if (pro != null)
-                {
-                    pro.SetValue(obj, dr[column.ColumnName], null);
+                {                    
+                    pro.SetValue(obj, columValdiate, null);
                 }
             }
             return obj;
+        }
+
+        public static T ConvertDBNull<T>(object value, Func<object, T> conversionFunction)
+        {
+            return conversionFunction(value == DBNull.Value ? null : value);
         }
 
         private class OrderByClass

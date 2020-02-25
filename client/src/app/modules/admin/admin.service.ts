@@ -7,6 +7,7 @@ import { ServiceBase } from 'src/app/shared/services/service.base';
 import { RequestResult } from 'src/app/shared/interfaces/requestResult.interface';
 import { Person, DocumentType } from './../../shared/interfaces/person';
 import { Role } from 'src/app/shared/interfaces/role';
+import { Providers } from 'src/app/shared/interfaces/providers.interface';
 
 
 
@@ -49,5 +50,18 @@ export class AdminService {
 
   getDocumentTypes() {
     return this.http.get<RequestResult<DocumentType[]>>(`${this.urls.urlbase}Admin/GetDocumentTypes`);
+  }
+
+
+  getAllProviders() {
+    return this.http.get<RequestResult<Providers[]>>(`${this.urls.urlbase}Provider/GetAllProviders`);
+  }
+
+  saveProvider(provider: Providers) {
+    return this.http.post<RequestResult<Providers>>(`${this.urls.urlbase}Provider/SaveProvider`, provider);
+  }
+
+  getProvider(id: string) {
+    return this.http.get<RequestResult<Providers>>(`${this.urls.urlbase}Provider/GetProvider?id=${id}`);
   }
 }

@@ -10,7 +10,7 @@ import { PopupComponent } from './popup/popup.component';
   styleUrls: ['./roles.component.scss']
 })
 export class RolesComponent implements OnInit {
-  displayedColumns = ['id', 'name', 'description', 'datemodified'];
+  displayedColumns = ['id', 'name', 'description'];
   dataSource: MatTableDataSource<any>;
   roles: Role[];
   role: Role;

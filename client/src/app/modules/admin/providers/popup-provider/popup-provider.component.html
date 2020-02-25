@@ -1,0 +1,51 @@
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width">
+                <mat-label>Código</mat-label>
+                <input matInput [(ngModel)]="data.code" name="code" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Razón Social</mat-label>
+                <input matInput [(ngModel)]="data.businessName" name="businessName" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>NIT</mat-label>
+                <input matInput [(ngModel)]="data.nit" name="nit" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Régimen</mat-label>
+                <input matInput [(ngModel)]="data.reqgimenType" name="reqgimenType">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Actividad Económica</mat-label>
+                <input matInput [(ngModel)]="data.economyActivity" name="economyActivity" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Dirección</mat-label>
+                <input matInput [(ngModel)]="data.address" name="address">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="data.email" name="email">
+            </mat-form-field>
+
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+            <button mat-button (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

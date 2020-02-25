@@ -124,6 +124,26 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.ProviderController.GetAllProviders">
+            <summary>
+            Get all provider
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProviderController.SaveProvider(WebApplication1.DomainServices.Entities.Provider)">
+            <summary>
+            Update or add provider
+            </summary>
+            <param name="provider"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProviderController.GetProviderById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllPerson">
             <summary>
             Get all person

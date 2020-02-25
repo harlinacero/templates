@@ -17,6 +17,9 @@ export class PopupComponent {
     public dialogRef: MatDialogRef<PopupComponent>,
     @Inject(MAT_DIALOG_DATA) public role: Role, private userService: AdminService) {
     this.data = role;
+    if (this.role.id > 0) {
+      this.title = 'Modificar Rol';
+    }
 
   }
 
