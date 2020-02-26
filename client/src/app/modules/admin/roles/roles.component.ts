@@ -1,7 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { Role } from 'src/app/shared/interfaces/role';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Role } from 'src/app/shared/interfaces/role.interface';
+
+
 import { AdminService } from '../admin.service';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
 
 @Component({
@@ -9,9 +13,11 @@ import { PopupComponent } from './popup/popup.component';
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss']
 })
-export class RolesComponent implements OnInit {
-  displayedColumns = ['id', 'name', 'description'];
-  dataSource: MatTableDataSource<any>;
+export class RolesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  displayedColumns =
+   ['id', 'name', 'description'];
+  dataSource = new MatTableDataSource();
   roles: Role[];
   role: Role;
 
@@ -20,6 +26,11 @@ export class RolesComponent implements OnInit {
   }
 
   ngOnInit() {
+
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
@@ -31,10 +42,7 @@ export class RolesComponent implements OnInit {
   getRoles() {
     this.userService.getAllRoles().subscribe(res => {
       if (res.isSuccesfull) {
-        this.roles = res.result.map(role => {
-          role.dateModified = new Date(role.dateModified);
-          return role;
-        });
+        this.roles = res.result;
         this.dataSource = new MatTableDataSource(this.roles);
       }
     });

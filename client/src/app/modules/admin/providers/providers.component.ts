@@ -11,7 +11,7 @@ import { Providers } from 'src/app/shared/interfaces/providers.interface';
 })
 export class ProvidersComponent implements OnInit {
 
-  displayedColumns = ['code', 'businessName', 'nit', 'regimenType', 'economyActivity', 'address', 'email'];
+  displayedColumns = ['code', 'businessName', 'nit', 'regimenType', 'economyActivity', 'contact', 'address', 'email'];
 
   dataSource: MatTableDataSource<any>;
   providers: Providers[];
@@ -49,6 +49,7 @@ export class ProvidersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
       this.getProviders();
     });
   }

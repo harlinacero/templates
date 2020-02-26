@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit {
     const sessionString = localStorage.getItem('session');
     if (!!sessionString) {
       const session: ISession = JSON.parse(sessionString);
+      this.menuIcon = 'fa fa-bars';
       this.account = session.userName;
     }
   }

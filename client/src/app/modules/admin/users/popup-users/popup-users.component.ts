@@ -2,8 +2,8 @@ import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
-import { Person, DocumentType } from 'src/app/shared/interfaces/person';
-import { Role } from 'src/app/shared/interfaces/role';
+import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
+import { Role } from 'src/app/shared/interfaces/role.interface';
 
 @Component({
   selector: 'app-popup-users',

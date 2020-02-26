@@ -40,6 +40,11 @@
             <mat-cell *matCellDef="let row"> {{row.economyActivity}} </mat-cell>
         </ng-container>
 
+        <!-- Area Column -->
+        <ng-container matColumnDef="contact">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Contacto </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.contact}}</mat-cell>
+        </ng-container>
 
         <!-- Area Column -->
         <ng-container matColumnDef="address">

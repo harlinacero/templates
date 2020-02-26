@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { AdminService } from '../admin.service';
 import { PopupUsersComponent } from './popup-users/popup-users.component';
-import { Person, DocumentType } from './../../../shared/interfaces/person';
-import { Role } from 'src/app/shared/interfaces/role';
+import { Person, DocumentType } from './../../../shared/interfaces/person.interface';
+import { Role } from 'src/app/shared/interfaces/role.interface';
+
+
 
 @Component({
   selector: 'app-users',
@@ -20,9 +22,9 @@ export class UsersComponent implements OnInit {
   roles: Role[] = [];
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
-    this.getusers();
-    this.getRols();
     this.getDocuments();
+    // this.getUsers();
+    // this.getRols();
   }
 
   ngOnInit() {
@@ -34,7 +36,7 @@ export class UsersComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  getusers() {
+  getUsers() {
     this.userService.getAllUsers().subscribe(res => {
       if (res.isSuccesfull) {
         this.persons = res.result.map(person => {
@@ -50,6 +52,7 @@ export class UsersComponent implements OnInit {
     this.userService.getDocumentTypes().subscribe(res => {
       if (res.isSuccesfull) {
         this.documents = res.result;
+        this.getRols();
       }
     });
   }
@@ -64,7 +67,7 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getusers();
+      this.getUsers();
     });
   }
 
@@ -77,7 +80,7 @@ export class UsersComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getusers();
+      this.getUsers();
     });
   }
 
@@ -118,6 +121,7 @@ export class UsersComponent implements OnInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.roles = res.result;
+          this.getUsers();
         }
       });
   }

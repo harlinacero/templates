@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatTableModule,
-  MatTabsModule, MatDialogModule, MatSelectModule, MatCardModule
+  MatTabsModule, MatDialogModule, MatSelectModule, MatCardModule, MatSortModule
 } from '@angular/material';
 
 
@@ -18,6 +18,7 @@ import {
     MatInputModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
 
@@ -30,6 +31,7 @@ import {
     MatInputModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatSortModule,
     MatTableModule,
     MatTabsModule,
   ]

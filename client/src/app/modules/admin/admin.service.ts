@@ -1,3 +1,4 @@
+import { Product } from './../../shared/interfaces/product.interface';
 import { Urls } from './../../shared/interfaces/urls';
 import { Injectable } from '@angular/core';
 
@@ -5,9 +6,11 @@ import { HttpClient } from '@angular/common/http';
 import { ServiceBase } from 'src/app/shared/services/service.base';
 
 import { RequestResult } from 'src/app/shared/interfaces/requestResult.interface';
-import { Person, DocumentType } from './../../shared/interfaces/person';
-import { Role } from 'src/app/shared/interfaces/role';
+
+
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
+import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
+import { Role } from 'src/app/shared/interfaces/role.interface';
 
 
 
@@ -63,5 +66,17 @@ export class AdminService {
 
   getProvider(id: string) {
     return this.http.get<RequestResult<Providers>>(`${this.urls.urlbase}Provider/GetProvider?id=${id}`);
+  }
+
+  getAllProducts() {
+    return this.http.get<RequestResult<Product[]>>(`${this.urls.urlbase}Product/GetAllProducts`);
+  }
+
+  saveProduct(product: Product) {
+    return this.http.post<RequestResult<Product>>(`${this.urls.urlbase}Product/SaveProduct`, product);
+  }
+
+  getProduct(id: string) {
+    return this.http.get<RequestResult<Product>>(`${this.urls.urlbase}Product/GetProduct?id=${id}`);
   }
 }

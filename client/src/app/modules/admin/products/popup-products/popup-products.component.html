@@ -1,0 +1,35 @@
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width">
+                <mat-label>Código</mat-label>
+                <input matInput [(ngModel)]="data.code" name="code" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Descripción</mat-label>
+                <input matInput [(ngModel)]="data.description" name="description" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo</mat-label>
+                <input matInput [(ngModel)]="data.type" name="type" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Cuenta Contable</mat-label>
+                <input matInput [(ngModel)]="data.accountingAccount" name="accountingAccount">
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+            <button mat-button (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

@@ -1,0 +1,48 @@
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+        <!-- displayedColumns = ['code', 'description', 'type', 'accountingAccount']; -->
+        <ng-container matColumnDef="code">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Código</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.code}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+        </ng-container>
+
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="type">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.type}}
+            </mat-cell>
+        </ng-container>
+
+
+        <!-- Date Aprobate Column -->
+        <ng-container matColumnDef="accountingAccount">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Cuenta Contable </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.accountingAccount}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateProduct(row)">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="addProduct()">
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
+</button>

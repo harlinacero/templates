@@ -124,6 +124,26 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.ProductController.GetAll">
+            <summary>
+            Get all provider
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.SaveProduct(WebApplication1.DomainServices.Entities.Product)">
+            <summary>
+            Update or add provider
+            </summary>
+            <param name="product"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.ProductController.GetProductById(System.Int32)">
+            <summary>
+            Get person by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.ProviderController.GetAllProviders">
             <summary>
             Get all provider
@@ -198,6 +218,13 @@
             <summary>
             Date modfified Entity
             </summary>
+        </member>
+        <member name="M:WebApplication1.DomainServices.ProductDomainService.UpdateProduct(WebApplication1.DomainServices.Entities.Product)">
+            <summary>
+            Update 
+            </summary>
+            <param name="product"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

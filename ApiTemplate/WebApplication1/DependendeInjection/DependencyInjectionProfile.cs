@@ -34,12 +34,13 @@ namespace WebApplication1.DependendeInjection
             services.AddSingleton<ISessionDomainService, SessionDomainService>();
             services.AddSingleton<IAdminDomainService, AdminDomainService>();
             services.AddSingleton<IProviderDomainService, ProviderDomainService>();
-
+            services.AddSingleton<IProductDomainService, ProductDomainService>();
 
 
             services.AddSingleton<ISessionAppService, SessionAppService>();
             services.AddSingleton<IAdminAppService, AdminAppService>();
             services.AddSingleton<IProviderAppService, ProviderAppService>();
+            services.AddSingleton<IProductAppService, ProductAppService>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }
