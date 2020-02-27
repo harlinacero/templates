@@ -1,6 +1,6 @@
 <nav id="sidebar" [ngStyle]="{'width': widthSidebar}">
-    <div class="sidebar-header">
-        <img src="./assets/images/enterpriseImage.png" alt="Empresa">
+    <div class="sidebar-header" [ngStyle]="{'background-color': getBackground(widthSidebar)}">
+        <img src="./assets/images/enterpriseImage.png" alt="Empresa" *ngIf="widthSidebar !== '50px'">
     </div>
 
     <ul class="list-unstyled components">

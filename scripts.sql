@@ -170,3 +170,50 @@ ALTER TABLE products_provider
 insert into TypeProduct (name) values
 ('Producto'),
 ('Servicio');
+
+-- Table: company
+
+-- DROP TABLE company;
+
+CREATE TABLE company
+(
+  id serial NOT NULL,
+  businessname character varying(40),
+  logo text,
+  nit character varying(20),
+  emailcompany character varying(40),
+  emailtreasury character varying(40),
+  accountableinterface boolean,
+  purchaseorders boolean,
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT company_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE company
+  OWNER TO postgres;
+
+-- Table: costcenter
+
+-- DROP TABLE costcenter;
+
+CREATE TABLE costcenter
+(
+  id serial NOT NULL,
+  name character varying(40),
+  description character varying(255),
+  companyid integer,
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT costcenter_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_company_id FOREIGN KEY (companyid)
+      REFERENCES company (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE costcenter
+  OWNER TO postgres;

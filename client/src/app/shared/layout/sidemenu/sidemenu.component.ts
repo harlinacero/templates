@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SidemenuComponent implements OnInit {
   @Input() widthSidebar: string;
-
+  background: '#7386D5';
 
   menuItems: any[] = [
     { icon: 'fa fa-home', name: 'Inicio', component: '/home' },
@@ -18,10 +18,23 @@ export class SidemenuComponent implements OnInit {
     { icon: 'fa fa-cog', name: 'Configuración', component: '/settings' }
   ];
 
-  constructor() { }
+  constructor() {
+    console.log(this.widthSidebar);
+
+
+  }
 
   ngOnInit() {
   }
+
+  getBackground(widthSidebar) {
+    if (widthSidebar === '250px') {
+      return '#fff';
+    } else {
+      return '#7386D5';
+    }
+  }
+
 
 
 
