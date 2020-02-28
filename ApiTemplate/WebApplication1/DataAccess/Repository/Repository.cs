@@ -48,6 +48,8 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append(valueField);
                 if (typeValue.Equals(typeof(DateTime)))
                     sql.Append("TO_TIMESTAMP('" + DateTime.Parse(valueField.ToString()) + "', 'DD/MM/YYYY HH:MI')");
+                if (typeValue.Equals(typeof(Boolean)))
+                    sql.Append(valueField);
 
                 if (i < values.Count - 1)
                     sql.Append(",");

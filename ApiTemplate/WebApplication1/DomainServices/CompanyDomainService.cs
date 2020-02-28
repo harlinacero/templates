@@ -63,11 +63,11 @@ namespace WebApplication1.DomainServices
 
         public RequestResult<CostCenter> SaveCostCenter(CostCenter costCenter)
         {
-            var oldCompany = _companyRepo.GetById(company.Id);
+            var oldCompany = _companyRepo.GetById(costCenter.Id);
             if (oldCompany != null)
-                return UpdateCompany(company);
+                return UpdateCostCenter(costCenter);
 
-            return AddCompany(company);
+            return AddCostCenter(costCenter);
         }
 
 
@@ -76,6 +76,20 @@ namespace WebApplication1.DomainServices
 
 
         #region Private methods
+        private RequestResult<CostCenter> AddCostCenter(CostCenter company)
+        {
+            if (_costCenterRepo.Add(company))
+                return RequestResult<CostCenter>.CreateSuccesfull(company);
+            return RequestResult<CostCenter>.CreateUnSuccesfull("No se pudo crear");
+        }
+
+        private RequestResult<CostCenter> UpdateCostCenter(CostCenter company)
+        {
+            if (_costCenterRepo.Update(company))
+                return RequestResult<CostCenter>.CreateSuccesfull(company);
+            return RequestResult<CostCenter>.CreateUnSuccesfull("No se pudo actualizar");
+        }
+
         private RequestResult<Company> AddCompany(Company company)
         {
             if (_companyRepo.Add(company))

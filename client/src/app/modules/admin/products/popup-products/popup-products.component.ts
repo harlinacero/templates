@@ -9,7 +9,7 @@ import { AdminService } from '../../admin.service';
   styleUrls: ['./popup-products.component.scss']
 })
 export class PopupProductsComponent implements OnInit {
-  title = 'Agregar Product';
+  title = 'Agregar Producto';
   data: Product;
 
   constructor(public dialogRef: MatDialogRef<PopupProductsComponent>,

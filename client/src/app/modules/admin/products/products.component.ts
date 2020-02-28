@@ -1,9 +1,10 @@
-import { Product } from './../../../shared/interfaces/product.interface';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatTableDataSource } from '@angular/material';
 
-import { PopupProductsComponent } from './popup-products/popup-products.component';
+
+import { Product } from './../../../shared/interfaces/product.interface';
 import { AdminService } from '../admin.service';
+import { PopupProductsComponent } from './popup-products/popup-products.component';
 
 @Component({
   selector: 'app-products',

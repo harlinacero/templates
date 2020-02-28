@@ -84,6 +84,39 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.ICompanyAppService.GetCompany">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.ICompanyAppService.SaveCompany(WebApplication1.DomainServices.Entities.Company)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="company"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.ICompanyAppService.GetAllCostCenter">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.ICompanyAppService.SaveCostCenter(WebApplication1.DomainServices.Entities.CostCenter)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="costCenter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.AppServices.Contrracts.ICompanyAppService.GetCostCenterById(System.Int32)">
+            <summary>
+            Get cost center by ID
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.AdminController.GetAllPerson">
             <summary>
             Get all person
@@ -122,6 +155,39 @@
             Get person by Id
             </summary>
             <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.CompanyController.SaveCompany(WebApplication1.DomainServices.Entities.Company)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="company"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.CompanyController.GetAllCostCenter">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.CompanyController.SaveCostCenter(WebApplication1.DomainServices.Entities.CostCenter)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="costCenter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.CompanyController.GetCostCenterById(System.Int32)">
+            <summary>
+            Get cost center by ID
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.Controllers.ProductController.GetAll">
@@ -202,6 +268,39 @@
             Get person by Id
             </summary>
             <param name="Id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.ICompanyDomainService.GetCompany">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.ICompanyDomainService.SaveCompany(WebApplication1.DomainServices.Entities.Company)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="company"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.ICompanyDomainService.GetAllCostCenter">
+            <summary>
+            Get all roles
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.ICompanyDomainService.SaveCostCenter(WebApplication1.DomainServices.Entities.CostCenter)">
+            <summary>
+            Update or add role
+            </summary>
+            <param name="costCenter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.Contracts.ICompanyDomainService.GetCostCenterById(System.Int32)">
+            <summary>
+            Get cost center by ID
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="P:WebApplication1.DomainServices.Entities.EntityBase.Id">

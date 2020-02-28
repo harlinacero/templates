@@ -11,6 +11,7 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { ProvidersComponent } from './providers/providers.component';
 import { PopupProviderComponent } from './providers/popup-provider/popup-provider.component';
 import { ProductsComponent } from './products/products.component';
+import { PopupCompanyComponent } from '../settings/popup-company/popup-company.component';
 import { PopupProductsComponent } from './products/popup-products/popup-products.component';
 
 
@@ -25,7 +26,8 @@ import { PopupProductsComponent } from './products/popup-products/popup-products
     ProvidersComponent,
     PopupProviderComponent,
     ProductsComponent,
-    PopupProductsComponent
+    PopupProductsComponent,
+    PopupCompanyComponent
   ],
   imports: [
     CommonModule,

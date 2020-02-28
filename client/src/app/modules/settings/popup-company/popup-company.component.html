@@ -1,0 +1,45 @@
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width">
+                <mat-label>Razón Social</mat-label>
+                <input matInput [(ngModel)]="data.businessName" name="businessname" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Nit</mat-label>
+                <input matInput [(ngModel)]="data.nit" name="nit" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email Corportativo</mat-label>
+                <input matInput [(ngModel)]="data.emailCompany" name="emailCompany" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Email Tesorería</mat-label>
+                <input matInput [(ngModel)]="data.emailTreasury" name="emailTreasury">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Interfaz Contable</mat-label>
+                <input matInput [(ngModel)]="data.accountableInterface" name="accountableInterface">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Módulo de órdenes de compra</mat-label>
+                <input matInput [(ngModel)]="data.purchaseOrders" name="purchaseOrders">
+            </mat-form-field>
+
+        </div>
+        <div mat-dialog-actions>
+            <button mat-button (click)="onNoClick()">Cancelar</button>
+            <button mat-button (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

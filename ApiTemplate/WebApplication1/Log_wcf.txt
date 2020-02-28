@@ -343,3 +343,9 @@ Fecha: 25/02/2020 12:33:29 a. m.
 -------------------
 Dato: A command is already in progress: SELECT * FROM public.Role
 Fecha: 25/02/2020 1:02:07 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 27/02/2020 11:24:57 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 27/02/2020 11:32:22 p. m.

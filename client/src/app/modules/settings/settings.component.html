@@ -1,1 +1,47 @@
-<p>settings works!</p>
+<div *ngIf="!!company">
+    <div class="row">
+
+
+        <div class="content-form">
+            <form>
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Razón Social</label>
+                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.businessName}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Nit</label>
+                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.nit}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Email Corporativo</label>
+                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.emailCompany}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Email Tesorería</label>
+                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.emailTreasury}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Módulo Órdenes de Compra</label>
+                    <input type="text" class="form-control-file" id="emailTreasury" value="{{company.purchaseOrders}}">
+                </div>
+
+                <div class="form-group">
+                    <label for="exampleFormControlFile1">Interface Contable</label>
+                    <input type="text" class="form-control-file" id="accountableInterface" value="{{company.accountableInterface}}">
+                </div>
+                <!-- BusinessName, Logo, Nit, EmailCompany, EmailTreasury, AccountableInterface, PurchaseOrders, UserChange, DateModified -->
+
+
+            </form>
+        </div>
+
+    </div>
+
+    <button class="mdc-fab" aria-label="Favorite" [title]="'Modificar'" (click)="saveCompany()">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
+  </button>

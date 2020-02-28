@@ -1,5 +1,8 @@
+import { Company } from './../../shared/interfaces/company.interface';
 import { Component, OnInit } from '@angular/core';
-import { ServiceBase } from 'src/app/shared/services/service.base';
+import { PopupCompanyComponent } from './popup-company/popup-company.component';
+import { AdminService } from '../admin/admin.service';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-settings',
@@ -8,10 +11,50 @@ import { ServiceBase } from 'src/app/shared/services/service.base';
 })
 export class SettingsComponent implements OnInit {
 
-  constructor(private serviceBase: ServiceBase) { }
+  company: Company;
+
+  constructor(private userService: AdminService, public dialog: MatDialog) {
+    this.getCompanys();
+  }
+
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+  }
+
+
+
+  getCompanys() {
+    this.userService.getCompany()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.company = res.result;
+        }
+      });
+  }
+
+  updateProduct(row) {
+    const dialogRef = this.dialog.open(PopupCompanyComponent, {
+      height: 'auto',
+      width: '600px',
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.getCompanys();
+    });
+  }
+
+  saveCompany() {
+    const dialogRef = this.dialog.open(PopupCompanyComponent, {
+      height: 'auto',
+      width: '600px',
+      data: this.company
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getCompanys();
+    });
   }
 
 }

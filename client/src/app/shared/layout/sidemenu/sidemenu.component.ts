@@ -18,11 +18,7 @@ export class SidemenuComponent implements OnInit {
     { icon: 'fa fa-cog', name: 'Configuración', component: '/settings' }
   ];
 
-  constructor() {
-    console.log(this.widthSidebar);
-
-
-  }
+  constructor() { }
 
   ngOnInit() {
   }

@@ -1,3 +1,4 @@
+import { Company } from './../../shared/interfaces/company.interface';
 import { Product } from './../../shared/interfaces/product.interface';
 import { Urls } from './../../shared/interfaces/urls';
 import { Injectable } from '@angular/core';
@@ -11,6 +12,7 @@ import { RequestResult } from 'src/app/shared/interfaces/requestResult.interface
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
 import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
+import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 
 
 
@@ -79,4 +81,25 @@ export class AdminService {
   getProduct(id: string) {
     return this.http.get<RequestResult<Product>>(`${this.urls.urlbase}Product/GetProduct?id=${id}`);
   }
+
+  saveCompany(company: Company) {
+    return this.http.post<RequestResult<Company>>(`${this.urls.urlbase}Company/SaveCompany`, company);
+  }
+
+  getCompany() {
+    return this.http.get<RequestResult<Company>>(`${this.urls.urlbase}Company/GetCompany`);
+  }
+
+  saveCostCenter(costCenter: CostCenter) {
+    return this.http.post<RequestResult<CostCenter>>(`${this.urls.urlbase}Company/SaveCostCenter`, costCenter);
+  }
+
+  getAllCostCenter() {
+    return this.http.get<RequestResult<CostCenter[]>>(`${this.urls.urlbase}Company/GetAllCostCenter`);
+  }
+
+  getCostCenter(id: string) {
+    return this.http.get<RequestResult<CostCenter>>(`${this.urls.urlbase}Company/GetCostCenterById?id=${id}`);
+  }
+
 }
