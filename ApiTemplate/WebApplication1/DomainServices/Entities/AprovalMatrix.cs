@@ -15,4 +15,12 @@ namespace WebApplication1.DomainServices.Entities
         public int ApobationLevels { get; set; }
         public float ValueTotal { get; set; }
     }
+
+    public class AprovalMatrixWithValues : AprovalMatrix
+    {
+        public string Productcode { get; set; }
+        public string ProductDescription { get; set; }
+        public string CostCenterName { get; set; }
+        public string Money { get; set; }
+    }
 }

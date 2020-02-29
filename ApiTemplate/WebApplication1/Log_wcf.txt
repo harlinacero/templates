@@ -15,3 +15,6 @@ Fecha: 28/02/2020 7:50:45 p. m.
 -------------------
 Dato: 23503: inserción o actualización en la tabla «costcenter» viola la llave foránea «fk_company_id»
 Fecha: 28/02/2020 9:08:40 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 29/02/2020 4:34:32 p. m.

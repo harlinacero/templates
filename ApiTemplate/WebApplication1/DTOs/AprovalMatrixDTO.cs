@@ -15,6 +15,8 @@ namespace WebApplication1.DTOs
         public float ValueMax { get; set; }
         public int ApobationLevels { get; set; }
         public float ValueTotal { get; set; }
-        public Person[] Personss { get; set; }
+        public IEnumerable<Person> Personss { get; set; }
     }
+
+    
 }

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Text;
 using System.Threading.Tasks;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
@@ -15,18 +17,37 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<AprovalMatrix> _aprovalMatrixRepo;
         private readonly IRepository<AprobalMatrixUsers> _aprovalMatrixUsersRepo;
         private readonly IRepository<Person> _personRepo;
-        public AprovaMatrixDomainService(IRepository<AprovalMatrix> aprovalMatrixRepo, IRepository<AprobalMatrixUsers> aprovalMatrixUsersRepo, IRepository<Person> personRepo)
+        private readonly IRepository<AprovalMatrixWithValues> _aprovalMatrixWithValues;
+        public AprovaMatrixDomainService(IRepository<AprovalMatrix> aprovalMatrixRepo, 
+            IRepository<AprobalMatrixUsers> aprovalMatrixUsersRepo, IRepository<Person> personRepo,
+            IRepository<AprovalMatrixWithValues> aprovalMatrixWithValues)
         {
             _aprovalMatrixRepo = aprovalMatrixRepo;
             _aprovalMatrixUsersRepo = aprovalMatrixUsersRepo;
             _personRepo = personRepo;
+            _aprovalMatrixWithValues = aprovalMatrixWithValues;
         }
 
-        public RequestResult<IEnumerable<AprovalMatrixDTO>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
         {
-            var listmMatrix = _aprovalMatrixRepo.ListAll();
-            var aprovalMatrixDTO = new List<AprovalMatrixDTO>();
-            return RequestResult<IEnumerable<AprovalMatrixDTO>>.CreateSuccesfull(aprovalMatrixDTO);
+            //IEnumerable<AprovalMatrixDTO> list = new List<AprovalMatrixDTO>();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT");
+            sql.Append("AP.*,");
+            sql.Append("P.CODE AS PRODUCTCODE,");
+            sql.Append("P.ID AS PRODUTCID,");
+            sql.Append("P.DESCRIPTION AS PRODUCTDESCRIPTION,");
+            sql.Append("C.NAME AS COSTCENTERNAME,");
+            sql.Append("M.SYMBOL AS MONEY");
+            sql.Append("FROM APROVALMATRIX AP");
+            sql.Append("INNER JOIN PRODUCT P ON P.ID = AP.PRODUCTID");
+            sql.Append("INNER JOIN COSTCENTER C ON C.ID = AP.COSTCENTERID");
+            sql.Append("INNER JOIN MONEY M ON M.ID = AP.MONEYID");
+
+            var list = _aprovalMatrixWithValues.CustomList(sql.ToString());
+
+
+            return RequestResult<IEnumerable<AprovalMatrixWithValues>>.CreateSuccesfull(list);
         }
 
         public RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrix provalMatrix, List<int> personsId)
@@ -44,30 +65,39 @@ namespace WebApplication1.DomainServices
             if (newmatrix != null)
                 return RequestResult<AprovalMatrix>.CreateUnSuccesfull("Ocurrió un Error al guardar la entidad");
 
-            foreach (var id in personsId)
-            {
-                AprobalMatrixUsers aprobalMatrixUsers = new AprobalMatrixUsers()
-                {
-                    AprovalMatrixId = newmatrix.Id,
-                    Personid = id,
-                    UserChange = matrix.UserChange,
-                    DateModified = new DateTime()
-                };
-                _aprovalMatrixUsersRepo.Add(aprobalMatrixUsers);
-            }
+            AddUsersToMatrix(newmatrix, personsId);
 
             return RequestResult<AprovalMatrix>.CreateSuccesfull(newmatrix);
         }
 
         private RequestResult<AprovalMatrix> UpdateMatrix(AprovalMatrix matrix, List<int> personsId)
         {
-            var isUpdate =_aprovalMatrixRepo.Update(matrix);
+            var isUpdate = _aprovalMatrixRepo.Update(matrix);
             if (!isUpdate)
                 return RequestResult<AprovalMatrix>.CreateUnSuccesfull("La entidad no pudo ser actualizada");
 
-            var oldMatrix =_aprovalMatrixRepo.GetById(matrix.Id);
-            return null;
+            string sql = $"DELETE FROM {nameof(AprobalMatrixUsers)} WHERE {nameof(AprobalMatrixUsers.AprovalMatrixId)} = {matrix.Id};";
+            if (_aprovalMatrixRepo.CustomQuery(sql))
+            {
+                AddUsersToMatrix(matrix, personsId);
+                return RequestResult<AprovalMatrix>.CreateSuccesfull(matrix);
+            }
+            return RequestResult<AprovalMatrix>.CreateUnSuccesfull("La lista de aprovadores no pudo guardarse");
+        }
 
+        private void AddUsersToMatrix(AprovalMatrix matrix, List<int> personsId)
+        {
+            foreach (var id in personsId)
+            {
+                AprobalMatrixUsers aprobalMatrixUsers = new AprobalMatrixUsers()
+                {
+                    AprovalMatrixId = matrix.Id,
+                    Personid = id,
+                    UserChange = matrix.UserChange,
+                    DateModified = new DateTime()
+                };
+                _aprovalMatrixUsersRepo.Add(aprobalMatrixUsers);
+            }
         }
     }
 }

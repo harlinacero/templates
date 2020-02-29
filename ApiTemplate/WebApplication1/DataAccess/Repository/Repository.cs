@@ -109,6 +109,7 @@ namespace WebApplication1.DataAccess.Repository
             StringBuilder sql = new StringBuilder();
             var type = entity.GetType();
             sql.Append("DELETE FROM " + type.Name + " WHERE Id = " + entity.Id);
+            _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
         public T GetById(int id)
@@ -129,8 +130,14 @@ namespace WebApplication1.DataAccess.Repository
             List<T> listEntity = new List<T>();
             var list = _postgreSQLConnection.ListAll2("SELECT * FROM public." + typeof(T).Name);
             listEntity = ConvertDataTable<T>(list);
+            return listEntity;
+        }
 
-
+        public IEnumerable<T> CustomList(string sql)
+        {
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2(sql);
+            listEntity = ConvertDataTable<T>(list);
             return listEntity;
         }
 
@@ -157,6 +164,14 @@ namespace WebApplication1.DataAccess.Repository
             //}
         }
 
+        public IEnumerable<T> ListByWhere(string sql)
+        {
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2($"SELECT * FROM {typeof(T).Name} WHERE {sql}");
+            listEntity = ConvertDataTable<T>(list);
+            return listEntity;
+        }
+
         public T GetLastEntitySave(T entity)
         {
             StringBuilder sql = new StringBuilder();
@@ -168,6 +183,11 @@ namespace WebApplication1.DataAccess.Repository
                 return lastEntity.FirstOrDefault();
             }
             return null;
+        }
+
+        public bool CustomQuery(string sql)
+        {
+            return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
         private OrderByClass ObtenerOrderBy(Parameters<T> parameters)

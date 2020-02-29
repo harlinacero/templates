@@ -19,7 +19,7 @@ namespace WebApplication1.AppServices
             _aprovaMatrixDomainService = aprovaMatrixDomainService;
         }
 
-        public RequestResult<IEnumerable<AprovalMatrixDTO>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
         {
             try
             {
@@ -27,7 +27,7 @@ namespace WebApplication1.AppServices
             }
             catch (Exception ex)
             {
-                return RequestResult<IEnumerable<AprovalMatrixDTO>>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<AprovalMatrixWithValues>>.CreateUnSuccesfull(ex.Message);
             }
         }
 

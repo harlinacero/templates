@@ -11,6 +11,6 @@ namespace WebApplication1.DomainServices.Contracts
     public interface IAprovaMatrixDomainService
     {
         RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrix provalMatrix, List<int> personsId);
-        RequestResult<IEnumerable<AprovalMatrixDTO>> GetAllAprovalMatrix();
+        RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix();
     }
 }

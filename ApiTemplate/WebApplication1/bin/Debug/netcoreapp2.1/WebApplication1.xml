@@ -157,6 +157,19 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.AprovaMatrixController.GetAllAprovalMatrix">
+            <summary>
+            GetAllAprovalMatrix with persons
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(WebApplication1.DTOs.AprovalMatrixDTO)">
+            <summary>
+            Update or add person
+            </summary>
+            <param name="matrix"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">
             <summary>
             Get all roles
@@ -324,6 +337,11 @@
             </summary>
             <param name="product"></param>
             <returns></returns>
+        </member>
+        <member name="P:WebApplication1.DTOs.DTOBase.UserChange">
+            <summary>
+            user change entity
+            </summary>
         </member>
     </members>
 </doc>

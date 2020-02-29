@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllAprovalMatrix")]
-        public RequestResult<IEnumerable<AprovalMatrixDTO>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
         {
             return _aprovaMatrixAppService.GetAllAprovalMatrix();
         }

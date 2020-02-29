@@ -4,13 +4,15 @@ import { SettingsComponent } from './settings.component';
 import { SettingsRoutingModule } from './settings-routing.module';
 import { SharedModule } from './../../shared/shared.module';
 import { PopupCompanyComponent } from './popup-company/popup-company.component';
+import { AprovalMatrixComponent } from './aproval-matrix/aproval-matrix.component';
 
 
 
 @NgModule({
   declarations: [
     SettingsComponent,
-    PopupCompanyComponent
+    PopupCompanyComponent,
+    AprovalMatrixComponent
   ],
   imports: [
     CommonModule,
