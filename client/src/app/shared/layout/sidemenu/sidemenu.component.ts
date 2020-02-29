@@ -27,7 +27,7 @@ export class SidemenuComponent implements OnInit {
     if (widthSidebar === '250px') {
       return '#fff';
     } else {
-      return '#7386D5';
+      return 'rgba(43, 43, 43, 0.8)';
     }
   }
 

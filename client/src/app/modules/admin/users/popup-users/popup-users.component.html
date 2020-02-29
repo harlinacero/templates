@@ -73,14 +73,16 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Repetir Contraseña</mat-label>
-                <input matInput id="password2" name="password2" (onkeyup)="validatePassword($event)" type="password" required>
+                <input matInput id="password2" name="password2" (onkeyup)="validatePassword($event)" type="password"
+                    required>
             </mat-form-field>
 
 
         </div>
-        <div mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">Cancelar</button>
-            <button mat-button (click)="save()" [mat-dialog-close]="data.documentNumber" cdkFocusInitial>Guardar</button>
+        <div mat-dialog-actions class="buttons">
+            <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data.documentNumber"
+                cdkFocusInitial>Guardar</button>
         </div>
     </form>
 

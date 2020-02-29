@@ -17,14 +17,15 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="documentType">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Documento </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ getDocumentName(row.id).resume }} {{row.documentNumber}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.documentNumber}} </mat-cell>
         </ng-container>
 
 
         <!-- Name Column -->
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.firstName}} {{row.secondName}} {{row.lastName}} {{row.secondLastName}}
+            <mat-cell *matCellDef="let row"> {{row.firstName}} {{row.secondName}} {{row.lastName}}
+                {{row.secondLastName}}
             </mat-cell>
         </ng-container>
 
@@ -58,6 +59,6 @@
 </div>
 
 <button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="adduser()">
-  <div class="mdc-fab__ripple"></div>
-  <span class="mdc-fab__icon material-icons">add</span>
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
 </button>

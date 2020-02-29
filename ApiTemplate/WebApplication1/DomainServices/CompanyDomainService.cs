@@ -63,6 +63,7 @@ namespace WebApplication1.DomainServices
 
         public RequestResult<CostCenter> SaveCostCenter(CostCenter costCenter)
         {
+            costCenter.Companyid = _companyRepo.ListAll().FirstOrDefault().Id;
             var oldCompany = _companyRepo.GetById(costCenter.Id);
             if (oldCompany != null)
                 return UpdateCostCenter(costCenter);
