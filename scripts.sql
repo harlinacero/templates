@@ -75,31 +75,40 @@ WITH (
 );
 ALTER TABLE documenttype
   OWNER TO postgres;
+  
+insert into documenttype (resume, name)
+values 
+('CC.', 'Cédula de Ciudadanía'),
+('CE.', 'Cédula de Extranjería');
 
 
--- Table: providers
 
--- DROP TABLE providers;
+  
+  -- Table: provider
 
-CREATE TABLE providers
+-- DROP TABLE provider;
+
+CREATE TABLE provider
 (
   id serial NOT NULL,
   code integer,
-  businessname character varying(50),
-  nit character varying(12),
+  businessname character varying(40),
+  nit character varying(20),
   reqgimentype integer,
-  economyactivity character varying(70),
+  economyactivity character varying(40),
   address character varying(40),
-  contact character varying(50),
-  email character varying(50),
-  CONSTRAINT providers_pkey PRIMARY KEY (id)
+  contact character varying(40),
+  email character varying(40),
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT provider_pkey PRIMARY KEY (id)
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE providers
+ALTER TABLE provider
   OWNER TO postgres;
-  
+
 
 -- Table: typeproduct
 

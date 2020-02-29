@@ -7,7 +7,7 @@
         <div mat-dialog-content>
             <mat-form-field class="example-full-width">
                 <mat-label>Código</mat-label>
-                <input matInput [(ngModel)]="data.code" name="code" required>
+                <input type="number" matInput [(ngModel)]="data.code" name="code" required>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -22,7 +22,7 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Régimen</mat-label>
-                <input matInput [(ngModel)]="data.reqgimenType" name="reqgimenType">
+                <input type="number" matInput [(ngModel)]="data.reqgimenType" name="reqgimenType">
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -47,9 +47,10 @@
 
 
         </div>
-        <div mat-dialog-actions>
-            <button mat-button (click)="onNoClick()">Cancelar</button>
-            <button mat-button (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+        <div mat-dialog-actions class="buttons">
+            <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data"
+                cdkFocusInitial>Guardar</button>
         </div>
     </form>
 

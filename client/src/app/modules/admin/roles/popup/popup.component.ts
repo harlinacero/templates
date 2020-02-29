@@ -32,6 +32,7 @@ export class PopupComponent {
     this.userService.saveRole(role).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Rol Creado');
+
       }
     });
   }

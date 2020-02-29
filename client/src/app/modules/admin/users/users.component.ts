@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
       if (res.isSuccesfull) {
         this.persons = res.result.map(person => {
           person.dateModified = new Date(person.dateModified);
+          person.documentNumber = this.getDocumentName(person.documentType).resume + person.documentNumber;
           return person;
         });
         this.dataSource = new MatTableDataSource(res.result);
@@ -108,11 +109,12 @@ export class UsersComponent implements OnInit {
 
   getDocumentName(id: number) {
     if (!!this.documents) {
-      for (const iterator of this.documents) {
-        if (iterator.id === id) {
-          return iterator;
-        }
-      }
+      return this.documents.find(x => x.id = id);
+      // for (const iterator of this.documents) {
+      //   if (iterator.id === id) {
+      //     return iterator;
+      //   }
+      // }
     }
   }
 

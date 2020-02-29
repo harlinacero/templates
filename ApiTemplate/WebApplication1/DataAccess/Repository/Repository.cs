@@ -80,6 +80,8 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append(props[i].Name +" = " + newValue); 
                 if (newValue.GetType().Equals(typeof(DateTime)))
                     sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
+                if (newValue.GetType().Equals(typeof(Boolean)))
+                    sql.Append(props[i].Name + " = " + newValue);
 
                 if (i < props.Count - 1)
                     sql.Append(", ");

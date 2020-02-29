@@ -12,6 +12,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class SettingsComponent implements OnInit {
 
   company: Company;
+  options: any[] = [
+    { key: true, value: 'Si' },
+    { key: false, value: 'No' }
+  ]
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
     this.getCompanys();

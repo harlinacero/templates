@@ -1,47 +1,63 @@
 <div *ngIf="!!company">
     <div class="row">
-
-
-        <div class="content-form">
-            <form>
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Razón Social</label>
-                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.businessName}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Nit</label>
-                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.nit}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Email Corporativo</label>
-                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.emailCompany}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Email Tesorería</label>
-                    <input type="text" class="form-control-file" id="exampleFormControlFile1" value="{{company.emailTreasury}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Módulo Órdenes de Compra</label>
-                    <input type="text" class="form-control-file" id="emailTreasury" value="{{company.purchaseOrders}}">
-                </div>
-
-                <div class="form-group">
-                    <label for="exampleFormControlFile1">Interface Contable</label>
-                    <input type="text" class="form-control-file" id="accountableInterface" value="{{company.accountableInterface}}">
-                </div>
-                <!-- BusinessName, Logo, Nit, EmailCompany, EmailTreasury, AccountableInterface, PurchaseOrders, UserChange, DateModified -->
-
-
-            </form>
+        <div class="header">
+            <h1>{{ company.businessName}}</h1>
         </div>
+    </div>
+    <div class="row">
+        <div class="content">
+            <div class="col">
+                <div class="row">
+                    <span class="data-title">Nit</span>
+                    <span class="data-text">{{company.nit}}</span>
+                </div>
 
+                <div class="row">
+                    <span class="data-title">Email Princial</span>
+                    <span class="data-text">{{company.emailCompany}}</span>
+                </div>
+
+                <div class="row">
+                    <span class="data-title">Email Secundario</span>
+                    <span class="data-text">{{company.emailTreasury}}</span>
+                </div>
+
+                <div class="row">
+                    <span class="data-title">Módulo de Órdenes de compra</span>
+                    <span class="data-text">{{company.purchaseOrders}}</span>
+                </div>
+
+                <div class="row">
+                    <span class="data-title">Interface Contable</span>
+                    <span class="data-text">{{company.accountableInterface}}</span>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="row">
+                    <span class="data-title">Logotipo</span>
+                    <div class="image">
+                        <img src="./assets/images/enterpriseImage.png" alt="logo">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <button class="mdc-fab" aria-label="Favorite" [title]="'Modificar'" (click)="saveCompany()">
+</div>
+
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Modificar'" (click)="saveCompany()">
     <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">add</span>
-  </button>
+    <span class="mdc-fab__icon material-icons">settings</span>
+</button>
+
+<!-- accountableInterface: true,
+purchaseOrders: false,
+businessName: '',
+datemodified: new Date(),
+emailCompany: '',
+emailTreasury: '',
+logo: '',
+nit: '',
+userchange: 1 -->

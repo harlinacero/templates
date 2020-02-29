@@ -11,8 +11,9 @@ import { MAT_DIALOG_DATA } from '@angular/material';
 import { ProvidersComponent } from './providers/providers.component';
 import { PopupProviderComponent } from './providers/popup-provider/popup-provider.component';
 import { ProductsComponent } from './products/products.component';
-import { PopupCompanyComponent } from '../settings/popup-company/popup-company.component';
 import { PopupProductsComponent } from './products/popup-products/popup-products.component';
+import { CostCenterComponent } from './cost-center/cost-center.component';
+import { PopupCostCenterComponent } from './cost-center/popup-cost-center/popup-cost-center.component';
 
 
 
@@ -27,7 +28,8 @@ import { PopupProductsComponent } from './products/popup-products/popup-products
     PopupProviderComponent,
     ProductsComponent,
     PopupProductsComponent,
-    PopupCompanyComponent
+    CostCenterComponent,
+    PopupCostCenterComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,8 @@ import { PopupProductsComponent } from './products/popup-products/popup-products
     PopupComponent,
     PopupUsersComponent,
     PopupProviderComponent,
-    PopupProductsComponent
+    PopupProductsComponent,
+    PopupCostCenterComponent
   ], providers: [
     { provide: MAT_DIALOG_DATA, useValue: { float: 'always' } }
   ]

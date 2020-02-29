@@ -1,0 +1,33 @@
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateCostCenter(row)">
+        </mat-row>
+
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="addCostCenter()">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
+</button>

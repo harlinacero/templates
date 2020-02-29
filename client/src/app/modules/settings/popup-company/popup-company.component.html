@@ -27,12 +27,24 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Interfaz Contable</mat-label>
-                <input matInput [(ngModel)]="data.accountableInterface" name="accountableInterface">
+                <!-- <input matInput [(ngModel)]="data.accountableInterface" name="accountableInterface"> -->
+                <mat-select [(value)]="data.accountableInterface" [(ngModel)]="data.accountableInterface"
+                    name="accountableInterface" required>
+                    <mat-option *ngFor="let doc of options" [(value)]="doc.key">
+                        {{doc.value}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Módulo de órdenes de compra</mat-label>
-                <input matInput [(ngModel)]="data.purchaseOrders" name="purchaseOrders">
+                <!-- <input matInput [(ngModel)]="data.purchaseOrders" name="purchaseOrders"> -->
+                <mat-select [(value)]="data.purchaseOrders" [(ngModel)]="data.purchaseOrders" name="purchaseOrders"
+                    required>
+                    <mat-option *ngFor="let doc of options" [(value)]="doc.key">
+                        {{doc.value}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
         </div>

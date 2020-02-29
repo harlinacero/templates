@@ -12,9 +12,15 @@ import { Company } from '../../../shared/interfaces/company.interface';
 export class PopupCompanyComponent implements OnInit {
   title = 'Modificar Datos de Empresa';
   data: Company;
+  options: any[] = [
+    { key: true, value: 'Si' },
+    { key: false, value: 'No' }
+  ]
 
   constructor(public dialogRef: MatDialogRef<PopupCompanyComponent>,
     @Inject(MAT_DIALOG_DATA) public company: Company, private userService: AdminService) {
+
+    console.log(company);
 
     if (company === null) {
       this.data = {
@@ -30,7 +36,7 @@ export class PopupCompanyComponent implements OnInit {
       };
     }
 
-    // this.data = company;
+    this.data = company;
 
   }
 
