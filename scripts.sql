@@ -226,3 +226,91 @@ WITH (
 );
 ALTER TABLE costcenter
   OWNER TO postgres;
+  
+ 
+-- Table: money
+
+-- DROP TABLE money;
+
+CREATE TABLE money
+(
+  id serial NOT NULL,
+  country character varying(30),
+  unitymoney character varying(40),
+  symbol character varying(3),
+  code character varying(4),
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT money_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE money
+  OWNER TO postgres;
+
+INSERT INTO money (country, unitymoney, symbol, code, userchange, datemodified)
+values
+('Colombia', 'peso colombiano', '$', 'COP', 1, NOW()),
+('Estadis Unidos', 'Dólar Estado Unidense', '$', 'USD', 1, NOW()),
+('Europa', 'Euro', '€', 'EUR', 1, NOW());
+
+
+-- Table: aprovalmatrix
+
+-- DROP TABLE aprovalmatrix;
+
+CREATE TABLE aprovalmatrix
+(
+  id serial NOT NULL,
+  productid integer,
+  costcenterid integer,
+  moneyid integer,
+  exangerate double precision,
+  valuemax double precision,
+  apobationlevels integer,
+  valuetotal double precision,
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT aprovalmatrix_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_costcenterid FOREIGN KEY (costcenterid)
+      REFERENCES costcenter (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_moneyid FOREIGN KEY (moneyid)
+      REFERENCES money (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_productid FOREIGN KEY (productid)
+      REFERENCES product (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE aprovalmatrix
+  OWNER TO postgres;
+
+
+-- Table: aprobalmatrixusers
+
+-- DROP TABLE aprobalmatrixusers;
+
+CREATE TABLE aprobalmatrixusers
+(
+  id serial NOT NULL,
+  aprovalmatrixid integer,
+  personid integer,
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT aprobalmatrixusers_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_aprovalmatrixid FOREIGN KEY (aprovalmatrixid)
+      REFERENCES aprovalmatrix (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_personidforeign FOREIGN KEY (personid)
+      REFERENCES person (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE aprobalmatrixusers
+  OWNER TO postgres;

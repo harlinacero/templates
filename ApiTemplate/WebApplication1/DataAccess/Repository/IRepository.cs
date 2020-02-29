@@ -10,6 +10,7 @@ namespace WebApplication1.DataAccess.Repository
     public interface IRepository<T> where T : EntityBase
     {
         bool Add(T entity);
+        T AddWithReturn(T entity);
         void Remove(T entity);
         bool Update(T entity);
         T GetById(int id);

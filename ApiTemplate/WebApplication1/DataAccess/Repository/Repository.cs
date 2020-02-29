@@ -50,6 +50,8 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append("TO_TIMESTAMP('" + DateTime.Parse(valueField.ToString()) + "', 'DD/MM/YYYY HH:MI')");
                 if (typeValue.Equals(typeof(Boolean)))
                     sql.Append(valueField);
+                if (typeValue.Equals(typeof(float)))
+                    sql.Append(valueField);
 
                 if (i < values.Count - 1)
                     sql.Append(",");
@@ -59,7 +61,16 @@ namespace WebApplication1.DataAccess.Repository
             return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
+        public T AddWithReturn(T entity)
+        {
+            var isSave = Add(entity);
+            if (isSave)
+            {
+                return GetLastEntitySave(entity);
+            }
 
+            return null;
+        }
 
         public bool Update(T entity)
         {
@@ -82,6 +93,8 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
                 if (newValue.GetType().Equals(typeof(Boolean)))
                     sql.Append(props[i].Name + " = " + newValue);
+                if (newValue.GetType().Equals(typeof(float)))
+                    sql.Append(props[i].Name + " = " + newValue);
 
                 if (i < props.Count - 1)
                     sql.Append(", ");
@@ -93,9 +106,9 @@ namespace WebApplication1.DataAccess.Repository
 
         public void Remove(T entity)
         {
-
-            //_context.Set<T>().Remove(entity);
-            //_context.SaveChanges();
+            StringBuilder sql = new StringBuilder();
+            var type = entity.GetType();
+            sql.Append("DELETE FROM " + type.Name + " WHERE Id = " + entity.Id);
         }
 
         public T GetById(int id)
@@ -144,6 +157,18 @@ namespace WebApplication1.DataAccess.Repository
             //}
         }
 
+        public T GetLastEntitySave(T entity)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM " + typeof(T).Name + " WHERE Id = (SELECT MAX(ID) FROM " + typeof(T).Name + ")");
+            var list = _postgreSQLConnection.ListAll2(sql.ToString());
+            if (list != null)
+            {
+                var lastEntity = ConvertDataTable<T>(list);
+                return lastEntity.FirstOrDefault();
+            }
+            return null;
+        }
 
         private OrderByClass ObtenerOrderBy(Parameters<T> parameters)
         {
@@ -205,6 +230,8 @@ namespace WebApplication1.DataAccess.Repository
         {
             return conversionFunction(value == DBNull.Value ? null : value);
         }
+
+
 
         private class OrderByClass
         {
