@@ -1,7 +1,7 @@
 import { Product } from './../../../../shared/interfaces/product.interface';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminService } from '../../admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 
 @Component({
   selector: 'app-popup-products',
@@ -13,7 +13,7 @@ export class PopupProductsComponent implements OnInit {
   data: Product;
 
   constructor(public dialogRef: MatDialogRef<PopupProductsComponent>,
-    @Inject(MAT_DIALOG_DATA) public product: Product, private userService: AdminService) {
+              @Inject(MAT_DIALOG_DATA) public product: Product, private userService: AdminService) {
     this.data = product;
 
     if (this.data.id > 0) {

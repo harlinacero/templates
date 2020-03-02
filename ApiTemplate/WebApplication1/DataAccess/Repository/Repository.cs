@@ -52,6 +52,8 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append(valueField);
                 if (typeValue.Equals(typeof(float)))
                     sql.Append(valueField);
+                if (typeValue.Equals(typeof(Double)))
+                    sql.Append(valueField);
 
                 if (i < values.Count - 1)
                     sql.Append(",");
@@ -94,6 +96,8 @@ namespace WebApplication1.DataAccess.Repository
                 if (newValue.GetType().Equals(typeof(Boolean)))
                     sql.Append(props[i].Name + " = " + newValue);
                 if (newValue.GetType().Equals(typeof(float)))
+                    sql.Append(props[i].Name + " = " + newValue);
+                if (newValue.GetType().Equals(typeof(Double)))
                     sql.Append(props[i].Name + " = " + newValue);
 
                 if (i < props.Count - 1)

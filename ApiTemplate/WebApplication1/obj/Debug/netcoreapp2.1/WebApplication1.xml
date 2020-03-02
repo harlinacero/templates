@@ -163,6 +163,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.AprovaMatrixController.GetAllMoney">
+            <summary>
+            GetAllAprovalMatrix with persons
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(WebApplication1.DTOs.AprovalMatrixDTO)">
             <summary>
             Update or add person

@@ -1,7 +1,8 @@
 import { PopupProviderComponent } from './popup-provider/popup-provider.component';
 import { Component, OnInit, Provider } from '@angular/core';
-import { AdminService } from './../admin.service';
 import { MatDialog, MatTableDataSource } from '@angular/material';
+
+import { AdminService } from '../../../shared/services/admin.service';
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
 
 @Component({

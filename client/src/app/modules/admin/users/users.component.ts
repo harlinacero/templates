@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
-import { AdminService } from '../admin.service';
+import { AdminService } from '../../../shared/services/admin.service';
 import { PopupUsersComponent } from './popup-users/popup-users.component';
 import { Person, DocumentType } from './../../../shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
@@ -87,8 +87,8 @@ export class UsersComponent implements OnInit {
 
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-    password: string, roleId: number, ): Person {
+            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+            password: string, roleId: number, ): Person {
     return {
       id,
       address,

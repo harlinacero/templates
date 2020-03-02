@@ -12,5 +12,6 @@ namespace WebApplication1.DomainServices.Contracts
     {
         RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrix provalMatrix, List<int> personsId);
         RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix();
+        RequestResult<IEnumerable<Money>> GetAllMoney();
     }
 }

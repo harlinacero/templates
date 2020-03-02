@@ -12,5 +12,6 @@ namespace WebApplication1.AppServices.Contrracts
     {
         RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix();
         RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrixDTO matrix);
+        RequestResult<IEnumerable<Money>> GetAllMoney();
     }
 }

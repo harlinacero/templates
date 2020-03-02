@@ -18,30 +18,39 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<AprobalMatrixUsers> _aprovalMatrixUsersRepo;
         private readonly IRepository<Person> _personRepo;
         private readonly IRepository<AprovalMatrixWithValues> _aprovalMatrixWithValues;
+        private readonly IRepository<Money> _moneyRepo;
         public AprovaMatrixDomainService(IRepository<AprovalMatrix> aprovalMatrixRepo, 
             IRepository<AprobalMatrixUsers> aprovalMatrixUsersRepo, IRepository<Person> personRepo,
-            IRepository<AprovalMatrixWithValues> aprovalMatrixWithValues)
+            IRepository<AprovalMatrixWithValues> aprovalMatrixWithValues,
+            IRepository<Money> moneyRepo)
         {
             _aprovalMatrixRepo = aprovalMatrixRepo;
             _aprovalMatrixUsersRepo = aprovalMatrixUsersRepo;
             _personRepo = personRepo;
             _aprovalMatrixWithValues = aprovalMatrixWithValues;
+            _moneyRepo = moneyRepo;
+        }
+
+        public RequestResult<IEnumerable<Money>> GetAllMoney()
+        {
+            var list = _moneyRepo.ListAll();
+            return RequestResult<IEnumerable<Money>>.CreateSuccesfull(list);
         }
 
         public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
         {
             //IEnumerable<AprovalMatrixDTO> list = new List<AprovalMatrixDTO>();
             StringBuilder sql = new StringBuilder();
-            sql.Append("SELECT");
-            sql.Append("AP.*,");
-            sql.Append("P.CODE AS PRODUCTCODE,");
-            sql.Append("P.ID AS PRODUTCID,");
+            sql.Append("SELECT ");
+            sql.Append("AP.*, ");
+            sql.Append("P.CODE AS PRODUCTCODE, ");
+            sql.Append("P.ID AS PRODUTCID, ");
             sql.Append("P.DESCRIPTION AS PRODUCTDESCRIPTION,");
-            sql.Append("C.NAME AS COSTCENTERNAME,");
-            sql.Append("M.SYMBOL AS MONEY");
-            sql.Append("FROM APROVALMATRIX AP");
-            sql.Append("INNER JOIN PRODUCT P ON P.ID = AP.PRODUCTID");
-            sql.Append("INNER JOIN COSTCENTER C ON C.ID = AP.COSTCENTERID");
+            sql.Append("C.NAME AS COSTCENTERNAME, ");
+            sql.Append("M.SYMBOL AS MONEY ");
+            sql.Append("FROM APROVALMATRIX AP ");
+            sql.Append("INNER JOIN PRODUCT P ON P.ID = AP.PRODUCTID ");
+            sql.Append("INNER JOIN COSTCENTER C ON C.ID = AP.COSTCENTERID ");
             sql.Append("INNER JOIN MONEY M ON M.ID = AP.MONEYID");
 
             var list = _aprovalMatrixWithValues.CustomList(sql.ToString());
@@ -54,9 +63,9 @@ namespace WebApplication1.DomainServices
         {
             var matrix = _aprovalMatrixRepo.GetById(provalMatrix.Id);
             if (matrix != null)
-                return UpdateMatrix(matrix, personsId);
+                return UpdateMatrix(provalMatrix, personsId);
 
-            return AddMatrix(matrix, personsId);
+            return AddMatrix(provalMatrix, personsId);
         }
 
         private RequestResult<AprovalMatrix> AddMatrix(AprovalMatrix matrix, List<int> personsId)
@@ -99,5 +108,7 @@ namespace WebApplication1.DomainServices
                 _aprovalMatrixUsersRepo.Add(aprobalMatrixUsers);
             }
         }
+
+
     }
 }

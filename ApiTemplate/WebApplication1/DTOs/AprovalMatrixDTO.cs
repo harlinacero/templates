@@ -11,11 +11,12 @@ namespace WebApplication1.DTOs
         public int Productid { get; set; }
         public int CostCenterid { get; set; }
         public int Moneyid { get; set; }
-        public float ExangeRate { get; set; }
-        public float ValueMax { get; set; }
+        public double ExangeRate { get; set; }
+        public double ValueMax { get; set; }
         public int ApobationLevels { get; set; }
-        public float ValueTotal { get; set; }
-        public IEnumerable<Person> Personss { get; set; }
+        public double ValueTotal { get; set; }
+        public DateTime DateLimit { get; set; }
+        public IEnumerable<int> Personss { get; set; }
     }
 
     

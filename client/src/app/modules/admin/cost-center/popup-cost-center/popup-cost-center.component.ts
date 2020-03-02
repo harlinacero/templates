@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminService } from '../../admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 @Component({
   selector: 'app-popup-cost-center',
   templateUrl: './popup-cost-center.component.html',
@@ -13,7 +13,7 @@ export class PopupCostCenterComponent implements OnInit {
   data: CostCenter;
 
   constructor(public dialogRef: MatDialogRef<PopupCostCenterComponent>,
-    @Inject(MAT_DIALOG_DATA) public costCenter: CostCenter, private userService: AdminService) {
+              @Inject(MAT_DIALOG_DATA) public costCenter: CostCenter, private userService: AdminService) {
     this.data = costCenter;
 
     if (this.data.id > 0) {

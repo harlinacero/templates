@@ -31,6 +31,18 @@ namespace WebApplication1.AppServices
             }
         }
 
+        public RequestResult<IEnumerable<Money>> GetAllMoney()
+        {
+            try
+            {
+                return _aprovaMatrixDomainService.GetAllMoney();
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<IEnumerable<Money>>.CreateUnSuccesfull(ex.Message);
+            }
+        }
+
         public RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrixDTO matrix)
         {
             try
@@ -48,12 +60,13 @@ namespace WebApplication1.AppServices
                     Productid = matrix.Productid,
                     UserChange = matrix.UserChange,
                     ValueMax = matrix.ValueMax,
-                    ValueTotal = matrix.ValueTotal
+                    ValueTotal = matrix.ValueTotal,
+                    DateLimit = matrix.DateLimit
                 };
 
                 foreach (var item in matrix.Personss)
                 {
-                    personsId.Add(item.Id);
+                    personsId.Add(item);
                 }
 
                 return _aprovaMatrixDomainService.SaveAprovalMatrix(provalMatrix, personsId);

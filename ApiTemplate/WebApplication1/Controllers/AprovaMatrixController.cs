@@ -34,6 +34,17 @@ namespace WebApplication1.Controllers
         }
 
         /// <summary>
+        /// GetAllAprovalMatrix with persons
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllMoney")]
+        public RequestResult<IEnumerable<Money>> GetAllMoney()
+        {
+            return _aprovaMatrixAppService.GetAllMoney();
+        }
+
+        /// <summary>
         /// Update or add person
         /// </summary>
         /// <param name="matrix"></param>

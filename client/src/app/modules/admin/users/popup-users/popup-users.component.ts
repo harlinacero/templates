@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormControl, Validators } from '@angular/forms';
-import { AdminService } from '../../admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 
@@ -77,8 +77,8 @@ export class PopupUsersComponent {
   }
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-    password: string, roleId: number): Person {
+            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+            password: string, roleId: number): Person {
     return {
       id,
       address,
