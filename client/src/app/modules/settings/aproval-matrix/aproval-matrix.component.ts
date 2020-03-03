@@ -42,8 +42,8 @@ export class AprovalMatrixComponent implements OnInit {
 
   updateCostCenter(row) {
     const dialogRef = this.dialog.open(PopupAprovalMatrixComponent, {
-      height: 'auto',
-      width: 'auto',
+      height: '600px',
+      width: '600px',
       data: row
     });
 
@@ -56,7 +56,7 @@ export class AprovalMatrixComponent implements OnInit {
   addMatrix() {
     const dialogRef = this.dialog.open(PopupAprovalMatrixComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: this.matrix
     });
 

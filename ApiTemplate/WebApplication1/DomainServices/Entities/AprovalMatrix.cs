@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace WebApplication1.DomainServices.Entities
 {
@@ -23,5 +21,6 @@ namespace WebApplication1.DomainServices.Entities
         public string ProductDescription { get; set; }
         public string CostCenterName { get; set; }
         public string Money { get; set; }
+        public IEnumerable<int> Personss { get; set; }
     }
 }

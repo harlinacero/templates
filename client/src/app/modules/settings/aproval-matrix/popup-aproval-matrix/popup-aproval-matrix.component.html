@@ -3,7 +3,7 @@
         <mat-card-title>{{title}}</mat-card-title>
     </mat-card-header>
 
-    <form class="example-form">
+    <form class="example-form" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
         <div mat-dialog-content>
             <mat-form-field class="example-full-width">
                 <mat-label>Producto</mat-label>
@@ -51,7 +51,8 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Niveles de Aprobación</mat-label>
-                <input type="number" min="1" max="10" matInput [(ngModel)]="data.apobationLevels" name="apobationLevels" (change)="changeAprobalValues($event)" required>
+                <input type="number" min="1" max="10" matInput [(ngModel)]="data.apobationLevels" name="apobationLevels"
+                    (change)="changeAprobalValues($event)" required>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -61,12 +62,15 @@
 
         </div>
 
+        <h6>Aprobadores</h6>
         <div mat-dialog-content>
-            <mat-label>Aprobadores</mat-label>
+
             <mat-form-field class="example-full-width" *ngFor="let item of aprobationLevels; let i=index">
                 <mat-select [(value)]="data.personss[i]" [(ngModel)]="data.personss[i]" name="personss[i]" required>
-                    <mat-option *ngFor="let prod of persons" [(value)]="prod.id">
-                        {{prod.firstName}} {{prod.lastName}}
+                    <mat-option *ngFor="let prod of personsWithRol" [(value)]="prod.personId" style="width: 100%;">
+                        <div>{{prod.personName }}
+                        </div>
+                        <span style="margin-left: 10px;">{{prod.personRole}}</span>
                     </mat-option>
                 </mat-select>
             </mat-form-field>
@@ -75,7 +79,8 @@
 
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data"
+                cdkFocusInitial>Guardar</button>
         </div>
     </form>
 
