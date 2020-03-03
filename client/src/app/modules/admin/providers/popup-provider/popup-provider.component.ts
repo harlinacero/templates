@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Providers } from './../../../../shared/interfaces/providers.interface';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminService } from '../../admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 
 @Component({
   selector: 'app-popup-provider',
@@ -14,7 +14,7 @@ export class PopupProviderComponent implements OnInit {
 
 
   constructor(public dialogRef: MatDialogRef<PopupProviderComponent>,
-    @Inject(MAT_DIALOG_DATA) public provide: Providers, private userService: AdminService) {
+              @Inject(MAT_DIALOG_DATA) public provide: Providers, private userService: AdminService) {
     this.data = provide;
 
     if (this.data.id > 0) {

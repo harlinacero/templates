@@ -50,6 +50,10 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append("TO_TIMESTAMP('" + DateTime.Parse(valueField.ToString()) + "', 'DD/MM/YYYY HH:MI')");
                 if (typeValue.Equals(typeof(Boolean)))
                     sql.Append(valueField);
+                if (typeValue.Equals(typeof(float)))
+                    sql.Append(valueField);
+                if (typeValue.Equals(typeof(Double)))
+                    sql.Append(valueField);
 
                 if (i < values.Count - 1)
                     sql.Append(",");
@@ -59,7 +63,16 @@ namespace WebApplication1.DataAccess.Repository
             return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
+        public T AddWithReturn(T entity)
+        {
+            var isSave = Add(entity);
+            if (isSave)
+            {
+                return GetLastEntitySave(entity);
+            }
 
+            return null;
+        }
 
         public bool Update(T entity)
         {
@@ -82,6 +95,10 @@ namespace WebApplication1.DataAccess.Repository
                     sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
                 if (newValue.GetType().Equals(typeof(Boolean)))
                     sql.Append(props[i].Name + " = " + newValue);
+                if (newValue.GetType().Equals(typeof(float)))
+                    sql.Append(props[i].Name + " = " + newValue);
+                if (newValue.GetType().Equals(typeof(Double)))
+                    sql.Append(props[i].Name + " = " + newValue);
 
                 if (i < props.Count - 1)
                     sql.Append(", ");
@@ -93,9 +110,10 @@ namespace WebApplication1.DataAccess.Repository
 
         public void Remove(T entity)
         {
-
-            //_context.Set<T>().Remove(entity);
-            //_context.SaveChanges();
+            StringBuilder sql = new StringBuilder();
+            var type = entity.GetType();
+            sql.Append("DELETE FROM " + type.Name + " WHERE Id = " + entity.Id);
+            _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
         public T GetById(int id)
@@ -116,8 +134,14 @@ namespace WebApplication1.DataAccess.Repository
             List<T> listEntity = new List<T>();
             var list = _postgreSQLConnection.ListAll2("SELECT * FROM public." + typeof(T).Name);
             listEntity = ConvertDataTable<T>(list);
+            return listEntity;
+        }
 
-
+        public IEnumerable<T> CustomList(string sql)
+        {
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2(sql);
+            listEntity = ConvertDataTable<T>(list);
             return listEntity;
         }
 
@@ -144,6 +168,31 @@ namespace WebApplication1.DataAccess.Repository
             //}
         }
 
+        public IEnumerable<T> ListByWhere(string sql)
+        {
+            List<T> listEntity = new List<T>();
+            var list = _postgreSQLConnection.ListAll2($"SELECT * FROM {typeof(T).Name} WHERE {sql}");
+            listEntity = ConvertDataTable<T>(list);
+            return listEntity;
+        }
+
+        public T GetLastEntitySave(T entity)
+        {
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM " + typeof(T).Name + " WHERE Id = (SELECT MAX(ID) FROM " + typeof(T).Name + ")");
+            var list = _postgreSQLConnection.ListAll2(sql.ToString());
+            if (list != null)
+            {
+                var lastEntity = ConvertDataTable<T>(list);
+                return lastEntity.FirstOrDefault();
+            }
+            return null;
+        }
+
+        public bool CustomQuery(string sql)
+        {
+            return _postgreSQLConnection.ExecuteQuery(sql.ToString());
+        }
 
         private OrderByClass ObtenerOrderBy(Parameters<T> parameters)
         {
@@ -205,6 +254,8 @@ namespace WebApplication1.DataAccess.Repository
         {
             return conversionFunction(value == DBNull.Value ? null : value);
         }
+
+
 
         private class OrderByClass
         {

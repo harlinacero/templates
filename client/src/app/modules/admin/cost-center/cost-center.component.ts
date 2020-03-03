@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
-import { AdminService } from '../admin.service';
+import { AdminService } from '../../../shared/services/admin.service';
 import { PopupCostCenterComponent } from './popup-cost-center/popup-cost-center.component';
 
 @Component({

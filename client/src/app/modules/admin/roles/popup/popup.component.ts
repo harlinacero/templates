@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminService } from '../../admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 
 @Component({

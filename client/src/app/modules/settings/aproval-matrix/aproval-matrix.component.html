@@ -1,0 +1,64 @@
+<div class="example-header">
+    <mat-form-field>
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+    </mat-form-field>
+</div>
+
+<div class="example-container mat-elevation-z8">
+    <!-- ['id', 'productcode', 'productDescription', 'costCenterName', 'money', 'exangeRate', 'valueMax', 'apobationLevels']; -->
+    <mat-table [dataSource]="dataSource" matSort>
+        <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="productcode">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Cod Producto </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.productcode}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="productDescription">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Descripción </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.productDescription}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="costCenterName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.costCenterName}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="money">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Moneda </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.money}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="exangeRate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tasa de Cambio </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.exangeRate}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="valueMax">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Valor Máx. de Aprobación </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.valueMax}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="apobationLevels">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Niveles de Aprobación </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.apobationLevels}} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="updateCostCenter(row)">
+        </mat-row>
+
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+
+<button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="addMatrix()">
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
+</button>

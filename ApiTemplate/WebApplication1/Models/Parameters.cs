@@ -14,9 +14,9 @@ namespace WebApplication1.Models
         public Func<T, object> OrderBy { get; set; }
         public Func<T, object> OrderByDescending { get; set; }
 
-        public Parameters(int top)
+        public Parameters()
         {
-            Top = top;
+            Top = 0;
             Where = null;
             OrderBy = null;
             OrderByDescending = null;

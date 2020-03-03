@@ -4,7 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 
 
-import { AdminService } from '../admin.service';
+import { AdminService } from '../../../shared/services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
 

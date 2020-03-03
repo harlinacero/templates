@@ -1,63 +1,20 @@
-<div *ngIf="!!company">
-    <div class="row">
-        <div class="header">
-            <h1>{{ company.businessName}}</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div class="content">
-            <div class="col">
-                <div class="row">
-                    <span class="data-title">Nit</span>
-                    <span class="data-text">{{company.nit}}</span>
-                </div>
+<app-title [title]="'Configuraciones'" [icon]="'fa fa-file-text-o'">
 
-                <div class="row">
-                    <span class="data-title">Email Princial</span>
-                    <span class="data-text">{{company.emailCompany}}</span>
-                </div>
+</app-title>
+<mat-tab-group>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            Empresa
+        </ng-template>
+        <app-company></app-company>
+    </mat-tab>
 
-                <div class="row">
-                    <span class="data-title">Email Secundario</span>
-                    <span class="data-text">{{company.emailTreasury}}</span>
-                </div>
-
-                <div class="row">
-                    <span class="data-title">Módulo de Órdenes de compra</span>
-                    <span class="data-text">{{company.purchaseOrders}}</span>
-                </div>
-
-                <div class="row">
-                    <span class="data-title">Interface Contable</span>
-                    <span class="data-text">{{company.accountableInterface}}</span>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="row">
-                    <span class="data-title">Logotipo</span>
-                    <div class="image">
-                        <img src="./assets/images/enterpriseImage.png" alt="logo">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div>
+    <mat-tab>
+        <ng-template mat-tab-label>
+            Matriz de Aprobación
+        </ng-template>
+        <app-aproval-matrix></app-aproval-matrix>
+    </mat-tab>
 
 
-<button class="mdc-fab" aria-label="Favorite" [title]="'Modificar'" (click)="saveCompany()">
-    <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">settings</span>
-</button>
-
-<!-- accountableInterface: true,
-purchaseOrders: false,
-businessName: '',
-datemodified: new Date(),
-emailCompany: '',
-emailTreasury: '',
-logo: '',
-nit: '',
-userchange: 1 -->
+</mat-tab-group>

@@ -15,3 +15,120 @@ Fecha: 28/02/2020 7:50:45 p. m.
 -------------------
 Dato: 23503: inserción o actualización en la tabla «costcenter» viola la llave foránea «fk_company_id»
 Fecha: 28/02/2020 9:08:40 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 29/02/2020 4:34:32 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:44:08 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:46:15 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:46:57 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:48:15 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:51:52 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:52:24 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:53:36 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 10:59:19 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:00:21 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:21:11 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:23:24 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:24:21 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:25:15 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:27:24 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:28:53 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:32:20 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:36:12 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:37:00 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:38:39 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:40:32 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:44:19 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:45:39 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:46:34 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:50:13 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:51:03 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:52:59 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:56:00 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:56:30 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 1/03/2020 11:57:37 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 12:56:58 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 12:58:40 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:02:43 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:03:05 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:03:07 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:03:30 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:03:38 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:04:37 a. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
+Fecha: 2/03/2020 1:07:31 a. m.

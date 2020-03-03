@@ -1,8 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AdminService } from '../../admin/admin.service';
+import { AdminService } from '../../../../shared/services/admin.service';
 
-import { Company } from '../../../shared/interfaces/company.interface';
+import { Company } from '../../../../shared/interfaces/company.interface';
+import { CompanyService } from '../company.service';
 
 @Component({
   selector: 'app-popup-company',
@@ -15,10 +16,10 @@ export class PopupCompanyComponent implements OnInit {
   options: any[] = [
     { key: true, value: 'Si' },
     { key: false, value: 'No' }
-  ]
+  ];
 
-  constructor(public dialogRef: MatDialogRef<PopupCompanyComponent>,
-    @Inject(MAT_DIALOG_DATA) public company: Company, private userService: AdminService) {
+  constructor(public dialogRef: MatDialogRef<PopupCompanyComponent>, @Inject(MAT_DIALOG_DATA) public company: Company,
+              private companyService: CompanyService) {
 
     console.log(company);
 
@@ -48,9 +49,9 @@ export class PopupCompanyComponent implements OnInit {
   }
 
   save() {
-    this.userService.saveCompany(this.data).subscribe(res => {
+    this.companyService.saveCompany(this.data).subscribe(res => {
       if (res.isSuccesfull) {
-        alert('Producto actualizado');
+        alert('La información de la empresa ha sido actualizada');
       }
     });
   }

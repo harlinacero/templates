@@ -1,6 +1,6 @@
-import { Company } from './../../shared/interfaces/company.interface';
-import { Product } from './../../shared/interfaces/product.interface';
-import { Urls } from './../../shared/interfaces/urls';
+import { Company } from '../interfaces/company.interface';
+import { Product } from '../interfaces/product.interface';
+import { Urls } from '../interfaces/urls';
 import { Injectable } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
@@ -80,14 +80,6 @@ export class AdminService {
 
   getProduct(id: string) {
     return this.http.get<RequestResult<Product>>(`${this.urls.urlbase}Product/GetProduct?id=${id}`);
-  }
-
-  saveCompany(company: Company) {
-    return this.http.post<RequestResult<Company>>(`${this.urls.urlbase}Company/SaveCompany`, company);
-  }
-
-  getCompany() {
-    return this.http.get<RequestResult<Company>>(`${this.urls.urlbase}Company/GetCompany`);
   }
 
   saveCostCenter(costCenter: CostCenter) {
