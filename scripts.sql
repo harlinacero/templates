@@ -271,6 +271,7 @@ CREATE TABLE aprovalmatrix
   apobationlevels integer,
   valuetotal double precision,
   userchange integer,
+  datelimit timestamp without time zone,
   datemodified timestamp without time zone,
   CONSTRAINT aprovalmatrix_pkey PRIMARY KEY (id),
   CONSTRAINT fk_costcenterid FOREIGN KEY (costcenterid)
