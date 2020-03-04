@@ -291,27 +291,30 @@ ALTER TABLE aprovalmatrix
   OWNER TO postgres;
 
 
--- Table: aprobalmatrixusers
+-- Table: aprovalmatrix
 
--- DROP TABLE aprobalmatrixusers;
+-- DROP TABLE aprovalmatrix;
 
-CREATE TABLE aprobalmatrixusers
+CREATE TABLE aprovalmatrix
 (
   id serial NOT NULL,
-  aprovalmatrixid integer,
+  levelaprobation integer,
+  costcenterid integer,
   personid integer,
+  daystoaprobate integer,
+  valuemin double precision,
+  valuemax double precision,
   userchange integer,
   datemodified timestamp without time zone,
-  CONSTRAINT aprobalmatrixusers_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_aprovalmatrixid FOREIGN KEY (aprovalmatrixid)
-      REFERENCES aprovalmatrix (id) MATCH SIMPLE
+  CONSTRAINT fk_costcenterid FOREIGN KEY (costcenterid)
+      REFERENCES costcenter (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_personidforeign FOREIGN KEY (personid)
+  CONSTRAINT fk_personid FOREIGN KEY (personid)
       REFERENCES person (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION
 )
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE aprobalmatrixusers
+ALTER TABLE aprovalmatrix
   OWNER TO postgres;

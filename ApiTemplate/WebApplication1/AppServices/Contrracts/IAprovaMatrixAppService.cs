@@ -10,8 +10,8 @@ namespace WebApplication1.AppServices.Contrracts
 {
     public interface IAprovaMatrixAppService
     {
-        RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix();
-        RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrixDTO matrix);
+        RequestResult<IEnumerable<AprovalMatrix>> GetAllAprovalMatrix();
+        RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices);
         RequestResult<IEnumerable<Money>> GetAllMoney();
     }
 }

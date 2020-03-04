@@ -28,10 +28,12 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllAprovalMatrix")]
-        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrix>> GetAllAprovalMatrix()
         {
             return _aprovaMatrixAppService.GetAllAprovalMatrix();
         }
+
+
 
         /// <summary>
         /// GetAllAprovalMatrix with persons
@@ -47,13 +49,13 @@ namespace WebApplication1.Controllers
         /// <summary>
         /// Update or add person
         /// </summary>
-        /// <param name="matrix"></param>
+        /// <param name="matrices"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("SaveAprovalMatrix")]
-        public RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrixDTO matrix)
+        public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices)
         {
-            return _aprovaMatrixAppService.SaveAprovalMatrix(matrix);
+            return _aprovaMatrixAppService.SaveAprovalMatrix(matrices);
         }
 
     }

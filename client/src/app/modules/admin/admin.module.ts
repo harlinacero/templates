@@ -12,9 +12,6 @@ import { ProvidersComponent } from './providers/providers.component';
 import { PopupProviderComponent } from './providers/popup-provider/popup-provider.component';
 import { ProductsComponent } from './products/products.component';
 import { PopupProductsComponent } from './products/popup-products/popup-products.component';
-import { CostCenterComponent } from './cost-center/cost-center.component';
-import { PopupCostCenterComponent } from './cost-center/popup-cost-center/popup-cost-center.component';
-
 
 
 @NgModule({
@@ -27,9 +24,7 @@ import { PopupCostCenterComponent } from './cost-center/popup-cost-center/popup-
     ProvidersComponent,
     PopupProviderComponent,
     ProductsComponent,
-    PopupProductsComponent,
-    CostCenterComponent,
-    PopupCostCenterComponent
+    PopupProductsComponent
   ],
   imports: [
     CommonModule,
@@ -40,8 +35,7 @@ import { PopupCostCenterComponent } from './cost-center/popup-cost-center/popup-
     PopupComponent,
     PopupUsersComponent,
     PopupProviderComponent,
-    PopupProductsComponent,
-    PopupCostCenterComponent
+    PopupProductsComponent
   ], providers: [
     { provide: MAT_DIALOG_DATA, useValue: { float: 'always' } }
   ]

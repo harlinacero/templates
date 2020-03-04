@@ -5,14 +5,12 @@ namespace WebApplication1.DomainServices.Entities
 {
     public class AprovalMatrix : EntityBase
     {
-        public int Productid { get; set; }
-        public int CostCenterid { get; set; }
-        public int Moneyid { get; set; }
-        public double ExangeRate { get; set; }
+        public int CostCenterId { get; set; }
+        public int PersonId { get; set; }
+        public int LevelAprobation { get; set; }
+        public double ValueMin { get; set; }
         public double ValueMax { get; set; }
-        public int ApobationLevels { get; set; }
-        public double ValueTotal { get; set; }
-        public DateTime DateLimit { get; set; }
+        public int DaysToAprobate { get; set; }
     }
 
     public class AprovalMatrixWithValues : AprovalMatrix

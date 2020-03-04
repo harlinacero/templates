@@ -169,11 +169,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(WebApplication1.DTOs.AprovalMatrixDTO)">
+        <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(System.Collections.Generic.List{WebApplication1.DomainServices.Entities.AprovalMatrix})">
             <summary>
             Update or add person
             </summary>
-            <param name="matrix"></param>
+            <param name="matrices"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">

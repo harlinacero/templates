@@ -34,38 +34,43 @@ namespace WebApplication1.DomainServices
             return RequestResult<IEnumerable<Money>>.CreateSuccesfull(list);
         }
 
-        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrix>> GetAllAprovalMatrix()
         {
             //IEnumerable<AprovalMatrixDTO> list = new List<AprovalMatrixDTO>();
-            StringBuilder sql = new StringBuilder();
-            sql.Append("SELECT ");
-            sql.Append("AP.*, ");
-            sql.Append("P.CODE AS PRODUCTCODE, ");
-            sql.Append("P.DESCRIPTION AS PRODUCTDESCRIPTION,");
-            sql.Append("C.NAME AS COSTCENTERNAME, ");
-            sql.Append("M.SYMBOL AS MONEY ");
-            sql.Append("FROM APROVALMATRIX AP ");
-            sql.Append("INNER JOIN PRODUCT P ON P.ID = AP.PRODUCTID ");
-            sql.Append("INNER JOIN COSTCENTER C ON C.ID = AP.COSTCENTERID ");
-            sql.Append("INNER JOIN MONEY M ON M.ID = AP.MONEYID");
+            //StringBuilder sql = new StringBuilder();
+            //sql.Append("SELECT ");
+            //sql.Append("AP.*, ");
+            //sql.Append("P.CODE AS PRODUCTCODE, ");
+            //sql.Append("P.DESCRIPTION AS PRODUCTDESCRIPTION,");
+            //sql.Append("C.NAME AS COSTCENTERNAME, ");
+            //sql.Append("M.SYMBOL AS MONEY ");
+            //sql.Append("FROM APROVALMATRIX AP ");
+            //sql.Append("INNER JOIN PRODUCT P ON P.ID = AP.PRODUCTID ");
+            //sql.Append("INNER JOIN COSTCENTER C ON C.ID = AP.COSTCENTERID ");
+            //sql.Append("INNER JOIN MONEY M ON M.ID = AP.MONEYID");
 
-            var list = _aprovalMatrixWithValues.CustomList(sql.ToString());
-            var listUsersByMatrix = _aprovalMatrixUsersRepo.ListAll();
-            foreach (var item in list)
-            {
-                item.Personss = listUsersByMatrix.Where(x => x.AprovalMatrixId == item.Id).Select(x => x.Personid);
-            }
-
-            return RequestResult<IEnumerable<AprovalMatrixWithValues>>.CreateSuccesfull(list);
+            //var list = _aprovalMatrixWithValues.CustomList(sql.ToString());
+            //var listUsersByMatrix = _aprovalMatrixUsersRepo.ListAll();
+            //foreach (var item in list)
+            //{
+            //    item.Personss = listUsersByMatrix.Where(x => x.AprovalMatrixId == item.Id).Select(x => x.Personid);
+            //}
+            var list = _aprovalMatrixRepo.ListAll();
+            return RequestResult<IEnumerable<AprovalMatrix>>.CreateSuccesfull(list);
         }
 
-        public RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrix provalMatrix, List<int> personsId)
+        public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices)
         {
-            var matrix = _aprovalMatrixRepo.GetById(provalMatrix.Id);
-            if (matrix != null)
-                return UpdateMatrix(provalMatrix, personsId);
+            foreach (var matrix in matrices)
+            {
+                var oldMatrix = _aprovalMatrixRepo.GetById(matrix.CostCenterId);
+                if (oldMatrix != null)
+                    _aprovalMatrixRepo.Update(matrix);
 
-            return AddMatrix(provalMatrix, personsId);
+                _aprovalMatrixRepo.Add(matrix);
+            }
+            var list = _aprovalMatrixRepo.ListAll();
+            return RequestResult<IEnumerable<AprovalMatrix>>.CreateSuccesfull(list);
         }
 
         private RequestResult<AprovalMatrix> AddMatrix(AprovalMatrix matrix, List<int> personsId)

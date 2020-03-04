@@ -1,0 +1,53 @@
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+        <button class="auxiliar-button" mat-button color="accent" (click)="addLevel()"><i class="material-icons">add</i></button>
+    </mat-card-header>
+
+    <form class="example-form" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+        <div mat-dialog-content *ngFor="let row of matrix; let i=index">
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Nivel</mat-label>
+                <input type="number" [[value]]="row.levelAprobation" matInput [(ngModel)]="row.levelAprobation" name="levelAprobation" disable="true" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Aprobador</mat-label>
+                <!-- <input type="number" matInput [(ngModel)]="row.personid" name="personid" required> -->
+                <mat-select [(value)]="row.personid" [(ngModel)]="row.personid" name="personid" required>
+                    <mat-option *ngFor="let per of persons" [(value)]="per.id">
+                        {{per.firstName}} {{per.lastName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Máx. Dias</mat-label>
+                <input type="number" matInput [(ngModel)]="row.daysToAprobate" name="daysToAprobate" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Valor Min. Aprobación</mat-label>
+                <input type="number" matInput [(ngModel)]="row.valueMin" name="valueMin" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Valor Máx. Aprobación</mat-label>
+                <input type="number" matInput [(ngModel)]="row.valueMax" name="valueMax" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <i class="material-icons" (click)="addLevel()">add</i>
+            </mat-form-field>
+        </div>
+
+
+
+        <div mat-dialog-actions class="buttons">
+            <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="matrix" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

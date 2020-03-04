@@ -3,6 +3,7 @@ import { MatTableDataSource, MatDialog } from '@angular/material';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { AdminService } from '../../../shared/services/admin.service';
 import { PopupCostCenterComponent } from './popup-cost-center/popup-cost-center.component';
+import { PopupAprovalMatrixComponent } from './popup-aproval-matrix/popup-aproval-matrix.component';
 
 @Component({
   selector: 'app-cost-center',
@@ -11,14 +12,14 @@ import { PopupCostCenterComponent } from './popup-cost-center/popup-cost-center.
 })
 export class CostCenterComponent implements OnInit {
 
-  displayedColumns = ['name', 'description'];
+  displayedColumns = ['name', 'description', 'actions'];
 
   dataSource: MatTableDataSource<any>;
   costCenters: CostCenter[];
   costCenter: CostCenter;
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
-    this.getProducts();
+    this.getAllCostCenter();
   }
 
 
@@ -31,7 +32,7 @@ export class CostCenterComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
-  getProducts() {
+  getAllCostCenter() {
     this.userService.getAllCostCenter()
       .subscribe(res => {
         if (res.isSuccesfull) {
@@ -50,7 +51,20 @@ export class CostCenterComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.getProducts();
+      this.getAllCostCenter();
+    });
+  }
+
+  setAprovalMatrix(row) {
+    const dialogRef = this.dialog.open(PopupAprovalMatrixComponent, {
+      height: 'auto',
+      width: '600px',
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.getAllCostCenter();
     });
   }
 
@@ -62,7 +76,7 @@ export class CostCenterComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getProducts();
+      this.getAllCostCenter();
     });
   }
 

@@ -19,7 +19,7 @@ namespace WebApplication1.AppServices
             _aprovaMatrixDomainService = aprovaMatrixDomainService;
         }
 
-        public RequestResult<IEnumerable<AprovalMatrixWithValues>> GetAllAprovalMatrix()
+        public RequestResult<IEnumerable<AprovalMatrix>> GetAllAprovalMatrix()
         {
             try
             {
@@ -27,7 +27,7 @@ namespace WebApplication1.AppServices
             }
             catch (Exception ex)
             {
-                return RequestResult<IEnumerable<AprovalMatrixWithValues>>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<AprovalMatrix>>.CreateUnSuccesfull(ex.Message);
             }
         }
 
@@ -43,38 +43,38 @@ namespace WebApplication1.AppServices
             }
         }
 
-        public RequestResult<AprovalMatrix> SaveAprovalMatrix(AprovalMatrixDTO matrix)
+        public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices)
         {
             try
             {
 
-                List<int> personsId = new List<int>();
-                AprovalMatrix provalMatrix = new AprovalMatrix()
-                {
-                    Id = matrix.Id,
-                    ApobationLevels = matrix.ApobationLevels,
-                    CostCenterid = matrix.CostCenterid,
-                    DateModified = new DateTime(),
-                    ExangeRate = matrix.ExangeRate,
-                    Moneyid = matrix.Moneyid,
-                    Productid = matrix.Productid,
-                    UserChange = matrix.UserChange,
-                    ValueMax = matrix.ValueMax,
-                    ValueTotal = matrix.ValueTotal,
-                    DateLimit = matrix.DateLimit
-                };
+                //List<int> personsId = new List<int>();
+                //AprovalMatrix provalMatrix = new AprovalMatrix()
+                //{
+                //    Id = matrix.Id,
+                //    ApobationLevels = matrix.ApobationLevels,
+                //    CostCenterid = matrix.CostCenterid,
+                //    DateModified = new DateTime(),
+                //    ExangeRate = matrix.ExangeRate,
+                //    Moneyid = matrix.Moneyid,
+                //    Productid = matrix.Productid,
+                //    UserChange = matrix.UserChange,
+                //    ValueMax = matrix.ValueMax,
+                //    ValueTotal = matrix.ValueTotal,
+                //    DateLimit = matrix.DateLimit
+                //};
 
-                foreach (var item in matrix.Personss)
-                {
-                    personsId.Add(item);
-                }
+                //foreach (var item in matrix.Personss)
+                //{
+                //    personsId.Add(item);
+                //}
 
-                return _aprovaMatrixDomainService.SaveAprovalMatrix(provalMatrix, personsId);
+                return _aprovaMatrixDomainService.SaveAprovalMatrix(matrices);
             }
             catch (Exception ex)
             {
 
-                return RequestResult<AprovalMatrix>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<AprovalMatrix>>.CreateUnSuccesfull(ex.Message);
             }
         }
     }
