@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
-using WebApplication1.DTOs;
 using WebApplication1.Models;
 
 namespace WebApplication1.DomainServices
@@ -19,7 +16,7 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Person> _personRepo;
         private readonly IRepository<AprovalMatrixWithValues> _aprovalMatrixWithValues;
         private readonly IRepository<Money> _moneyRepo;
-        public AprovaMatrixDomainService(IRepository<AprovalMatrix> aprovalMatrixRepo, 
+        public AprovaMatrixDomainService(IRepository<AprovalMatrix> aprovalMatrixRepo,
             IRepository<AprobalMatrixUsers> aprovalMatrixUsersRepo, IRepository<Person> personRepo,
             IRepository<AprovalMatrixWithValues> aprovalMatrixWithValues,
             IRepository<Money> moneyRepo)
@@ -44,7 +41,6 @@ namespace WebApplication1.DomainServices
             sql.Append("SELECT ");
             sql.Append("AP.*, ");
             sql.Append("P.CODE AS PRODUCTCODE, ");
-            sql.Append("P.ID AS PRODUTCID, ");
             sql.Append("P.DESCRIPTION AS PRODUCTDESCRIPTION,");
             sql.Append("C.NAME AS COSTCENTERNAME, ");
             sql.Append("M.SYMBOL AS MONEY ");
@@ -54,7 +50,11 @@ namespace WebApplication1.DomainServices
             sql.Append("INNER JOIN MONEY M ON M.ID = AP.MONEYID");
 
             var list = _aprovalMatrixWithValues.CustomList(sql.ToString());
-
+            var listUsersByMatrix = _aprovalMatrixUsersRepo.ListAll();
+            foreach (var item in list)
+            {
+                item.Personss = listUsersByMatrix.Where(x => x.AprovalMatrixId == item.Id).Select(x => x.Personid);
+            }
 
             return RequestResult<IEnumerable<AprovalMatrixWithValues>>.CreateSuccesfull(list);
         }
@@ -71,7 +71,7 @@ namespace WebApplication1.DomainServices
         private RequestResult<AprovalMatrix> AddMatrix(AprovalMatrix matrix, List<int> personsId)
         {
             var newmatrix = _aprovalMatrixRepo.AddWithReturn(matrix);
-            if (newmatrix != null)
+            if (newmatrix == null)
                 return RequestResult<AprovalMatrix>.CreateUnSuccesfull("Ocurrió un Error al guardar la entidad");
 
             AddUsersToMatrix(newmatrix, personsId);

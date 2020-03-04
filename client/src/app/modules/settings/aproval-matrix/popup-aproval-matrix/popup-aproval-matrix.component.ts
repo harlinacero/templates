@@ -24,6 +24,7 @@ export class PopupAprovalMatrixComponent implements OnInit {
   moneys: Money[];
   aprobationLevels: any[] = [];
   persons: Person[];
+  personsWithRol: any[];
   roles: Role[];
 
   constructor(public dialogRef: MatDialogRef<PopupAprovalMatrixComponent>,
@@ -32,21 +33,25 @@ export class PopupAprovalMatrixComponent implements OnInit {
     private service: AprovalMatrixService) {
     this.data = {
       apobationLevels: matrix.apobationLevels,
-      costCenterid: matrix.costcenterid,
+      costCenterid: matrix.costCenterid,
       exangeRate: matrix.exangeRate,
       moneyid: matrix.moneyid,
-      personss: [],
       productid: matrix.productid,
       valueMax: matrix.valueMax,
       valueTotal: matrix.valueTotal,
       id: matrix.id,
       datemodified: matrix.datemodified,
       userchange: matrix.userchange,
-      datelimit: matrix.datelimit
+      datelimit: new Date(matrix.datelimit),
+      personss: matrix.personss
     };
+
+
+
     this.getProducts();
     if (this.data.id > 0) {
       this.title = 'Modificar Matriz de Aprobación';
+      this.aprobationLevels = new Array(matrix.apobationLevels);
     }
 
   }
@@ -98,8 +103,20 @@ export class PopupAprovalMatrixComponent implements OnInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.persons = res.result;
+          this.getPersonsWithRol(this.persons);
         }
       });
+  }
+
+
+  getPersonsWithRol(persons: Person[]) {
+    this.personsWithRol = persons.map(person => {
+      return {
+        personId: person.id,
+        personName: person.firstName + ' ' + person.lastName,
+        personRole: this.roles.find(r => r.id === person.roleId).name
+      };
+    });
   }
 
   changeAprobalValues(event) {
@@ -111,6 +128,17 @@ export class PopupAprovalMatrixComponent implements OnInit {
   }
 
   save() {
+    for (const key in this.data) {
+      if (this.data.hasOwnProperty(key)) {
+        const element = this.data[key];
+        if (key === 'datelimit' && element === undefined) {
+          alert('El campo ' + key + ' no puede ser nullo ni idenfinido')
+          return;
+        }
+
+      }
+    }
+
     this.service.SaveAprovalMatrix(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Matriz de Aprobación actualizada');

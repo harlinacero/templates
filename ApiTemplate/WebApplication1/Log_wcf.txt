@@ -132,3 +132,27 @@ Fecha: 2/03/2020 1:04:37 a. m.
 -------------------
 Dato: 42601: error de sintaxis en o cerca de «SELECTAP»
 Fecha: 2/03/2020 1:07:31 a. m.
+-------------------
+Dato: Exception while connecting
+Fecha: 2/03/2020 7:33:00 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 2/03/2020 7:33:31 p. m.
+-------------------
+Dato: Exception while connecting
+Fecha: 2/03/2020 7:33:40 p. m.
+-------------------
+Dato: Exception while connecting
+Fecha: 2/03/2020 7:33:48 p. m.
+-------------------
+Dato: 42703: no existe la columna «datelimit» en la relación «aprovalmatrix»
+Fecha: 2/03/2020 7:36:14 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «aprovalmatrix» viola la llave foránea «fk_costcenterid»
+Fecha: 2/03/2020 8:39:55 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «aprovalmatrix» viola la llave foránea «fk_costcenterid»
+Fecha: 2/03/2020 8:42:15 p. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM Role WHERE Id = 0
+Fecha: 2/03/2020 9:18:07 p. m.

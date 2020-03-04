@@ -3,7 +3,7 @@ import { Person } from './person.interface';
 export interface AprobalMatrixTable {
   id: number;
   productid: number;
-  costcenterid: number;
+  costCenterid: number;
   moneyid: number;
   exangeRate: number;
   valueMax: number;
@@ -16,6 +16,7 @@ export interface AprobalMatrixTable {
   costCenterName: string;
   money: string;
   datelimit: Date;
+  personss: number[];
 }
 
 export interface AprovalMatrixDTO {
@@ -27,8 +28,8 @@ export interface AprovalMatrixDTO {
   valueMax: number;
   apobationLevels: number;
   valueTotal: number;
-  personss: Person[];
   datelimit: Date;
   userchange: number;
   datemodified: Date;
+  personss: number[];
 }
