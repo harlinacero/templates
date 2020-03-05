@@ -57,13 +57,12 @@ export class CostCenterComponent implements OnInit {
 
   setAprovalMatrix(row) {
     const dialogRef = this.dialog.open(PopupAprovalMatrixComponent, {
-      height: 'auto',
-      width: '600px',
+      height: '500px',
+      width: '1200px',
       data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.getAllCostCenter();
     });
   }

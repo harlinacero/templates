@@ -63,11 +63,16 @@ namespace WebApplication1.DomainServices
         {
             foreach (var matrix in matrices)
             {
-                var oldMatrix = _aprovalMatrixRepo.GetById(matrix.CostCenterId);
+                var oldMatrix = _aprovalMatrixRepo.GetById(matrix.Id);
                 if (oldMatrix != null)
+                {
                     _aprovalMatrixRepo.Update(matrix);
-
+                }else
+                {
                 _aprovalMatrixRepo.Add(matrix);
+
+                }
+
             }
             var list = _aprovalMatrixRepo.ListAll();
             return RequestResult<IEnumerable<AprovalMatrix>>.CreateSuccesfull(list);

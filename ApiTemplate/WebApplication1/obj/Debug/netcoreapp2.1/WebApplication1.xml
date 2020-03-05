@@ -169,7 +169,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(System.Collections.Generic.List{WebApplication1.DomainServices.Entities.AprovalMatrix})">
+        <member name="M:WebApplication1.Controllers.AprovaMatrixController.SaveAprovalMatrix(System.Collections.Generic.IEnumerable{WebApplication1.DomainServices.Entities.AprovalMatrix})">
             <summary>
             Update or add person
             </summary>

@@ -53,9 +53,9 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpPost]
         [Route("SaveAprovalMatrix")]
-        public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices)
+        public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(IEnumerable<AprovalMatrix> matrices)
         {
-            return _aprovaMatrixAppService.SaveAprovalMatrix(matrices);
+            return _aprovaMatrixAppService.SaveAprovalMatrix(matrices.ToList());
         }
 
     }

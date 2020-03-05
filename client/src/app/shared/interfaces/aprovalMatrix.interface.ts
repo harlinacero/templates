@@ -37,11 +37,11 @@ import { Person } from './person.interface';
 export interface AprobalMatrix {
   id?: number;
   levelAprobation: number;
-  costcenterid: number;
-  personid: number;
+  costCenterId: number;
+  personId: number;
   daysToAprobate: number;
   valueMin: number;
   valueMax: number;
-  userchange: number;
-  datemodified: Date;
+  userChange: number;
+  dateModified: Date;
 }

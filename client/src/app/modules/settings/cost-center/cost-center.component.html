@@ -9,7 +9,7 @@
     <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="name">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+            <mat-cell *matCellDef="let row" style="text-transform: capitalize;"> {{row.name}} </mat-cell>
         </ng-container>
 
         <!-- Progress Column -->

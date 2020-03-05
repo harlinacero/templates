@@ -71,42 +71,58 @@ export class PopupAprovalMatrixComponent implements OnInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           const allMatrix = res.result;
-          this.matrix = allMatrix.map(mat => {
-            if (mat.costcenterid === this.costCenter.id) {
-              return mat;
+          this.matrix = [];
+          for (const mat of allMatrix) {
+            if (mat.costCenterId === this.costCenter.id) {
+              this.matrix.push(mat);
             }
-          });
+          }
+          console.log(this.matrix);
         }
       });
   }
 
 
-  // getPersonsWithRol(persons: Person[]) {
-  //   this.personsWithRol = persons.map(person => {
-  //     return {
-  //       personId: person.id,
-  //       personName: person.firstName + ' ' + person.lastName,
-  //       personRole: this.roles.find(r => r.id === person.roleId).name
-  //     };
-  //   });
-  // }
-
-  // changeAprobalValues(event) {
-  //   this.aprobationLevels = new Array(this.data.apobationLevels);
-  // }
 
   addLevel() {
     const newLevel: AprobalMatrix = {
-      costcenterid: this.costCenter.id,
-      datemodified: new Date(),
+      costCenterId: this.costCenter.id,
+      dateModified: new Date(),
       daysToAprobate: 0,
       levelAprobation: this.matrix.length + 1,
-      personid: 0,
-      userchange: 1,
+      personId: 0,
+      userChange: 1,
       valueMin: 0,
       valueMax: 0
     };
     this.matrix.push(newLevel);
+  }
+
+  removeLevel(i) {
+    this.matrix.splice(i, 1);
+  }
+
+  selectedValueChange(value, namefield, i) {
+    this.matrix[i][namefield] = value;
+    console.log(this.matrix);
+  }
+
+  getValueMin(i) {
+    if (!!this.matrix[i - 1]) {
+      const a = this.matrix[i - 1].valueMax;
+      return +a + 1;
+    } else {
+      return 0;
+    }
+  }
+
+  getValueMax(i) {
+    if (!!this.matrix[i].valueMin) {
+      const a = this.matrix[i].valueMin;
+      return +a + 1;
+    } else {
+      return 0;
+    }
   }
 
   onNoClick(): void {
@@ -118,7 +134,6 @@ export class PopupAprovalMatrixComponent implements OnInit {
     this.service.SaveAprovalMatrix(this.matrix).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Matriz de Aprobación actualizada');
-
       }
     });
   }
