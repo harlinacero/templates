@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatFormFieldModule, MatIconModule, MatInputModule, MatPaginatorModule, MatTableModule,
-  MatTabsModule, MatDialogModule, MatSelectModule, MatCardModule, MatSortModule, MatDatepickerModule, MatNativeDateModule
+  MatTabsModule, MatDialogModule, MatSelectModule, MatCardModule, MatSortModule, MatDatepickerModule, MatNativeDateModule, MatButtonModule
 } from '@angular/material';
 
 
@@ -11,6 +11,7 @@ import {
   declarations: [],
   imports: [
     CommonModule,
+    MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -26,6 +27,7 @@ import {
 
   ], exports: [
     CommonModule,
+    MatButtonModule,
     MatCardModule,
     MatDatepickerModule,
     MatDialogModule,

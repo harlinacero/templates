@@ -156,3 +156,12 @@ Fecha: 2/03/2020 8:42:15 p. m.
 -------------------
 Dato: A command is already in progress: SELECT * FROM Role WHERE Id = 0
 Fecha: 2/03/2020 9:18:07 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 5/03/2020 6:45:06 p. m.
+-------------------
+Dato: 42703: no existe la columna «personid» en la relación «aprovalmatrix»
+Fecha: 5/03/2020 6:57:17 p. m.
+-------------------
+Dato: 42703: no existe la columna «personid» en la relación «aprovalmatrix»
+Fecha: 5/03/2020 6:58:00 p. m.

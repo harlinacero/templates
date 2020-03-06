@@ -2,11 +2,14 @@
     <mat-card-header>
         <mat-card-title>{{title}}</mat-card-title>
         <div style="position: absolute; right: 0;">
-            <button class="auxiliar-button" style="background: none; border: none;" mat-button color="accent" (click)="addLevel()"><i class="material-icons">add</i></button>
+            <button class="auxiliar-button" style="background: none; border: none;" mat-button (click)="addLevel()"><i
+                    class="material-icons">add</i></button>
         </div>
     </mat-card-header>
 
-    <form class="example-form" fxLayout="column wrap" fxLayoutAlign="center center" fxLayoutGap="10px">
+    <form class="example-form" [formGroup]="ownerForm" autocomplete="off" novalidate
+        (ngSubmit)="createOwner(ownerForm.value)" fxLayout="column wrap" fxLayoutAlign="center center"
+        fxLayoutGap="10px">
 
 
         <div class="table-responsive">
@@ -19,31 +22,38 @@
                     <td>Valor Máx.</td>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let row of matrix; let i=index">
+                    <tr *ngFor="let row of matrix  | sort:'levelAprobation'; let i=index">
                         <td style="width: 50px;">
                             <input type="number" class="form-control" [(value)]="row.levelAprobation" disabled>
                         </td>
 
                         <td>
-                            <select class="custom-select" [(value)]="row.personId" (change)="selectedValueChange($event.srcElement.value, 'personId' , i)">
-                <option *ngFor="let item of persons" [(value)]="item.id">{{item.firstName}} {{item.lastName}}</option>
-              </select>
+                            <select class="custom-select" [(value)]="row.personId"
+                                (change)="selectedValueChange($event.srcElement.value, 'personId' , i)" required>
+                                <option *ngFor="let item of persons" [(value)]="item.id">{{item.firstName}}
+                                    {{item.lastName}}</option>
+                            </select>
+                            <span class="validate-field" *ngIf="hasError('Aprobador', 'required')">El campo no puede ser
+                                nulo</span>
                         </td>
 
                         <td>
-                            <input type="number" min="1" class="form-control" [(value)]="row.daysToAprobate" (change)="selectedValueChange($event.srcElement.value, 'daysToAprobate' , i)">
+                            <input type="number" min="1" class="form-control" [(value)]="row.daysToAprobate"
+                                (change)="selectedValueChange($event.srcElement.value, 'daysToAprobate' , i)" required>
                         </td>
 
                         <td>
-                            <input type="number" class="form-control" min="{{getValueMin(i)}}" [(value)]="row.valueMin" (change)="selectedValueChange($event.srcElement.value, 'valueMin' , i)">
+                            <input type="number" class="form-control" min="{{getValueMin(i)}}" [(value)]="row.valueMin"
+                                (change)="selectedValueChange($event.srcElement.value, 'valueMin' , i)" required>
                         </td>
 
                         <td>
-                            <input type="number" class="form-control" min="{{getValueMax(i)}}" [(value)]="row.valueMax" (change)="selectedValueChange($event.srcElement.value, 'valueMax' , i)">
+                            <input type="number" class="form-control" min="{{getValueMax(i)}}" [(value)]="row.valueMax"
+                                (change)="selectedValueChange($event.srcElement.value, 'valueMax' , i)" required>
                         </td>
                         <td>
                             <button style="background: none; border: none;" (click)="removeLevel(i)"><i
-                  class="fa fa-minus"></i></button>
+                                    class="fa fa-minus"></i></button>
                         </td>
 
                     </tr>
@@ -54,13 +64,14 @@
 
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="matrix" cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="validateDateBeforeToSave()"
+                cdkFocusInitial>Guardar</button>
         </div>
     </form>
 
 </mat-card>
 
-
+<!-- https://code-maze.com/angular-material-form-validation/ -->
 <!-- <div mat-dialog-content *ngFor="let row of matrix; let i=index">
 
             <mat-form-field class="example-full-width">

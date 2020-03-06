@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -61,19 +59,13 @@ namespace WebApplication1.DomainServices
 
         public RequestResult<IEnumerable<AprovalMatrix>> SaveAprovalMatrix(List<AprovalMatrix> matrices)
         {
+            string sql = $"DELETE FROM {nameof(AprovalMatrix)} WHERE {nameof(AprovalMatrix.CostCenterId)} = {matrices[0].CostCenterId};";
+            _aprovalMatrixRepo.CustomQuery(sql);
             foreach (var matrix in matrices)
             {
-                var oldMatrix = _aprovalMatrixRepo.GetById(matrix.Id);
-                if (oldMatrix != null)
-                {
-                    _aprovalMatrixRepo.Update(matrix);
-                }else
-                {
                 _aprovalMatrixRepo.Add(matrix);
-
-                }
-
             }
+
             var list = _aprovalMatrixRepo.ListAll();
             return RequestResult<IEnumerable<AprovalMatrix>>.CreateSuccesfull(list);
         }

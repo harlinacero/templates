@@ -6,6 +6,7 @@ import { AdminService } from '../../../../shared/services/admin.service';
 import { Person } from 'src/app/shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.service';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-popup-aproval-matrix',
@@ -15,12 +16,15 @@ import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.serv
 export class PopupAprovalMatrixComponent implements OnInit {
 
   title = 'Matriz de Aprobación ';
-  matrix: AprobalMatrix[];
+  matrix: AprobalMatrix[] = [];
+  ownerForm: FormGroup;
   id: number;
   costCenter: CostCenter;
   persons: Person[];
   personsWithRol: any[];
   roles: Role[];
+  canSave = true;
+  isValidateForm = false;
 
   constructor(public dialogRef: MatDialogRef<PopupAprovalMatrixComponent>,
     @Inject(MAT_DIALOG_DATA) public cost: CostCenter,
@@ -32,6 +36,9 @@ export class PopupAprovalMatrixComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.ownerForm = new FormGroup({
+      name: new FormControl('', [Validators.required])
+    })
   }
 
   // getCostCenter() {
@@ -77,7 +84,6 @@ export class PopupAprovalMatrixComponent implements OnInit {
               this.matrix.push(mat);
             }
           }
-          console.log(this.matrix);
         }
       });
   }
@@ -100,11 +106,18 @@ export class PopupAprovalMatrixComponent implements OnInit {
 
   removeLevel(i) {
     this.matrix.splice(i, 1);
+    for (let i = 0; i < this.matrix.length; i++) {
+      this.matrix[i].levelAprobation = i + 1;
+    }
   }
 
   selectedValueChange(value, namefield, i) {
+    if (value === null || value === undefined || value === 0 || value === '') {
+      alert('El valor ' + namefield + ' no puede estar vacio');
+      return;
+    }
+
     this.matrix[i][namefield] = value;
-    console.log(this.matrix);
   }
 
   getValueMin(i) {
@@ -127,6 +140,30 @@ export class PopupAprovalMatrixComponent implements OnInit {
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+
+  validateDateBeforeToSave() {
+    for (const matriz of this.matrix) {
+      for (const key in matriz) {
+        if (matriz.hasOwnProperty(key)) {
+          const value = matriz[key];
+          if (value === null || value === undefined || value === 0 || value === '') {
+            this.canSave = false;
+
+          }
+
+        }
+      }
+    }
+
+    if (this.canSave) {
+      alert('save')
+    }
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.ownerForm.controls[controlName].hasError(errorName);
   }
 
 

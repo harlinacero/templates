@@ -11,11 +11,13 @@ import { MaterialModule } from './material/material.module';
 import { ServiceBase } from './services/service.base';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ArraySortPipe } from './pipes/arraySort.pipe';
 
 @NgModule({
   declarations: [
     TablesComponent,
-    ModalComponent
+    ModalComponent,
+    ArraySortPipe
   ],
   imports: [
     AngularFontAwesomeModule,
@@ -24,10 +26,11 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     LayoutModule,
     MaterialModule,
-    ReactiveFormsModule ,
+    ReactiveFormsModule,
     RouterModule
   ],
   exports: [
+    ArraySortPipe,
     FormsModule,
     LayoutModule,
     MaterialModule,
