@@ -256,39 +256,7 @@ values
 ('Europa', 'Euro', '€', 'EUR', 1, NOW());
 
 
--- Table: aprovalmatrix
 
--- DROP TABLE aprovalmatrix;
-
-CREATE TABLE aprovalmatrix
-(
-  id serial NOT NULL,
-  productid integer,
-  costcenterid integer,
-  moneyid integer,
-  exangerate double precision,
-  valuemax double precision,
-  apobationlevels integer,
-  valuetotal double precision,
-  userchange integer,
-  datelimit timestamp without time zone,
-  datemodified timestamp without time zone,
-  CONSTRAINT aprovalmatrix_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_costcenterid FOREIGN KEY (costcenterid)
-      REFERENCES costcenter (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_moneyid FOREIGN KEY (moneyid)
-      REFERENCES money (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_productid FOREIGN KEY (productid)
-      REFERENCES product (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE aprovalmatrix
-  OWNER TO postgres;
 
 
 -- Table: aprovalmatrix
