@@ -4,9 +4,14 @@
 
 .box {
     .example-form {
-        .example-full-width {
-            margin: 1em;
+        .validate-field {
+            position: absolute;
+            font-size: 10px;
+            color: red;
         }
+        // .example-full-width {
+        //     margin: 1em;
+        // }
         .cdk-global-overlay-wrapper {
             display: flex;
             position: absolute;

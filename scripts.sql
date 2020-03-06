@@ -270,10 +270,14 @@ CREATE TABLE aprovalmatrix
   costcenterid integer,
   personid integer,
   daystoaprobate integer,
+  moneyid integer,
   valuemin double precision,
   valuemax double precision,
   userchange integer,
   datemodified timestamp without time zone,
+  CONSTRAINT fk_bill_moneyid FOREIGN KEY (moneyid)
+      REFERENCES money (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT fk_costcenterid FOREIGN KEY (costcenterid)
       REFERENCES costcenter (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -285,4 +289,76 @@ WITH (
   OIDS=FALSE
 );
 ALTER TABLE aprovalmatrix
+  OWNER TO postgres;
+
+-- Table: status
+
+-- DROP TABLE status;
+
+CREATE TABLE status
+(
+  id serial NOT NULL,
+  name character varying(40),
+  userchange integer,
+  datemodified timestamp without time zone,
+  CONSTRAINT status_pkey PRIMARY KEY (id)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE status
+  OWNER TO postgres;
+
+
+INSERT INTO status (name, userChange, dateModified)
+VALUES
+('En Proceso Aprobación', 0, now()),
+('Aprobada', 0, now()),
+('Rechazada', 0, now()),
+('Cancelada', 0, now());
+
+-- Table: billing
+
+-- DROP TABLE billing;
+
+CREATE TABLE billing
+(
+  id serial NOT NULL,
+  numberbilling integer,
+  providerid integer,
+  billingtype integer,
+  producttype integer,
+  costcenterid integer,
+  moneyid integer,
+  exchangerate double precision,
+  datebilling timestamp without time zone,
+  datelimit timestamp without time zone,
+  datefiled timestamp without time zone,
+  valuebill double precision,
+  userchange integer,
+  datecreated timestamp without time zone,
+  datemodified timestamp without time zone,
+  stateid integer,
+  dateaprovalrejection timestamp without time zone,
+  casuerejection character varying(255),
+  userrejection integer,
+  routefile text,
+  CONSTRAINT billing_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_bill_costcenterid FOREIGN KEY (costcenterid)
+      REFERENCES costcenter (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_bill_moneyid FOREIGN KEY (moneyid)
+      REFERENCES money (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_bill_providerid FOREIGN KEY (providerid)
+      REFERENCES provider (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_bill_stateid FOREIGN KEY (stateid)
+      REFERENCES status (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE billing
   OWNER TO postgres;

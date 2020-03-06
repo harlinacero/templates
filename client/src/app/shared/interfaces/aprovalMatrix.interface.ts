@@ -40,6 +40,7 @@ export interface AprobalMatrix {
   costCenterId: number;
   personId: number;
   daysToAprobate: number;
+  moneyId: number;
   valueMin: number;
   valueMax: number;
   userChange: number;

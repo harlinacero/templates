@@ -37,6 +37,7 @@ namespace WebApplication1.DependendeInjection
             services.AddSingleton<IProductDomainService, ProductDomainService>();
             services.AddSingleton<ICompanyDomainService, CompanyDomainService>();
             services.AddSingleton<IAprovaMatrixDomainService, AprovaMatrixDomainService>();
+            services.AddSingleton<IBillingDomainService, BillingDomainService>();
 
             services.AddSingleton<ISessionAppService, SessionAppService>();
             services.AddSingleton<IAdminAppService, AdminAppService>();
@@ -44,6 +45,7 @@ namespace WebApplication1.DependendeInjection
             services.AddSingleton<IProductAppService, ProductAppService>();
             services.AddSingleton<ICompanyAppService, CompanyAppService>();
             services.AddSingleton<IAprovaMatrixAppService, AprovaMatrixAppService>();
+            services.AddSingleton<IBillingAppService, BillingAppService>();
 
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
         }

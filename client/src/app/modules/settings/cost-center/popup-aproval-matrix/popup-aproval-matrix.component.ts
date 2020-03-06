@@ -7,6 +7,7 @@ import { Person } from 'src/app/shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Money } from 'src/app/shared/interfaces/money.interface';
 
 @Component({
   selector: 'app-popup-aproval-matrix',
@@ -20,11 +21,13 @@ export class PopupAprovalMatrixComponent implements OnInit {
   ownerForm: FormGroup;
   id: number;
   costCenter: CostCenter;
+  moneys: Money[];
   persons: Person[];
   personsWithRol: any[];
   roles: Role[];
   canSave = true;
   isValidateForm = false;
+  fieldsNoValidate = ['costCenterId', 'levelAprobation', 'dateModified', 'userChange', 'id'];
 
   constructor(public dialogRef: MatDialogRef<PopupAprovalMatrixComponent>,
     @Inject(MAT_DIALOG_DATA) public cost: CostCenter,
@@ -38,19 +41,19 @@ export class PopupAprovalMatrixComponent implements OnInit {
   ngOnInit() {
     this.ownerForm = new FormGroup({
       name: new FormControl('', [Validators.required])
-    })
+    });
   }
 
-  // getCostCenter() {
-  //   this.adminService.getAllCostCenter()
-  //     .subscribe(res => {
-  //       if (res.isSuccesfull) {
-  //         this.costCenters = res.result.find(x => x.id === this.costCenter.id);
-  //         // this.title += this.costCenters.find(c => c.id === this.levelsAproval[0].costcenterid);
-  //         this.geAllRoles();
-  //       }
-  //     });
-  // }
+  getCostCenter() {
+    this.adminService.getAllCostCenter()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.costCenter = res.result.find(x => x.id === this.costCenter.id);
+          // this.title += this.costCenters.find(c => c.id === this.levelsAproval[0].costcenterid);
+          this.geAllRoles();
+        }
+      });
+  }
 
 
   geAllRoles() {
@@ -68,6 +71,16 @@ export class PopupAprovalMatrixComponent implements OnInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.persons = res.result;
+          this.getAllMoney();
+        }
+      });
+  }
+
+  getAllMoney() {
+    this.service.getAllMoney()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.moneys = res.result;
           this.getMatrix();
         }
       });
@@ -98,14 +111,15 @@ export class PopupAprovalMatrixComponent implements OnInit {
       levelAprobation: this.matrix.length + 1,
       personId: 0,
       userChange: 1,
+      moneyId: 0,
       valueMin: 0,
       valueMax: 0
     };
     this.matrix.push(newLevel);
   }
 
-  removeLevel(i) {
-    this.matrix.splice(i, 1);
+  removeLevel(index) {
+    this.matrix.splice(index, 1);
     for (let i = 0; i < this.matrix.length; i++) {
       this.matrix[i].levelAprobation = i + 1;
     }
@@ -148,9 +162,19 @@ export class PopupAprovalMatrixComponent implements OnInit {
       for (const key in matriz) {
         if (matriz.hasOwnProperty(key)) {
           const value = matriz[key];
+
+          if (this.fieldsNoValidate.find(x => x === key)) {
+            continue;
+          }
+
           if (value === null || value === undefined || value === 0 || value === '') {
             this.canSave = false;
-
+            const input = document.getElementById(`${key}-${this.matrix.indexOf(matriz)}`);
+            input.style.display = 'block';
+          } else {
+            this.canSave = true;
+            const input = document.getElementById(`${key}-${this.matrix.indexOf(matriz)}`);
+            input.style.display = 'none';
           }
 
         }
@@ -158,13 +182,16 @@ export class PopupAprovalMatrixComponent implements OnInit {
     }
 
     if (this.canSave) {
-      alert('save')
+      this.save();
+    } else {
+      alert('Existen campos sin completar');
     }
   }
 
-  public hasError = (controlName: string, errorName: string) => {
-    return this.ownerForm.controls[controlName].hasError(errorName);
-  }
+
+  // hasError(controlName: string, errorName: string) {
+  //   return this.ownerForm.controls[controlName].hasError(errorName);
+  // }
 
 
   save() {

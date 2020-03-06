@@ -1,10 +1,10 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     $("#sidebar").mCustomScrollbar({
         theme: "minimal"
     });
 
-    $('#sidebarCollapse').on('click', function () {
+    $('#sidebarCollapse').on('click', function() {
         $('#sidebar').toggleClass('active');
     });
 

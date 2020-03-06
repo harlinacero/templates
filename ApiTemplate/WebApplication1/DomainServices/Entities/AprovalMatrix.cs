@@ -11,6 +11,7 @@ namespace WebApplication1.DomainServices.Entities
         public double ValueMin { get; set; }
         public double ValueMax { get; set; }
         public int DaysToAprobate { get; set; }
+        public int MoneyId { get; set; }
     }
 
     public class AprovalMatrixWithValues : AprovalMatrix
