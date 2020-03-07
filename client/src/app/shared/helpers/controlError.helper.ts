@@ -10,12 +10,12 @@ export class ControlErrorHelperService {
     }
 
     controlErros(res: RequestResult<any>) {
-        try{
-            if(!res.isSuccesfull) {
-                alert(res.message);
+        try {
+            if (!res.isSuccesfull) {
+                console.log(res);
             }
-        }catch(e) {
-            alert('Error Inesperado');
+        } catch (e) {
+            //alert('Error Inesperado');
             console.error(e);
         }
 

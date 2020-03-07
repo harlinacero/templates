@@ -362,3 +362,24 @@ WITH (
 );
 ALTER TABLE billing
   OWNER TO postgres;
+
+CREATE TABLE typeBilling
+(
+  id serial NOT NULL,
+  name character varying(40),
+  code character varying(10),
+  description character varying(200),
+  userchange integer,
+  datemodified timestamp without time zone
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE status
+  OWNER TO postgres;
+
+INSERT INTO typeBilling (name, code, description, userchange, datemodified)
+VALUES
+('Servicios Públicos', 'SER_PUB', 'Servicios públicos', 0, now()),
+('Servicios Privados', 'SER_PRI', 'Servicios privados', 0, now()),
+('Licencias Software', 'LIC', 'Licencias de software', 0, now());

@@ -11,6 +11,7 @@ import { Money } from 'src/app/shared/interfaces/money.interface';
 import { Status } from 'src/app/shared/interfaces/status.interface';
 import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.helper';
 import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.service';
+import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -26,6 +27,8 @@ export class PupupBillingComponent implements OnInit {
   costCenters: CostCenter[] = [];
   moneys: Money[] = [];
   states: Status[] = [];
+  typesBilling: TypeBilling[];
+
 
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
     // tslint:disable-next-line: align
@@ -38,6 +41,7 @@ export class PupupBillingComponent implements OnInit {
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
+    this.getAllTypeBilling();
     this.getAllMoneys();
     this.getAllStates();
 
@@ -61,6 +65,18 @@ export class PupupBillingComponent implements OnInit {
         }
       });
   }
+
+  getAllTypeBilling() {
+    this.billingService.GetAllTypesBilling()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.typesBilling = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      })
+  }
+
 
   getAllProducts() {
     this.adminService.getAllProducts()

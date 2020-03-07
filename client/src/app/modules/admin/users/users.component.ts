@@ -35,8 +35,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
 
 
@@ -55,6 +54,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
           return person;
         });
         this.dataSource = new MatTableDataSource(res.result);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     });
   }

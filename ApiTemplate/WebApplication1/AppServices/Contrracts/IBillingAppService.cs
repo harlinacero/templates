@@ -13,5 +13,6 @@ namespace WebApplication1.AppServices.Contrracts
         RequestResult<Billing> SaveBilling(Billing billing);
         RequestResult<Billing> GetBillingById(int id);
         RequestResult<IEnumerable<Status>> GetStates();
+        RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling();
     }
 }

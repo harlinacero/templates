@@ -68,6 +68,17 @@ namespace WebApplication1.Controllers
             return _billingAppService.GetStates();
         }
 
+        /// <summary>
+        /// Get all billing
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllTypeBilling")]
+        public RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling()
+        {
+            return _billingAppService.GetAllTypeBilling();
+        }
+
         #endregion
 
 

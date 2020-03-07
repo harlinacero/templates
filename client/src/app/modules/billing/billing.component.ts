@@ -13,6 +13,7 @@ import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.h
 import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.service';
 import { Status } from 'src/app/shared/interfaces/status.interface';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
+import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
 
 
 @Component({
@@ -31,6 +32,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   costCenters: CostCenter[] = [];
   moneys: Money[] = [];
   states: Status[] = [];
+  typesBilling: TypeBilling[];
 
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -46,6 +48,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
     this.getAllCostCenters();
     this.getAllMoneys();
     this.getAllStates();
+    this.getAllTypeBilling();
     this.getAllBillings();
   }
 
@@ -54,8 +57,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
   }
 
   getAllProviders() {
@@ -115,6 +117,18 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
+  getAllTypeBilling() {
+    this.billingService.GetAllTypesBilling()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.typesBilling = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      })
+  }
+
+
 
   getAllBillings() {
     this.billingService.GetAllBilling()
@@ -122,6 +136,8 @@ export class BillingComponent implements OnInit, AfterViewInit {
         if (res.isSuccesfull) {
           this.billings = res.result;
           this.dataSource = new MatTableDataSource(res.result);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         } else {
           this.helper.controlErros(res);
         }
@@ -133,6 +149,9 @@ export class BillingComponent implements OnInit, AfterViewInit {
       case 'providerid':
         const prov = this.providers.find(p => p.id === id);
         return (!!prov) ? prov.businessName : '';
+      case 'billingtype':
+        const type = this.typesBilling.find(x => x.id === id);
+        return (!!type) ? type.code : '';
       case 'producttype':
         const prod = this.products.find(pro => pro.id === id);
         return (!!prod) ? prod.code : '';
@@ -185,7 +204,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   addCostCenter() {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
       height: 'auto',
-      width: '600px',
+      width: '1200px',
       data: this.billings
     });
 

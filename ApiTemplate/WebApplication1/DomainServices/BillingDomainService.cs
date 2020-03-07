@@ -12,13 +12,15 @@ namespace WebApplication1.DomainServices
         #region Fields
         private readonly IRepository<Billing> _billingRepo;
         private readonly IRepository<Status> _stateRepo;
+        private readonly IRepository<TypeBilling> _typeBilingRepo;
         #endregion
 
         #region Builder
-        public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo)
+        public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo, IRepository<TypeBilling> typeBilingRepo)
         {
             _billingRepo = billingRepo;
             _stateRepo = stateRepo;
+            _typeBilingRepo = typeBilingRepo;
         }
         #endregion
         public RequestResult<IEnumerable<Billing>> GetAllBilling()
@@ -54,6 +56,13 @@ namespace WebApplication1.DomainServices
             return RequestResult<IEnumerable<Status>>.CreateSuccesfull(list);
         }
 
+
+        public RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling()
+        {
+            var list = _typeBilingRepo.ListAll();
+            return RequestResult<IEnumerable<TypeBilling>>.CreateSuccesfull(list);
+        }
+
         private RequestResult<Billing> AddBilling(Billing billing)
         {
             if (_billingRepo.Add(billing))
@@ -67,5 +76,6 @@ namespace WebApplication1.DomainServices
                 return RequestResult<Billing>.CreateSuccesfull(billing);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo actualizar");
         }
+
     }
 }

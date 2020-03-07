@@ -70,5 +70,17 @@ namespace WebApplication1.AppServices
                 return RequestResult<IEnumerable<Status>>.CreateUnSuccesfull(ex.Message);
             }
         }
+
+        public RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling()
+        {
+            try
+            {
+                return _billingDomainService.GetAllTypeBilling();
+            }
+            catch (Exception ex )
+            {
+                return RequestResult<IEnumerable<TypeBilling>>.CreateUnSuccesfull(ex.Message);
+            }
+        }
     }
 }

@@ -22,7 +22,12 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Tipo Factura</mat-label>
-                <input matInput [(ngModel)]="data.billingtype" name="billingtype" required>
+                <!-- <input matInput [(ngModel)]="data.billingtype" name="billingtype" required> -->
+                <mat-select [(value)]="data.billingtype" [(ngModel)]="data.billingtype" name="billingtype" required>
+                    <mat-option *ngFor="let type of typesBilling" [(value)]="type.id">
+                        {{type.name}}
+                    </mat-option>
+                </mat-select>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
@@ -55,29 +60,38 @@
 
             <mat-form-field class="example-full-width">
                 <mat-label>Fecha factura</mat-label>
-                <input matInput [(ngModel)]="data.datebilling" name="datebilling">
+                <input matInput [matDatepicker]="datebilling" [(ngModel)]="data.datebilling" name="datebilling">
+                <mat-datepicker-toggle matSuffix [for]="datebilling"></mat-datepicker-toggle>
+                <mat-datepicker #datebilling [startAt]="datebilling"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Fecha Límite</mat-label>
-                <input matInput [(ngModel)]="data.datelimit" name="datelimit">
+                <input matInput [matDatepicker]="datelimit" [(ngModel)]="data.datelimit" name="datelimit">
+                <mat-datepicker-toggle matSuffix [for]="datelimit"></mat-datepicker-toggle>
+                <mat-datepicker #datelimit [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="example-full-width">
                 <mat-label>Fecha Radicado</mat-label>
-                <input matInput [(ngModel)]="data.datefiled" name="datefiled">
+                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.datefiled" name="datefiled">
+                <mat-datepicker-toggle matSuffix [for]="datefiled"></mat-datepicker-toggle>
+                <mat-datepicker #datefiled [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
-
+            <!-- 
             <mat-form-field class="example-full-width">
                 <mat-label>Fecha Radicado</mat-label>
-                <input matInput [(ngModel)]="data.datefiled" name="datefiled">
-            </mat-form-field>
+                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.datefiled" name="datefiled">
+                <mat-datepicker-toggle matSuffix [for]="datefiled"></mat-datepicker-toggle>
+                <mat-datepicker #datefiled [startAt]="datelimit"></mat-datepicker>
+            </mat-form-field> -->
 
 
         </div>
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data"
+                cdkFocusInitial>Guardar</button>
         </div>
     </form>
 

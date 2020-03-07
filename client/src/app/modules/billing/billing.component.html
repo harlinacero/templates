@@ -27,7 +27,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="billingtype">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.billingtype}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{getNameById('billingtype', row.billingtype)}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="producttype">
@@ -82,7 +82,8 @@
         <!-- Indicator Column -->
         <ng-container matColumnDef="stateid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.background]="getColorById(row.stateid)"> {{ getNameById('stateid', row.stateid) }}
+            <mat-cell *matCellDef="let row" [style.background]="getColorById(row.stateid)">
+                {{ getNameById('stateid', row.stateid) }}
             </mat-cell>
         </ng-container>
 
@@ -95,6 +96,6 @@
 </div>
 
 <button class="mdc-fab" aria-label="Favorite" (click)="addCostCenter()" [title]="'Agregar'">
-  <div class="mdc-fab__ripple"></div>
-  <span class="mdc-fab__icon material-icons">add</span>
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
 </button>
