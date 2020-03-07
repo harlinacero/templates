@@ -11,12 +11,14 @@ namespace WebApplication1.DomainServices
 
         #region Fields
         private readonly IRepository<Billing> _billingRepo;
+        private readonly IRepository<Status> _stateRepo;
         #endregion
 
         #region Builder
-        public BillingDomainService(IRepository<Billing> billingRepo)
+        public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo)
         {
             _billingRepo = billingRepo;
+            _stateRepo = stateRepo;
         }
         #endregion
         public RequestResult<IEnumerable<Billing>> GetAllBilling()
@@ -35,6 +37,8 @@ namespace WebApplication1.DomainServices
             return RequestResult<Billing>.CreateUnSuccesfull("No se encontró el valor indicado");
         }
 
+
+
         public RequestResult<Billing> SaveBilling(Billing billing)
         {
             var billingEntity = _billingRepo.GetById(billing.Id);
@@ -42,6 +46,12 @@ namespace WebApplication1.DomainServices
                 return UpdateBilling(billing);
 
             return AddBilling(billing);
+        }
+
+        public RequestResult<IEnumerable<Status>> GetStates()
+        {
+            var list = _stateRepo.ListAll();
+            return RequestResult<IEnumerable<Status>>.CreateSuccesfull(list);
         }
 
         private RequestResult<Billing> AddBilling(Billing billing)

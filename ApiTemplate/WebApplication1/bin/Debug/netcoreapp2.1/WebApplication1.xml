@@ -196,6 +196,13 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.BillingController.GetStates">
+            <summary>
+            Get billing by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">
             <summary>
             Get all roles

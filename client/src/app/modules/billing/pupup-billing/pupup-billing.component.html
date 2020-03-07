@@ -1,0 +1,84 @@
+<mat-card class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
+
+    <form class="example-form">
+        <div mat-dialog-content>
+            <mat-form-field class="example-full-width">
+                <mat-label>No. Factura</mat-label>
+                <input type="number" matInput [(ngModel)]="data.numberbilling" name="numberbilling" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Proveedor</mat-label>
+                <!-- <input matInput [(ngModel)]="data.providerid" name="businessName" required> -->
+                <mat-select [(value)]="data.providerid" [(ngModel)]="data.providerid" name="providerid" required>
+                    <mat-option *ngFor="let pro of providers" [(value)]="pro.id">
+                        {{pro.businessName}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo Factura</mat-label>
+                <input matInput [(ngModel)]="data.billingtype" name="billingtype" required>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Tipo Producto</mat-label>
+                <input type="number" matInput [(ngModel)]="data.producttype" name="producttype">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Centro de Costo</mat-label>
+                <mat-select [(value)]="data.costcenterid" [(ngModel)]="data.costcenterid" name="costcenterid" required>
+                    <mat-option *ngFor="let pro of costCenters" [(value)]="pro.id">
+                        {{pro.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Moneda</mat-label>
+                <mat-select [(value)]="data.moneyid" [(ngModel)]="data.moneyid" name="moneyid" required>
+                    <mat-option *ngFor="let pro of moneys" [(value)]="pro.id">
+                        {{pro.unitymoney}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Tasa de Cambio</mat-label>
+                <input type="number" matInput [(ngModel)]="data.exchangerate" name="exchangerate">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha factura</mat-label>
+                <input matInput [(ngModel)]="data.datebilling" name="datebilling">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha Límite</mat-label>
+                <input matInput [(ngModel)]="data.datelimit" name="datelimit">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha Radicado</mat-label>
+                <input matInput [(ngModel)]="data.datefiled" name="datefiled">
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-label>Fecha Radicado</mat-label>
+                <input matInput [(ngModel)]="data.datefiled" name="datefiled">
+            </mat-form-field>
+
+
+        </div>
+        <div mat-dialog-actions class="buttons">
+            <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+</mat-card>

@@ -26,69 +26,75 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="billingtype">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.billingtype}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="producttype">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Producto </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.producttype}} </mat-cell>
         </ng-container>
 
         <!-- DateBill Column -->
         <ng-container matColumnDef="costcenterid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dateBill | date}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ getNameById('costcenterid', row.costcenterid)}} </mat-cell>
         </ng-container>
 
         <!-- Date Aprobate Column -->
         <ng-container matColumnDef="moneyid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Aprobación </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.dateAprobate | date}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Moneda </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ getNameById('moneyid', row.moneyid) }} </mat-cell>
         </ng-container>
 
 
         <!-- Date Pay datePay -->
         <ng-container matColumnDef="exchangerate">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Pago </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.datePay | date}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tasa de cambio </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.exchangerate }} </mat-cell>
         </ng-container>
 
 
         <!-- Area Column -->
         <ng-container matColumnDef="datebilling">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Área </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.area}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.datebilling | date}} </mat-cell>
         </ng-container>
 
         <!-- Value Column -->
         <ng-container matColumnDef="datelimit">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
-            <mat-cell *matCellDef="let row"> $ {{row.value}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Límite </mat-header-cell>
+            <mat-cell *matCellDef="let row"> $ {{row.datelimit| date}} </mat-cell>
         </ng-container>
 
         <!-- Status Column -->
         <ng-container matColumnDef="datefiled">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Radicado </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.datefiled | date}} </mat-cell>
         </ng-container>
 
-          <!-- Status Column -->
-          <ng-container matColumnDef="valuebill">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.status}} </mat-cell>
+        <!-- Status Column -->
+        <ng-container matColumnDef="valuebill">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.valuebill}} </mat-cell>
         </ng-container>
 
         <!-- Indicator Column -->
         <ng-container matColumnDef="stateid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.background]="row.color"> {{row.indicator}} </mat-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+            <mat-cell *matCellDef="let row" [style.background]="getColorById(row.stateid)"> {{ getNameById('stateid', row.stateid) }}
+            </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setAprovalMatrix(row)">
         </mat-row>
     </mat-table>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 </div>
 
-<button class="mdc-fab" aria-label="Favorite" (click)="newBilling()" [title]="'Agregar'">
-    <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">add</span>
+<button class="mdc-fab" aria-label="Favorite" (click)="addCostCenter()" [title]="'Agregar'">
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
 </button>

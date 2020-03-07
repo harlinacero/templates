@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Provider } from '@angular/core';
 import { ServiceBase } from 'src/app/shared/services/service.base';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { ValueTransformer } from '@angular/compiler/src/util';
 import { Billing } from 'src/app/shared/interfaces/billing.interface';
 import { Product } from 'src/app/shared/interfaces/product.interface';
@@ -11,6 +11,9 @@ import { AdminService } from 'src/app/shared/services/admin.service';
 import { Providers } from './../../shared/interfaces/providers.interface';
 import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.helper';
 import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.service';
+import { Status } from 'src/app/shared/interfaces/status.interface';
+import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
+
 
 @Component({
   selector: 'app-billing',
@@ -19,29 +22,40 @@ import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.serv
 })
 export class BillingComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate', 'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
+  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate',
+    'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
   dataSource: MatTableDataSource<any>;
   providers: Providers[] = [];
   billings: Billing[] = [];
   products: Product[] = [];
   costCenters: CostCenter[] = [];
   moneys: Money[] = [];
+  states: Status[] = [];
 
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
   constructor(private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
-    private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService) {
+    // tslint:disable-next-line: align
+    private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService,
+    // tslint:disable-next-line: align
+    public dialog: MatDialog) {
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
     this.getAllMoneys();
+    this.getAllStates();
     this.getAllBillings();
   }
 
   ngOnInit() {
     this.serviceBase.validateSession();
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   getAllProviders() {
@@ -90,6 +104,18 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
+  getAllStates() {
+    this.billingService.GetAllStates()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.states = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+
   getAllBillings() {
     this.billingService.GetAllBilling()
       .subscribe(res => {
@@ -102,36 +128,41 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getNameById(nameList: strign, id: number) {
-    switch(nameList) {
+  getNameById(nameList: string, id: number) {
+    switch (nameList) {
       case 'providerid':
-        const prov = this.providers.find( p => p.id === id);
-        const name = (!!prov) ? prov.businessName : '';
-        return name;
-      // case 'billingtype':
-      //   const prov = this.bill.find( p => p.id = id);
-      //   const name = (!!prov) ? prov.businessName : '';
-      //   return name;
+        const prov = this.providers.find(p => p.id === id);
+        return (!!prov) ? prov.businessName : '';
       case 'producttype':
         const prod = this.products.find(pro => pro.id === id);
-        const name = (!!prod) ? prod.code: '';
-        return name;
+        return (!!prod) ? prod.code : '';
       case 'costcenterid':
-       
-        return name;
+        const cost = this.costCenters.find(co => co.id === id);
+        return (!!cost) ? cost.name : '';
       case 'moneyid':
-        return name;
+        const money = this.moneys.find(mo => mo.id === id);
+        return (!!money) ? money.code : '';
       case 'stateid':
-        return name;
+        const stat = this.states.find(st => st.id === id);
+        return (!!stat) ? stat.name : '';
     }
 
   }
 
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  getColorById(stateid) {
+    switch (stateid) {
+      case 1: // En Proceso Aprobación
+        return 'blue';
+      case 2: // Aprobada
+        return 'green';
+      case 3: // Rechazada
+        return 'gray';
+      case 4: // Cancelada
+        return 'orange';
+    }
   }
+
+
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -139,8 +170,28 @@ export class BillingComponent implements OnInit, AfterViewInit {
     this.dataSource.filter = filterValue;
   }
 
-  newBilling() {
+  setAprovalMatrix(row) {
+    const dialogRef = this.dialog.open(PupupBillingComponent, {
+      height: '500px',
+      width: '1200px',
+      data: row
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllBillings();
+    });
+  }
+
+  addCostCenter() {
+    const dialogRef = this.dialog.open(PupupBillingComponent, {
+      height: 'auto',
+      width: '600px',
+      data: this.billings
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.getAllBillings();
+    });
   }
 
 

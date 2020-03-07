@@ -45,6 +45,7 @@ namespace WebApplication1.AppServices
             }
         }
 
+
         public RequestResult<Billing> SaveBilling(Billing billing)
         {
             try
@@ -54,6 +55,19 @@ namespace WebApplication1.AppServices
             catch (Exception ex)
             {
                 return RequestResult<Billing>.CreateUnSuccesfull(ex.Message);
+            }
+        }
+
+
+        public RequestResult<IEnumerable<Status>> GetStates()
+        {
+            try
+            {
+                return _billingDomainService.GetStates();
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<IEnumerable<Status>>.CreateUnSuccesfull(ex.Message);
             }
         }
     }

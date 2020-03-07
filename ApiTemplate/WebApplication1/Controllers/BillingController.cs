@@ -56,9 +56,21 @@ namespace WebApplication1.Controllers
             return _billingAppService.GetBillingById(Id);
         }
 
+        /// <summary>
+        /// Get billing by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetStates")]
+        public RequestResult<IEnumerable<Status>> GetStates()
+        {
+            return _billingAppService.GetStates();
+        }
+
         #endregion
 
 
-        
+
     }
 }

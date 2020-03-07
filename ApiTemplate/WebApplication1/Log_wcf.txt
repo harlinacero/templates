@@ -171,3 +171,30 @@ Fecha: 5/03/2020 10:06:01 p. m.
 -------------------
 Dato: 3D000: no existe la base de datos �test�
 Fecha: 5/03/2020 10:06:01 p. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:01:19 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:01:19 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:02:34 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:02:34 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:02:35 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:02:35 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:05:43 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:05:44 a. m.
+-------------------
+Dato: 3D000: no existe la base de datos �test�
+Fecha: 7/03/2020 1:05:44 a. m.
