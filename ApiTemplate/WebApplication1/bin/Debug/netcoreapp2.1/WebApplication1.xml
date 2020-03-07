@@ -176,6 +176,26 @@
             <param name="matrices"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.BillingController.GetAllBilling">
+            <summary>
+            Get all billing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.BillingController.SaveBilling(WebApplication1.DomainServices.Entities.Billing)">
+            <summary>
+            Update or add billing
+            </summary>
+            <param name="billing"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.BillingController.GetBillingById(System.Int32)">
+            <summary>
+            Get billing by Id
+            </summary>
+            <param name="Id"></param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">
             <summary>
             Get all roles

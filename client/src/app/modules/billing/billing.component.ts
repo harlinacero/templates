@@ -1,7 +1,16 @@
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Provider } from '@angular/core';
 import { ServiceBase } from 'src/app/shared/services/service.base';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { ValueTransformer } from '@angular/compiler/src/util';
+import { Billing } from 'src/app/shared/interfaces/billing.interface';
+import { Product } from 'src/app/shared/interfaces/product.interface';
+import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
+import { Money } from 'src/app/shared/interfaces/money.interface';
+import { BillingService } from 'src/app/shared/services/billing.service';
+import { AdminService } from 'src/app/shared/services/admin.service';
+import { Providers } from './../../shared/interfaces/providers.interface';
+import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.helper';
+import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.service';
 
 @Component({
   selector: 'app-billing',
@@ -9,24 +18,113 @@ import { ValueTransformer } from '@angular/compiler/src/util';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['id', 'name', 'reference', 'dateBill', 'dateAprobate', 'datePay', 'area', 'value', 'status', 'indicator'];
-  dataSource: MatTableDataSource<UserData>;
+
+  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate', 'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
+  dataSource: MatTableDataSource<any>;
+  providers: Providers[] = [];
+  billings: Billing[] = [];
+  products: Product[] = [];
+  costCenters: CostCenter[] = [];
+  moneys: Money[] = [];
+
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  constructor(private serviceBase: ServiceBase) {
-
-    const users: UserData[] = [];
-    for (let i = 1; i <= 100; i++) { users.push(createNewUser(i)); }
-
-    // Assign the data to the data source for the table to render
-    this.dataSource = new MatTableDataSource(users);
-
+  constructor(private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
+    private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService) {
+    this.getAllProviders();
+    this.getAllProducts();
+    this.getAllCostCenters();
+    this.getAllMoneys();
+    this.getAllBillings();
   }
 
   ngOnInit() {
     this.serviceBase.validateSession();
+  }
+
+  getAllProviders() {
+    this.adminService.getAllProviders()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.providers = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+  getAllProducts() {
+    this.adminService.getAllProducts()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.products = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+  getAllCostCenters() {
+    this.adminService.getAllCostCenter()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.costCenters = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+
+
+  getAllMoneys() {
+    this.aprovalMatrixService.getAllMoney()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.moneys = res.result;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+  getAllBillings() {
+    this.billingService.GetAllBilling()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.billings = res.result;
+          this.dataSource = new MatTableDataSource(res.result);
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+  }
+
+  getNameById(nameList: strign, id: number) {
+    switch(nameList) {
+      case 'providerid':
+        const prov = this.providers.find( p => p.id === id);
+        const name = (!!prov) ? prov.businessName : '';
+        return name;
+      // case 'billingtype':
+      //   const prov = this.bill.find( p => p.id = id);
+      //   const name = (!!prov) ? prov.businessName : '';
+      //   return name;
+      case 'producttype':
+        const prod = this.products.find(pro => pro.id === id);
+        const name = (!!prod) ? prod.code: '';
+        return name;
+      case 'costcenterid':
+       
+        return name;
+      case 'moneyid':
+        return name;
+      case 'stateid':
+        return name;
+    }
+
   }
 
 

@@ -3,7 +3,7 @@
         <mat-card-title>{{title}} {{costCenter.name}}</mat-card-title>
         <div style="position: absolute; right: 0;">
             <button class="auxiliar-button" style="background: none; border: none;" mat-button (click)="addLevel()"><i
-          class="material-icons">add</i></button>
+                    class="material-icons">add</i></button>
         </div>
     </mat-card-header>
     <!-- [formGroup]="matrix" -->
@@ -25,43 +25,52 @@
                         </td>
 
                         <td>
-                            <select class="custom-select" [(value)]="row.personId" (change)="selectedValueChange($event.srcElement.value, 'personId' , i)" required>
-                <option *ngFor="let item of persons" [(value)]="item.id">{{item.firstName}}
-                  {{item.lastName}}</option>
-              </select>
-                            <span class="validate-field" id="personId-{{i}}" style="display: none;">El campo no Aprobador puede ser
-                nulo</span>
+                            <select class="custom-select" [(value)]="row.personId"
+                                (change)="selectedValueChange($event.srcElement.value, 'personId' , i)" required>
+                                <option *ngFor="let item of persons" [(value)]="item.id">{{item.firstName}}
+                                    {{item.lastName}}</option>
+                            </select>
+                            <span class="validate-field" id="personId-{{i}}" style="display: none;">El campo no
+                                Aprobador puede ser
+                                nulo</span>
                         </td>
 
                         <td>
-                            <input type="number" min="1" class="form-control" [(value)]="row.daysToAprobate" (change)="selectedValueChange($event.srcElement.value, 'daysToAprobate' , i)" required>
-                            <span class="validate-field" id="daysToAprobate-{{i}}" style="display: none;">El campo no Dias de
-                aprobación puede ser nulo</span>
+                            <input type="number" min="1" class="form-control" [(value)]="row.daysToAprobate"
+                                (change)="selectedValueChange($event.srcElement.value, 'daysToAprobate' , i)" required>
+                            <span class="validate-field" id="daysToAprobate-{{i}}" style="display: none;">El campo no
+                                Dias de
+                                aprobación puede ser nulo</span>
                         </td>
 
                         <td>
                             <!-- <input type="number" min="1" class="form-control" [(value)]="row.money" (change)="selectedValueChange($event.srcElement.value, 'money' , i)" required> -->
-                            <select class="custom-select" [(value)]="row.moneyId" (change)="selectedValueChange($event.srcElement.value, 'moneyId' , i)" required>
-                            <option *ngFor="let item of moneys" [(value)]="item.id">{{item.code}}</option>
-                          </select>
-                            <span class="validate-field" id="money-{{i}}" style="display: none;">El campo Moneda de
-              aprobación puede ser nulo</span>
+                            <select class="custom-select" [(value)]="row.moneyId"
+                                (change)="selectedValueChange($event.srcElement.value, 'moneyId' , i)" required>
+                                <option *ngFor="let item of moneys" [(value)]="item.id">{{item.code}}</option>
+                            </select>
+                            <span class="validate-field" id="moneyId-{{i}}" style="display: none;">El campo Moneda no
+                                puede ser nulo</span>
                         </td>
 
                         <td>
-                            <input type="number" class="form-control" min="{{getValueMin(i)}}" [(value)]="row.valueMin" (change)="selectedValueChange($event.srcElement.value, 'valueMin' , i)" required>
-                            <span class="validate-field" id="valueMin-{{i}}" style="display: none;">El campo no Valor Mínimo puede ser
-                0 </span>
+                            <input type="number" class="form-control" min="{{getValueMin(i)}}" [(value)]="row.valueMin"
+                                (change)="selectedValueChange($event.srcElement.value, 'valueMin' , i)" required>
+                            <span class="validate-field" id="valueMin-{{i}}" style="display: none;">El campo no Valor
+                                Mínimo puede ser
+                                0 </span>
                         </td>
 
                         <td>
-                            <input type="number" class="form-control" min="{{getValueMax(i)}}" [(value)]="row.valueMax" (change)="selectedValueChange($event.srcElement.value, 'valueMax' , i)" required>
-                            <span class="validate-field" id="valueMax-{{i}}" style="display: none;">El campo no Valor Máximo puede ser
-                0 </span>
+                            <input type="number" class="form-control" min="{{getValueMax(i)}}" [(value)]="row.valueMax"
+                                (change)="selectedValueChange($event.srcElement.value, 'valueMax' , i)" required>
+                            <span class="validate-field" id="valueMax-{{i}}" style="display: none;">El campo no Valor
+                                Máximo puede ser
+                                0 </span>
                         </td>
                         <td>
                             <button style="background: none; border: none;" (click)="removeLevel(i)"><i
-                  class="fa fa-minus"></i></button>
+                                    class="fa fa-minus"></i></button>
                         </td>
 
                     </tr>

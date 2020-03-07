@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { MatTableDataSource, MatDialog } from '@angular/material';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
 import { AdminService } from '../../../shared/services/admin.service';
 import { PopupUsersComponent } from './popup-users/popup-users.component';
 import { Person, DocumentType } from './../../../shared/interfaces/person.interface';
@@ -12,7 +12,11 @@ import { Role } from 'src/app/shared/interfaces/role.interface';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, AfterViewInit {
+
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
   displayedColumns = ['id', 'documentType', 'name', 'email', 'phone', 'roleId'];
 
   dataSource: MatTableDataSource<any>;
@@ -29,6 +33,12 @@ export class UsersComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -87,8 +97,8 @@ export class UsersComponent implements OnInit {
 
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-            password: string, roleId: number, ): Person {
+    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+    password: string, roleId: number, ): Person {
     return {
       id,
       address,
