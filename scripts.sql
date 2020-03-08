@@ -10,6 +10,26 @@ CREATE DATABASE test
        LC_CTYPE = 'Spanish_Spain.1252'
        CONNECTION LIMIT = -1;
 
+
+CREATE TABLE MENU
+(
+id serial primary key, 
+icon varchar(20),
+name varchar(40),
+component varchar(40),
+  userchange integer,
+  datemodified timestamp without time zone
+);
+
+INSERT INTO MENU (icon, name, component, userchange, datemodified)
+VALUES 
+    ('fa fa-home', 'Inicio', '/home', 0, now()),
+    ('fa fa-file-text-o', 'Gestión de Facturas', '/billing', 0, now()),
+    ('fa fa-shopping-cart', 'Órdenes de Compra', '/shopping', 0, now()),
+    ('fa fa-users', 'Administración', '/admin', 0, now()),
+    ('fa fa-line-chart', 'Informes', '/reports', 0, now()),
+    ('fa fa-cog', 'Configuración', '/settings', 0, now());
+	
 -- Table: role
 
 -- DROP TABLE role;
@@ -316,6 +336,13 @@ VALUES
 ('Aprobada', 0, now()),
 ('Rechazada', 0, now()),
 ('Cancelada', 0, now());
+
+alter table status add column color varchar(10);
+
+update status set color = '#4586c7' where id = 1;
+update status set color = '#287531' where id = 2;
+update status set color = '#585858' where id = 3;
+update status set color = '#ab3030' where id = 4;
 
 -- Table: billing
 

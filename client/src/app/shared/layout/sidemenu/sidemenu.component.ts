@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Session } from '../../interfaces/session.interface';
+
 
 @Component({
   selector: 'app-sidemenu',
@@ -18,7 +20,15 @@ export class SidemenuComponent implements OnInit {
     { icon: 'fa fa-cog', name: 'Configuración', component: '/settings' }
   ];
 
-  constructor() { }
+  constructor() {
+    const session: Session = JSON.parse(localStorage.getItem('session'));
+    if (!!session) {
+      this.menuItems = session.menus;
+    }
+
+
+
+  }
 
   ngOnInit() {
   }

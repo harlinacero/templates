@@ -1,4 +1,5 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
+import { HttpEventType, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Billing } from 'src/app/shared/interfaces/billing.interface';
 import { ServiceBase } from 'src/app/shared/services/service.base';
@@ -12,6 +13,11 @@ import { Status } from 'src/app/shared/interfaces/status.interface';
 import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.helper';
 import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.service';
 import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
+import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
+import { of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
+import { FileValidator } from 'ngx-material-file-input';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -19,6 +25,8 @@ import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
   styleUrls: ['./pupup-billing.component.scss']
 })
 export class PupupBillingComponent implements OnInit {
+  @ViewChild('fileUpload', { static: false }) fileUpload: ElementRef;
+  files = [];
 
   title = 'Agregar Factura';
   data: Billing;
@@ -28,6 +36,8 @@ export class PupupBillingComponent implements OnInit {
   moneys: Money[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
+  disabled = false;
+  isVisible = false;
 
 
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
@@ -36,8 +46,11 @@ export class PupupBillingComponent implements OnInit {
     // tslint:disable-next-line: align
     private aprovalMatrixService: AprovalMatrixService,
     // tslint:disable-next-line: align
-    private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService) {
+    private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
+    // tslint:disable-next-line: align
+    private formBuilder: FormBuilder, private httpClient: HttpClient) {
     this.data = bill;
+
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
@@ -45,8 +58,12 @@ export class PupupBillingComponent implements OnInit {
     this.getAllMoneys();
     this.getAllStates();
 
-    if (this.bill.id > 0) {
+    if (this.data.id > 0) {
       this.title = 'Modificar Factura';
+      this.disabled = true; // cambiar
+    } else {
+      this.disabled = false;
+      this.setFieldsVisible(this.data.stateid);
     }
 
   }
@@ -54,6 +71,7 @@ export class PupupBillingComponent implements OnInit {
   ngOnInit() {
 
   }
+
 
   getAllProviders() {
     this.adminService.getAllProviders()
@@ -74,7 +92,7 @@ export class PupupBillingComponent implements OnInit {
         } else {
           this.helper.controlErros(res);
         }
-      })
+      });
   }
 
 
@@ -124,16 +142,65 @@ export class PupupBillingComponent implements OnInit {
       });
   }
 
+  setFieldsVisible(event) {
+    if (event === StatusBillingEnum.Rechazada) {
+      this.isVisible = true;
+    } else {
+      this.isVisible = false;
+    }
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   save() {
+
+    this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.id : StatusBillingEnum['En Proceso Aprobación'];
     this.billingService.SaveBilling(this.data).subscribe(res => {
       if (res.isSuccesfull) {
-        alert('Factura actualizado');
+        alert('Se ha agregado la factura');
+      } else {
+        this.helper.controlErros(res);
       }
     });
   }
+
+
+
+
+
+
+
+
+  // getBilling() {
+
+  //   const stateId = (!!this.data.id || this.data.id === 0) ? this.data.id : StatusBillingEnum['En Proceso Aprobación'];
+
+  //   const billing: Billing = {
+  //     billingtype: this.data.billingtype,
+  //     casuerejection: this.data.casuerejection,
+  //     costcenterid: this.data.costcenterid,
+  //     dateaprovalrejection: this.data.dateaprovalrejection,
+  //     datebilling: this.data.datebilling,
+  //     datecreated: this.data.datecreated,
+  //     datefiled: this.data.datefiled,
+  //     datelimit: this.data.datelimit,
+  //     exchangerate: this.data.exchangerate,
+  //     moneyid: this.data.moneyid,
+  //     numberbilling: this.data.numberbilling,
+  //     producttype: this.data.producttype,
+  //     providerid: this.data.providerid,
+  //     routefile: this.data.routefile,
+  //     stateid: stateId,
+  //     userchange: this.data.userchange,
+  //     userrejection: this.data.userrejection,
+  //     valuebill: this.data.valuebill,
+  //     id: this.data.id
+  //   };
+
+  //   return billing;
+
+  // }
 
 }

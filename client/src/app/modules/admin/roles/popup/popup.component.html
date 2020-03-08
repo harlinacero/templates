@@ -1,17 +1,27 @@
-<h1 mat-dialog-title>{{title}}</h1>
-<div mat-dialog-content>
-    <mat-form-field>
-        <mat-label>Nombre</mat-label>
-        <input matInput [(ngModel)]="data.name">
-    </mat-form-field>
+<div class="box">
+    <mat-card-header>
+        <mat-card-title>{{title}}</mat-card-title>
+    </mat-card-header>
 
-    <mat-form-field>
-        <mat-label>Descripción</mat-label>
-        <input matInput [(ngModel)]="data.description">
-    </mat-form-field>
-</div>
-<div mat-dialog-actions class="buttons">
-    <button mat-raised-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-    <button mat-raised-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data.name"
-        cdkFocusInitial>Guardar</button>
+    <form class="example-form">
+        <div mat-dialog-content>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput [(ngModel)]="data.name" name="name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Descripción</mat-label>
+                <input matInput [(ngModel)]="data.description" name="description">
+            </mat-form-field>
+        </div>
+
+        <div mat-dialog-actions class="buttons">
+            <button mat-raised-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
+            <button mat-raised-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data.name" cdkFocusInitial>Guardar</button>
+        </div>
+    </form>
+
+
 </div>

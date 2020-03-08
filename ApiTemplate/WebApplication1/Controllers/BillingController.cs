@@ -1,7 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Entities;
@@ -33,16 +37,25 @@ namespace WebApplication1.Controllers
         {
             return _billingAppService.GetAllBilling();
         }
-        /// <summary>
-        /// Update or add billing
-        /// </summary>
-        /// <param name="billing"></param>
-        /// <returns></returns>
+        ///// <summary>
+        ///// Update or add billing
+        ///// </summary>
+        ///// <param name="billing"></param>
+        ///// <returns></returns>
+        //[HttpPost]
+        //[Route("SaveBilling")]
+        //public RequestResult<Billing> SaveBilling(Billing billing)
+        //{
+        //    return _billingAppService.SaveBilling(billing);
+        //}
+
+
         [HttpPost]
         [Route("SaveBilling")]
         public RequestResult<Billing> SaveBilling(Billing billing)
         {
             return _billingAppService.SaveBilling(billing);
+            
         }
         /// <summary>
         /// Get billing by Id

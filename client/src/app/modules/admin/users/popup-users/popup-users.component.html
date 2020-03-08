@@ -1,11 +1,11 @@
-<mat-card class="box">
+<div class="box">
     <mat-card-header>
         <mat-card-title>{{title}}</mat-card-title>
     </mat-card-header>
 
     <form class="example-form">
         <div mat-dialog-content>
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo Documento</mat-label>
                 <!-- <input matInput [(ngModel)]="data.documentType" name="documentType" required> -->
                 <mat-select [(value)]="data.documentType" [(ngModel)]="data.documentType" name="documentType" required>
@@ -15,32 +15,32 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Número Documento</mat-label>
                 <input matInput [(ngModel)]="data.documentNumber" name="documentNumber" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Primer Nombre</mat-label>
                 <input matInput [(ngModel)]="data.firstName" name="firstName" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Segundo Nombre</mat-label>
                 <input matInput [(ngModel)]="data.secondName" name="secondName">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Primer Apellido</mat-label>
                 <input matInput [(ngModel)]="data.lastName" name="lastname" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Segundo Apellido</mat-label>
                 <input matInput [(ngModel)]="data.secondLastName" name="secontLastName">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Rol</mat-label>
                 <mat-select [(value)]="data.roleId" [(ngModel)]="data.roleId" name="roleId" required>
                     <mat-option *ngFor="let rol of roles" [(value)]="rol.id">
@@ -50,40 +50,38 @@
                 <!-- <input matInput [(ngModel)]="data.rolId"> -->
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Email</mat-label>
                 <input matInput placeholder="pat@example.com" [(ngModel)]="data.email" name="email" required>
                 <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Diección</mat-label>
                 <input matInput [(ngModel)]="data.address" name="address">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Teléfono</mat-label>
                 <input matInput [(ngModel)]="data.phone" name="phone">
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Contraseña</mat-label>
                 <input matInput [(ngModel)]="data.password" name="password" type="password" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Repetir Contraseña</mat-label>
-                <input matInput id="password2" name="password2" (onkeyup)="validatePassword($event)" type="password"
-                    required>
+                <input matInput id="password2" name="password2" (onchange)="validatePassword($event)" type="password" required>
             </mat-form-field>
 
 
         </div>
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data.documentNumber"
-                cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data.documentNumber" cdkFocusInitial>Guardar</button>
         </div>
     </form>
 
-</mat-card>
+</div>

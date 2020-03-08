@@ -182,13 +182,6 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.BillingController.SaveBilling(WebApplication1.DomainServices.Entities.Billing)">
-            <summary>
-            Update or add billing
-            </summary>
-            <param name="billing"></param>
-            <returns></returns>
-        </member>
         <member name="M:WebApplication1.Controllers.BillingController.GetBillingById(System.Int32)">
             <summary>
             Get billing by Id

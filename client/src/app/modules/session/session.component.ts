@@ -26,7 +26,7 @@ export class SessionComponent implements OnInit {
 
   logIn(username: string, password: string, event: Event) {
     event.preventDefault();
-    this.sessionService.login(username, password)
+    this.sessionService.login(username, btoa(password))
       .subscribe(res => {
         if (res.isSuccesfull) {
           localStorage.setItem('session', JSON.stringify(res.result));
@@ -35,6 +35,7 @@ export class SessionComponent implements OnInit {
         } else {
           this.intentos = this.intentos - 1;
           localStorage.clear();
+          alert(res.message);
           this.router.navigateByUrl('login');
         }
       });

@@ -18,7 +18,7 @@ namespace WebApplication1.AppServices
         }
 
 
-        public RequestResult<Session> Login(Login login)
+        public RequestResult<Account> Login(Login login)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace WebApplication1.AppServices
             }
             catch (Exception ex)
             {
-                return RequestResult<Session>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<Account>.CreateUnSuccesfull(ex.Message);
             }
         }
     }

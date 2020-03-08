@@ -56,6 +56,7 @@ namespace WebApplication1
             //services.AddEntityFrameworkNpgsql().AddDbContext<AppDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
             //services.AddDbContext<AppDbContext>(options =>  options.UseNpgsql(Configuration.GetConnectionString("AppDbContext")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddSingleton<IConfiguration>(Configuration);
 
             DependencyInjectionProfile.RegisterProfile(services);
 

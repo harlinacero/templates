@@ -23,7 +23,7 @@ namespace WebApplication1.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public RequestResult<Session> Login(Login login)
+        public RequestResult<Account> Login(Login login)
         {
             return _sessionAppService.Login(login);
         }

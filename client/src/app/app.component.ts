@@ -27,14 +27,14 @@ export class AppComponent implements OnInit {
 
 
   addBackgroundImage(session) {
-    if (!(!!session)) {
-      const a = document.getElementById('wrapper');
-      a.style.backgroundImage = 'url("./assets/images/loginImage.jpg")';
-      a.style.backgroundPosition = 'center';
-      a.style.backgroundRepeat = 'no-repeat';
-      a.style.backgroundSize = 'cover';
-      a.style.height = '100vh';
-    }
+    // if (!(!!session)) {
+    //   const a = document.getElementById('wrapper');
+    //   a.style.backgroundImage = 'url("./assets/images/loginImage.jpg")';
+    //   a.style.backgroundPosition = 'center';
+    //   a.style.backgroundRepeat = 'no-repeat';
+    //   a.style.backgroundSize = 'cover';
+    //   a.style.height = '100vh';
+    // }
   }
 }
 

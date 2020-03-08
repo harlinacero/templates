@@ -11,6 +11,7 @@ import { TypeBilling } from '../interfaces/typeBilling.interface';
   providedIn: 'root',
 })
 export class BillingService {
+
   urls: Urls;
 
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
@@ -25,12 +26,17 @@ export class BillingService {
     return this.http.get<RequestResult<Billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
   }
 
-  SaveBilling(levelsAproval: Billing) {
+  SaveBilling(levelsAproval: Billing, ) {
     return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, levelsAproval);
   }
 
+
+  upload(formData: FormData) {
+    return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, formData);
+  }
+
   GetAllStates() {
-    return this.http.get<RequestResult<Status[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
+    return this.http.get<RequestResult<Status[]>>(`${this.urls.urlbase}Billing/GetStates`);
   }
 
   GetAllTypesBilling() {

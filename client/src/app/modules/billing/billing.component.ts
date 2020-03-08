@@ -14,6 +14,7 @@ import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.serv
 import { Status } from 'src/app/shared/interfaces/status.interface';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
 import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
+import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
 
 
 @Component({
@@ -25,6 +26,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
 
   displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate',
     'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
+
   dataSource: MatTableDataSource<any>;
   providers: Providers[] = [];
   billings: Billing[] = [];
@@ -33,7 +35,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   moneys: Money[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
-
+  billing: Billing;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -43,13 +45,14 @@ export class BillingComponent implements OnInit, AfterViewInit {
     private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService,
     // tslint:disable-next-line: align
     public dialog: MatDialog) {
-    this.getAllProviders();
-    this.getAllProducts();
     this.getAllCostCenters();
     this.getAllMoneys();
     this.getAllStates();
     this.getAllTypeBilling();
+    this.getAllProducts();
+    this.getAllProviders();
     this.getAllBillings();
+
   }
 
   ngOnInit() {
@@ -58,6 +61,20 @@ export class BillingComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
 
+  }
+
+  getAllBillings() {
+    this.billingService.GetAllBilling()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.billings = res.result;
+          this.dataSource = new MatTableDataSource(res.result);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
   }
 
   getAllProviders() {
@@ -87,6 +104,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.costCenters = res.result;
+
         } else {
           this.helper.controlErros(res);
         }
@@ -100,6 +118,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.moneys = res.result;
+
         } else {
           this.helper.controlErros(res);
         }
@@ -125,26 +144,19 @@ export class BillingComponent implements OnInit, AfterViewInit {
         } else {
           this.helper.controlErros(res);
         }
-      })
-  }
-
-
-
-  getAllBillings() {
-    this.billingService.GetAllBilling()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.billings = res.result;
-          this.dataSource = new MatTableDataSource(res.result);
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-        } else {
-          this.helper.controlErros(res);
-        }
       });
   }
 
+
+
+
+
   getNameById(nameList: string, id: number) {
+    if (!(!!id)) {
+      console.log(nameList);
+      return;
+    }
+
     switch (nameList) {
       case 'providerid':
         const prov = this.providers.find(p => p.id === id);
@@ -165,20 +177,11 @@ export class BillingComponent implements OnInit, AfterViewInit {
         const stat = this.states.find(st => st.id === id);
         return (!!stat) ? stat.name : '';
     }
-
   }
 
   getColorById(stateid) {
-    switch (stateid) {
-      case 1: // En Proceso Aprobación
-        return 'blue';
-      case 2: // Aprobada
-        return 'green';
-      case 3: // Rechazada
-        return 'gray';
-      case 4: // Cancelada
-        return 'orange';
-    }
+    const state = this.states.find(st => st.id === stateid);
+    return (!!state) ? state.color : 'red';
   }
 
 
@@ -191,8 +194,8 @@ export class BillingComponent implements OnInit, AfterViewInit {
 
   setAprovalMatrix(row) {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
-      height: '500px',
-      width: '1200px',
+      height: 'auto',
+      width: 'auto',
       data: row
     });
 
@@ -204,8 +207,8 @@ export class BillingComponent implements OnInit, AfterViewInit {
   addCostCenter() {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
       height: 'auto',
-      width: '1200px',
-      data: this.billings
+      width: 'auto',
+      data: this.billing
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -214,70 +217,4 @@ export class BillingComponent implements OnInit, AfterViewInit {
   }
 
 
-}
-
-/** Builds and returns a new User. */
-function createNewUser(id: number): UserData {
-  const name =
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))] + ' ' +
-    NAMES[Math.round(Math.random() * (NAMES.length - 1))].charAt(0) + '.';
-
-  const area =
-    AREA[Math.round(Math.random() * (AREA.length - 1))];
-
-  const status =
-    STATUS[Math.round(Math.random() * (STATUS.length - 1))];
-  const indicadores =
-    INDICATORS[Math.round(Math.random() * (INDICATORS.length - 1))];
-
-
-
-  return {
-    id: id.toString(),
-    name,
-    reference: 'Referencia' + Math.round(Math.random() * 100),
-    area,
-    dateAprobate: new Date(),
-    dateBill: new Date(),
-    datePay: new Date(),
-    status,
-    value: Math.round(Math.random() * 1000),
-    indicator: indicadores,
-    color: getColor(indicadores)
-  };
-}
-
-function getColor(indicador: string) {
-  switch (indicador) {
-    case 'A tiempo':
-      return 'green';
-    case 'Tarde':
-      return 'red';
-    case 'Pendiente Tarde':
-      return 'orange';
-  }
-}
-
-/** Constants used to fill up our data base. */
-const COLORS = ['maroon', 'red', 'orange', 'yellow', 'olive', 'green', 'purple',
-  'fuchsia', 'lime', 'teal', 'aqua', 'blue', 'navy', 'black', 'gray'];
-const NAMES = ['Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack',
-  'Charlotte', 'Theodore', 'Isla', 'Oliver', 'Isabella', 'Jasper',
-  'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'];
-const AREA = ['Compras', 'Comercial', 'Tesoreria', 'Administración'];
-const STATUS = ['Cancelada', 'Aprobada', 'Pendiente Aprobación', 'Pendiente Pago'];
-const INDICATORS = ['A tiempo', 'Tarde', 'Pendiente Tarde'];
-
-export interface UserData {
-  id: string;
-  name: string;
-  reference: string;
-  dateBill: Date;
-  dateAprobate: Date;
-  datePay: Date;
-  area: string;
-  value: number;
-  status: string;
-  color: string;
-  indicator: string;
 }

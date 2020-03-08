@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -82,5 +83,7 @@ namespace WebApplication1.AppServices
                 return RequestResult<IEnumerable<TypeBilling>>.CreateUnSuccesfull(ex.Message);
             }
         }
+
+     
     }
 }

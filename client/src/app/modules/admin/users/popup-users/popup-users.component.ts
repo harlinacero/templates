@@ -22,7 +22,7 @@ export class PopupUsersComponent {
   constructor(
     public dialogRef: MatDialogRef<PopupUsersComponent>,
     @Inject(MAT_DIALOG_DATA) public person: Person, private userService: AdminService) {
-
+    person.password = atob(person.password);
     this.data = person;
     this.getRoles();
     this.getDocuments();
@@ -64,6 +64,7 @@ export class PopupUsersComponent {
       this.person.documentType, this.person.email, this.person.firstName, this.person.secondName,
       this.person.lastName, this.person.secondLastName, this.person.phone, this.person.password,
       this.person.roleId);
+    person.password = btoa(person.password);
     this.userService.saveUser(person).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Usuario actualizado');
@@ -77,8 +78,8 @@ export class PopupUsersComponent {
   }
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,
-            firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
-            password: string, roleId: number): Person {
+    firstName: string, secondName: string, lastName: string, secondLastName: string, phone: string,
+    password: string, roleId: number): Person {
     return {
       id,
       address,

@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { ISession } from '../../interfaces/session.interface';
+import { Session } from '../../interfaces/session.interface';
 
 
 @Component({
@@ -21,9 +21,9 @@ export class NavbarComponent implements OnInit {
     this.isExpandSidebar = false;
     const sessionString = localStorage.getItem('session');
     if (!!sessionString) {
-      const session: ISession = JSON.parse(sessionString);
+      const session: Session = JSON.parse(sessionString);
       this.menuIcon = 'fa fa-bars';
-      this.account = session.userName;
+      this.account = session.person.firstName + ' ' + session.person.lastName;
     }
   }
 

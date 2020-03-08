@@ -23,7 +23,7 @@
         <!-- Name Column -->
         <ng-container matColumnDef="type">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.type}}
+            <mat-cell *matCellDef="let row"> {{ getProductType(row.type)}}
             </mat-cell>
         </ng-container>
 

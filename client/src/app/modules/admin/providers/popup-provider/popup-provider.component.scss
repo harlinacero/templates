@@ -1,27 +1,25 @@
 .example-container .mat-form-field+.mat-form-field {
-  margin-left: 8px;
+    margin-left: 8px;
 }
 
 .box {
-  .example-form {
-    .example-full-width {
-      margin: 1em;
+    .example-form {
+        text-align: center;
+        .example-full-width {
+            margin: 1em;
+        }
+        .btn-block {
+            margin: 1em;
+        }
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            padding: 0;
+            button {
+                margin: 2px;
+                margin-bottom: 2em;
+            }
+        }
     }
-
-    .btn-block {
-      margin: 1em;
-    }
-
-    .buttons {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-      padding: 0;
-
-      button {
-        margin: 2px;
-        margin-bottom: 2em;
-      }
-    }
-  }
 }

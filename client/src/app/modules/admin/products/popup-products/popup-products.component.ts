@@ -11,6 +11,10 @@ import { AdminService } from '../../../../shared/services/admin.service';
 export class PopupProductsComponent implements OnInit {
   title = 'Agregar Producto';
   data: Product;
+  productType: any[] = [
+    { key: 1, value: 'Producto' },
+    { key: 2, value: 'Servicio' }
+  ];
 
   constructor(public dialogRef: MatDialogRef<PopupProductsComponent>,
               @Inject(MAT_DIALOG_DATA) public product: Product, private userService: AdminService) {

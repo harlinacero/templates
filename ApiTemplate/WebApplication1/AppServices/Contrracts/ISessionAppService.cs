@@ -9,6 +9,6 @@ namespace WebApplication1.AppServices.Contrracts
 {
     public interface ISessionAppService
     {
-        RequestResult<Session> Login(Login login);
+        RequestResult<Account> Login(Login login);
     }
 }

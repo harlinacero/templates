@@ -9,6 +9,6 @@ namespace WebApplication1.DomainServices.Contracts
 {
     public interface ISessionDomainService
     {
-        RequestResult<Session> Login(Login login);
+        RequestResult<Account> Login(Login login);
     }
 }

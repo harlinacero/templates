@@ -10,4 +10,12 @@ namespace WebApplication1.DomainServices.Entities
         public string UserName { get; set; }
         public string RoleName { get; set; }
     }
+
+    public class Account
+    {
+        public Person Person { get; set; }
+        public IEnumerable<Menu> Menus { get; set; }
+    }
+
+
 }

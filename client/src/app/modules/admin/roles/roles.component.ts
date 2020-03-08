@@ -7,6 +7,7 @@ import { Role } from 'src/app/shared/interfaces/role.interface';
 import { AdminService } from '../../../shared/services/admin.service';
 import { MatDialog } from '@angular/material/dialog';
 import { PopupComponent } from './popup/popup.component';
+import { MatPaginator } from '@angular/material';
 
 @Component({
   selector: 'app-roles',
@@ -15,8 +16,10 @@ import { PopupComponent } from './popup/popup.component';
 })
 export class RolesComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+
   displayedColumns =
-   ['id', 'name', 'description'];
+    ['id', 'name', 'description'];
   dataSource = new MatTableDataSource();
   roles: Role[];
   role: Role;
@@ -44,6 +47,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
       if (res.isSuccesfull) {
         this.roles = res.result;
         this.dataSource = new MatTableDataSource(this.roles);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       }
     });
   }
@@ -51,8 +56,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
   openDialog(): void {
     this.role = this.getRole(0, '', '');
     const dialogRef = this.dialog.open(PopupComponent, {
-      height: '400px',
-      width: '300px',
+      height: 'auto',
+      width: 'auto',
       data: this.role
     });
 
@@ -64,13 +69,12 @@ export class RolesComponent implements OnInit, AfterViewInit {
   updateRol(event) {
     this.role = this.getRole(event.id, event.name, event.description);
     const dialogRef = this.dialog.open(PopupComponent, {
-      height: '400px',
-      width: '300px',
+      height: 'auto',
+      width: 'auto',
       data: this.role
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.role = result;
     });
 

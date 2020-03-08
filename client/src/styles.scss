@@ -4,14 +4,14 @@
 
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
-
 html,
 body {
-  height: 100%;
-  width: 100vw;
-  font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
-  overflow: hidden;
-  margin: 0;
+    height: 100%;
+    width: 100vw;
+    font-family: "Roboto Condensed", Arial, Helvetica, sans-serif;
+    font-size: 13px;
+    overflow: hidden;
+    margin: 0;
 }
 
 h1,
@@ -20,13 +20,13 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: sans-serif;
+    font-family: sans-serif;
 }
 
 // Own Styles
 .elipsis {
-  text-overflow: ellipsis;
-  /* Required for text-overflow to do anything */
-  white-space: nowrap;
-  overflow: hidden;
+    text-overflow: ellipsis;
+    /* Required for text-overflow to do anything */
+    white-space: nowrap;
+    overflow: hidden;
 }

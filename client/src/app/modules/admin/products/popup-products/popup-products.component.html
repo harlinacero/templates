@@ -5,22 +5,27 @@
 
     <form class="example-form">
         <div mat-dialog-content>
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Código</mat-label>
                 <input matInput [(ngModel)]="data.code" name="code" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Descripción</mat-label>
                 <input matInput [(ngModel)]="data.description" name="description" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo</mat-label>
-                <input type="number" matInput [(ngModel)]="data.type" name="type" required>
+                <mat-select [(value)]="data.type" [(ngModel)]="data.type" name="type" required>
+                    <mat-option *ngFor="let pro of productType" [(value)]="pro.key">
+                        {{pro.value}}
+                    </mat-option>
+                </mat-select>
+
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Cuenta Contable</mat-label>
                 <input matInput [(ngModel)]="data.accountingAccount" name="accountingAccount">
             </mat-form-field>
@@ -28,8 +33,7 @@
         </div>
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data"
-                cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
         </div>
     </form>
 

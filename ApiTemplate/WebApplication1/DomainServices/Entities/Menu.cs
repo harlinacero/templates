@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.DomainServices.Entities
 {
-    public class Status : EntityBase
+    public class Menu : EntityBase
     {
+        public string Icon { get; set; }
         public string Name { get; set; }
-        public string Color { get; set; }
+        public string Component { get; set; }
     }
 }

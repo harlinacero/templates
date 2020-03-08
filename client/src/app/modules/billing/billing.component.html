@@ -6,83 +6,80 @@
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
     </mat-form-field>
 </div>
-
-<div class="example-container mat-elevation-z8">
+<div class="example-container mat-elevation-z8" *ngIf="!!dataSource">
 
     <mat-table [dataSource]="dataSource" matSort>
-        <!-- 'numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate', 'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'  -->
-
         <!-- ID Column -->
         <ng-container matColumnDef="numberbilling">
             <mat-header-cell *matHeaderCellDef mat-sort-header> No. Factura</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.numberBilling}} </mat-cell>
         </ng-container>
 
         <!-- Progress Column -->
         <ng-container matColumnDef="providerid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ getNameById('providerid', row.prividerId)}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ getNameById('providerid', row.providerId)}} </mat-cell>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="billingtype">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{getNameById('billingtype', row.billingtype)}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{getNameById('billingtype', row.billingType)}} </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="producttype">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Producto </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.producttype}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.productType}} </mat-cell>
         </ng-container>
 
         <!-- DateBill Column -->
         <ng-container matColumnDef="costcenterid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ getNameById('costcenterid', row.costcenterid)}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ getNameById('costcenterid', row.costcenterId)}} </mat-cell>
         </ng-container>
 
         <!-- Date Aprobate Column -->
         <ng-container matColumnDef="moneyid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Moneda </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ getNameById('moneyid', row.moneyid) }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{ getNameById('moneyid', row.moneyId) }} </mat-cell>
         </ng-container>
 
 
         <!-- Date Pay datePay -->
         <ng-container matColumnDef="exchangerate">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Tasa de cambio </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.exchangerate }} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.exchangeRate }} </mat-cell>
         </ng-container>
 
 
         <!-- Area Column -->
         <ng-container matColumnDef="datebilling">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.datebilling | date}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateBilling | date}} </mat-cell>
         </ng-container>
 
         <!-- Value Column -->
         <ng-container matColumnDef="datelimit">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Límite </mat-header-cell>
-            <mat-cell *matCellDef="let row"> $ {{row.datelimit| date}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateLimit| date}} </mat-cell>
         </ng-container>
 
         <!-- Status Column -->
         <ng-container matColumnDef="datefiled">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Radicado </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.datefiled | date}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.dateFiled | date}} </mat-cell>
         </ng-container>
 
         <!-- Status Column -->
         <ng-container matColumnDef="valuebill">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.valuebill}} </mat-cell>
+            <mat-cell *matCellDef="let row">{{row.valueBill | currency}} </mat-cell>
         </ng-container>
 
         <!-- Indicator Column -->
         <ng-container matColumnDef="stateid">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.background]="getColorById(row.stateid)">
+            <mat-cell *matCellDef="let row" [style.background]="getColorById(row.stateid)" [ngStyle]="{'padding-left':'10px'}">
                 {{ getNameById('stateid', row.stateid) }}
             </mat-cell>
         </ng-container>
@@ -96,6 +93,6 @@
 </div>
 
 <button class="mdc-fab" aria-label="Favorite" (click)="addCostCenter()" [title]="'Agregar'">
-    <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">add</span>
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
 </button>

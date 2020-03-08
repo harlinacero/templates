@@ -1,6 +1,6 @@
 import { PopupProviderComponent } from './popup-provider/popup-provider.component';
-import { Component, OnInit, Provider } from '@angular/core';
-import { MatDialog, MatTableDataSource } from '@angular/material';
+import { Component, OnInit, Provider, ViewChild } from '@angular/core';
+import { MatDialog, MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 import { AdminService } from '../../../shared/services/admin.service';
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
@@ -11,6 +11,8 @@ import { Providers } from 'src/app/shared/interfaces/providers.interface';
   styleUrls: ['./providers.component.scss']
 })
 export class ProvidersComponent implements OnInit {
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
 
   displayedColumns = ['code', 'businessName', 'nit', 'regimenType', 'economyActivity', 'contact', 'address', 'email'];
 
@@ -38,6 +40,8 @@ export class ProvidersComponent implements OnInit {
         if (res.isSuccesfull) {
           this.providers = res.result;
           this.dataSource = new MatTableDataSource(res.result);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
         }
       });
   }
@@ -45,12 +49,11 @@ export class ProvidersComponent implements OnInit {
   updateProvider(row) {
     const dialogRef = this.dialog.open(PopupProviderComponent, {
       height: 'auto',
-      width: '600px',
+      width: 'auto',
       data: row
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
       this.getProviders();
     });
   }
@@ -58,7 +61,7 @@ export class ProvidersComponent implements OnInit {
   addProvider() {
     const dialogRef = this.dialog.open(PopupProviderComponent, {
       height: 'auto',
-      width: '600px',
+      width: 'auto',
       data: this.provider
     });
 
