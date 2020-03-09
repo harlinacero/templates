@@ -61,6 +61,7 @@ export class PupupBillingComponent implements OnInit {
     if (this.data.id > 0) {
       this.title = 'Modificar Factura';
       this.disabled = true; // cambiar
+      this.isVisible = (this.data.stateid === StatusBillingEnum.Rechazada) ? true : false;
     } else {
       this.disabled = false;
       this.setFieldsVisible(this.data.stateid);
@@ -155,11 +156,10 @@ export class PupupBillingComponent implements OnInit {
   }
 
   save() {
-
-    this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.id : StatusBillingEnum['En Proceso Aprobación'];
+    this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
     this.billingService.SaveBilling(this.data).subscribe(res => {
       if (res.isSuccesfull) {
-        alert('Se ha agregado la factura');
+        alert('Se ha modificado la factura');
       } else {
         this.helper.controlErros(res);
       }
