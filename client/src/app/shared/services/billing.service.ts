@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Urls } from '../interfaces/urls';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { ServiceBase } from './service.base';
 import { Billing } from '../interfaces/billing.interface';
 import { RequestResult } from '../interfaces/requestResult.interface';
@@ -26,13 +26,20 @@ export class BillingService {
     return this.http.get<RequestResult<Billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
   }
 
-  SaveBilling(levelsAproval: Billing, ) {
-    return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, levelsAproval);
-  }
+  // SaveBilling(levelsAproval: Billing) {
+  //   return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, levelsAproval);
+  // }
 
 
-  upload(formData: FormData) {
-    return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, formData);
+
+  SaveBilling(billing: Billing, file: File) {
+
+    let formData = new FormData()
+    formData.set('uploadFile', file, file.name);
+    let params = new HttpParams()
+      .set('billing', JSON.stringify(billing))
+
+    return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, formData, { params });
   }
 
   GetAllStates() {

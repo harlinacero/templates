@@ -47,15 +47,33 @@ namespace WebApplication1.AppServices
         }
 
 
-        public RequestResult<Billing> SaveBilling(Billing billing)
+        public RequestResult<Billing> SaveBilling(Billing billing, IFormFile file)
         {
             try
             {
-                return _billingDomainService.SaveBilling(billing);
+                return _billingDomainService.SaveBilling(file, billing);
             }
             catch (Exception ex)
             {
                 return RequestResult<Billing>.CreateUnSuccesfull(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// Export datasource file
+        /// </summary>
+        /// <param name="nameFile">Name File to download</param>
+        /// <returns></returns>
+        public RequestResult<byte[]> DownloadFile(string nameFile)
+        {
+            try
+            {
+                return _billingDomainService.DownloadFile(nameFile);
+
+            }
+            catch (Exception ex)
+            {
+               return RequestResult<byte[]>.CreateUnSuccesfull(ex.Message);
             }
         }
 

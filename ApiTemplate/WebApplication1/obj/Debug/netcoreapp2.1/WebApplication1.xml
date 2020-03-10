@@ -44,6 +44,13 @@
             <param name="Id"></param>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.AppServices.BillingAppService.DownloadFile(System.String)">
+            <summary>
+            Export datasource file
+            </summary>
+            <param name="nameFile">Name File to download</param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.GetAllPerson">
             <summary>
             Get all person
@@ -182,6 +189,13 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.BillingController.DownloadFile(System.String)">
+            <summary>
+            Export datasource file
+            </summary>
+            <param name="nameFile">Name File to download</param>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.BillingController.GetBillingById(System.Int32)">
             <summary>
             Get billing by Id
@@ -274,6 +288,23 @@
             </summary>
             <param name="Id"></param>
             <returns></returns>
+        </member>
+        <member name="F:WebApplication1.DomainServices.BillingDomainService.CURRENT_PATH">
+            <summary>
+            Current path repository of dashboards files
+            </summary>
+        </member>
+        <member name="F:WebApplication1.DomainServices.BillingDomainService._env">
+            <summary>
+            Environment vars
+            </summary>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.VerifyExistFile(Microsoft.AspNetCore.Http.IFormFile,System.String)">
+            <summary>
+            Verify if the temp file exist, else, it create
+            </summary>
+            <param name="file"></param>
+            <param name="fileTempPath"></param>
         </member>
         <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllPerson">
             <summary>

@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -13,14 +17,23 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Billing> _billingRepo;
         private readonly IRepository<Status> _stateRepo;
         private readonly IRepository<TypeBilling> _typeBilingRepo;
+        /// <summary>
+        /// Current path repository of dashboards files
+        /// </summary>
+        private const string CURRENT_PATH = "\\App_Data\\Facturas\\";
+        /// <summary>
+        /// Environment vars
+        /// </summary>
+        private readonly IHostingEnvironment _env;
         #endregion
 
         #region Builder
-        public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo, IRepository<TypeBilling> typeBilingRepo)
+        public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo, IRepository<TypeBilling> typeBilingRepo, IHostingEnvironment env)
         {
             _billingRepo = billingRepo;
             _stateRepo = stateRepo;
             _typeBilingRepo = typeBilingRepo;
+            _env = env;
         }
         #endregion
         public RequestResult<IEnumerable<Billing>> GetAllBilling()
@@ -41,14 +54,58 @@ namespace WebApplication1.DomainServices
 
 
 
-        public RequestResult<Billing> SaveBilling(Billing billing)
+        public RequestResult<Billing> SaveBilling(IFormFile file, Billing billing)
         {
-            var billingEntity = _billingRepo.GetById(billing.Id);
-            if (billingEntity != null)
-                return UpdateBilling(billing);
 
-            return AddBilling(billing);
+            var newPath = Path.Combine(_env.ContentRootPath + CURRENT_PATH, file.FileName);
+            try
+            {
+
+                if (File.Exists(newPath))
+                    return RequestResult<Billing>.CreateUnSuccesfull("Ya existe una factua con el mismo nombre");
+
+                if (!File.Exists(newPath))
+                {
+                    // This statement ensures that the file is created,but the handle is not kept.
+                    using (FileStream fs = File.Create(newPath)) { }
+                    using (var stream = new FileStream(newPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+
+                    var billingEntity = _billingRepo.GetById(billing.Id);
+                    billing.RouteFile = newPath;
+                    if (billingEntity != null)
+                        return UpdateBilling(billing);
+
+                    return AddBilling(billing, newPath);
+                }
+
+
+
+                return RequestResult<Billing>.CreateSuccesfull(billing);
+
+            }
+            catch (Exception e)
+            {
+                File.Delete(newPath);
+                return RequestResult<Billing>.CreateUnSuccesfull(e.Message);
+            }
         }
+
+
+        public RequestResult<byte[]> DownloadFile(string nameFile)
+        {
+            var path = Path.Combine(_env.ContentRootPath + CURRENT_PATH, nameFile);
+            if (File.Exists(path))
+            {
+                var file = File.ReadAllBytes(path);
+                return RequestResult<byte[]>.CreateSuccesfull(file); //missing ;
+            }
+
+            return null;
+        }
+
 
         public RequestResult<IEnumerable<Status>> GetStates()
         {
@@ -63,10 +120,15 @@ namespace WebApplication1.DomainServices
             return RequestResult<IEnumerable<TypeBilling>>.CreateSuccesfull(list);
         }
 
-        private RequestResult<Billing> AddBilling(Billing billing)
+
+
+
+        private RequestResult<Billing> AddBilling(Billing billing, string newPath)
         {
             if (_billingRepo.Add(billing))
                 return RequestResult<Billing>.CreateSuccesfull(billing);
+
+            File.Delete(newPath);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo crear");
         }
 
@@ -77,5 +139,23 @@ namespace WebApplication1.DomainServices
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo actualizar");
         }
 
+
+        /// <summary>
+        /// Verify if the temp file exist, else, it create
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="fileTempPath"></param>
+        private void VerifyExistFile(IFormFile file, string fileTempPath)
+        {
+            if (!File.Exists(fileTempPath))
+            {
+                // This statement ensures that the file is created,but the handle is not kept.
+                using (FileStream fs = File.Create(fileTempPath)) { }
+                using (var stream = new FileStream(fileTempPath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+            }
+        }
     }
 }

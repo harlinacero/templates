@@ -36,6 +36,7 @@ export class PupupBillingComponent implements OnInit {
   moneys: Money[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
+  fileValues: File;
   disabled = false;
   isVisible = false;
 
@@ -62,6 +63,7 @@ export class PupupBillingComponent implements OnInit {
       this.title = 'Modificar Factura';
       this.disabled = true; // cambiar
       this.isVisible = (this.data.stateid === StatusBillingEnum.Rechazada) ? true : false;
+
     } else {
       this.disabled = false;
       this.setFieldsVisible(this.data.stateid);
@@ -155,9 +157,24 @@ export class PupupBillingComponent implements OnInit {
     this.dialogRef.close();
   }
 
+
+
+  onFileSelected() {
+    const inputNode = document.querySelector('#file') as HTMLInputElement;
+    const label = document.getElementById('labelFile');
+    if (inputNode.files.length > 0) {
+      this.fileValues = inputNode.files[0];
+      label.innerText = this.fileValues.name;
+    } else {
+      label.innerText = '';
+    }
+
+  }
+
   save() {
+
     this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
-    this.billingService.SaveBilling(this.data).subscribe(res => {
+    this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Se ha modificado la factura');
       } else {
