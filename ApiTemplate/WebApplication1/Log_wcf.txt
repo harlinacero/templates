@@ -24,3 +24,18 @@ Fecha: 10/03/2020 7:12:29 p. m.
 -------------------
 Dato: 22001: el valor es demasiado largo para el tipo character varying(20)
 Fecha: 10/03/2020 8:41:06 p. m.
+-------------------
+Dato: 42703: no existe la columna «procesoarobación»
+Fecha: 11/03/2020 1:01:08 a. m.
+-------------------
+Dato: 42703: no existe la columna «procesoarobación»
+Fecha: 11/03/2020 1:03:30 a. m.
+-------------------
+Dato: Object reference not set to an instance of an object.
+Fecha: 11/03/2020 1:04:48 a. m.
+-------------------
+Dato: Connection already open
+Fecha: 11/03/2020 1:04:48 a. m.
+-------------------
+Dato: Connection is not open
+Fecha: 11/03/2020 1:04:49 a. m.

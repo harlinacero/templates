@@ -299,13 +299,6 @@
             Environment vars
             </summary>
         </member>
-        <member name="M:WebApplication1.DomainServices.BillingDomainService.VerifyExistFile(Microsoft.AspNetCore.Http.IFormFile,System.String)">
-            <summary>
-            Verify if the temp file exist, else, it create
-            </summary>
-            <param name="file"></param>
-            <param name="fileTempPath"></param>
-        </member>
         <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllPerson">
             <summary>
             Get all person

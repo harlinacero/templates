@@ -154,7 +154,7 @@ export class PupupBillingComponent implements OnInit {
         if (res.isSuccesfull) {
           this.aprovalMatrices = res.result;
         }
-      })
+      });
   }
 
   setFieldsVisible(event) {
@@ -201,30 +201,42 @@ export class PupupBillingComponent implements OnInit {
   validateForm() {
     this.canCreate = true;
 
-    if (!(!!this.data.numberBilling))
+    if (!(!!this.data.numberBilling)) {
       this.canCreate = false;
-    if (!(!!this.data.billingType))
+    }
+    if (!(!!this.data.billingType)) {
       this.canCreate = false;
-    if (!(!!this.data.providerId))
+    }
+    if (!(!!this.data.providerId)) {
       this.canCreate = false;
-    if (!(!!this.data.productType))
+    }
+    if (!(!!this.data.productType)) {
       this.canCreate = false;
-    if (!(!!this.data.costcenterId))
+    }
+    if (!(!!this.data.costcenterId)) {
       this.canCreate = false;
-    if (!(!!this.data.moneyId))
+    }
+    if (!(!!this.data.moneyId)) {
       this.canCreate = false;
-    if (!(!!this.data.valueBill && this.data.valueBill > 0))
+    }
+    if (!(!!this.data.valueBill && this.data.valueBill > 0)) {
       this.canCreate = false;
-    if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0))
+    }
+    if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0)) {
       this.canCreate = false;
-    if (!(!!this.data.dateBilling))
+    }
+    if (!(!!this.data.dateBilling)) {
       this.canCreate = false;
-    if (!(!!this.data.dateFiled))
+    }
+    if (!(!!this.data.dateFiled)) {
       this.canCreate = false;
-    if (!(!!this.data.dateLimit))
+    }
+    if (!(!!this.data.dateLimit)) {
       this.canCreate = false;
-    if (!(!!this.fileValues))
+    }
+    if (!(!!this.fileValues)) {
       this.canCreate = false;
+    }
 
     if (this.canCreate) {
       this.save();

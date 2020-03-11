@@ -6,13 +6,10 @@ namespace WebApplication1.Helpers
 {
     public static class Mail
     {
-        public static bool SendEmail(string fromAddress, string toAddress, string fromPassword, string subject, string body)
+        public static bool SendEmail(string fromAddress, string toAddress, string fromPassword, string subject, string body, string filename = null)
         {
-           // var fromAddress = new MailAddress("from@gmail.com", "From Name");
-           // var toAddress = new MailAddress("to@example.com", "To Name");
-            //const string fromPassword = "fromPassword";
-            //const string subject = "Subject";
-            //const string body = "Body";
+
+            Attachment attachment = new Attachment(filename);
 
             var smtp = new SmtpClient
             {
@@ -23,21 +20,26 @@ namespace WebApplication1.Helpers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress, fromPassword)
             };
-            using (var message = new MailMessage(fromAddress, toAddress)
+            //using (var message = new MailMessage(fromAddress, toAddress)
+            //{
+            //    Subject = subject,
+            //    Body = body,
+            //    IsBodyHtml = true
+            //})
+
+            try
             {
-                Subject = subject,
-                Body = body
-            })
+                MailMessage message = new MailMessage(fromAddress, toAddress);
+                message.Subject = subject;
+                message.Body = body;
+                message.IsBodyHtml = true;
+                message.Attachments.Add(new Attachment(filename));
+                smtp.Send(message);
+                return true;
+            }
+            catch (System.Exception ex)
             {
-                try
-                {
-                    smtp.Send(message);
-                    return true;
-                }
-                catch (System.Exception)
-                {
-                    return false;
-                }
+                return false;
             }
         }
     }

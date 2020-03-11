@@ -46,3 +46,27 @@ export interface AprovalMatrix {
   userChange: number;
   dateModified: Date;
 }
+
+
+// public string numerofactura {get;set;}
+//   public string proveedor {get;set;}
+//   public string nit {get;set;}
+//   public string tipofactura, {get;set;}
+// public string tipoproducto {get;set;}
+//   public string costcenter {get;set;}
+//   public string tasacambio {get;set;}
+//   public string valor {get;set;}
+//   public string fechafactura {get;set;}
+//   public string fechalimite {get;set;}
+//   public string fecharadicado {get;set;}
+//   public string pdf {get;set;}
+//   public string estado {get;set;}
+//   public string color {get;set;}
+//   public string nivelaprobacion {get;set;}
+//   public string diasaprobación {get;set;}
+//   public string valorminimo {get;set;}
+//   public string valormaximo {get;set;}
+//   public string aprobador {get;set;}
+//   public string email {get;set;}
+//     public string estadoid {get;set;}
+//       public string levelaprobation {get;set;}
