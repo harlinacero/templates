@@ -32,40 +32,6 @@ C:\Users\harfe\Documents\Proyectos\ApiTemplate\WebApplication1\obj\Debug\netcore
 C:\Users\harfe\Documents\Proyectos\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.pdb
 C:\Users\harfe\Documents\Proyectos\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CopyComplete
 C:\Users\harfe\Documents\Proyectos\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csprojAssemblyReference.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.deps.json
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.json
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.dev.json
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.dll
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.pdb
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.xml
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.Views.dll
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.Views.pdb
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csprojAssemblyReference.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CoreCompileInputs.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorAssemblyInfo.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorAssemblyInfo.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.AssemblyInfoInputs.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.AssemblyInfo.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.TagHelpers.input.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.TagHelpers.output.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorCoreGenerate.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorTargetAssemblyInfo.cache
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorTargetAssemblyInfo.cs
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.Views.pdb
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.dll
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.xml
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.pdb
-E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CopyComplete
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.deps.json
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.json
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.dev.json
@@ -100,3 +66,37 @@ C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\obj\Deb
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.xml
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.pdb
 C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CopyComplete
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.deps.json
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.json
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.runtimeconfig.dev.json
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.dll
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.pdb
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.xml
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.Views.dll
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\bin\Debug\netcoreapp2.1\WebApplication1.Views.pdb
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csprojAssemblyReference.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CoreCompileInputs.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorAssemblyInfo.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorAssemblyInfo.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.AssemblyInfoInputs.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.AssemblyInfo.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.TagHelpers.input.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.TagHelpers.output.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorCoreGenerate.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorTargetAssemblyInfo.cache
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.RazorTargetAssemblyInfo.cs
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.Views.pdb
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.dll
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.xml
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.pdb
+E:\Ophelia GIT\templates\ApiTemplate\WebApplication1\obj\Debug\netcoreapp2.1\WebApplication1.csproj.CopyComplete

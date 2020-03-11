@@ -34,7 +34,7 @@ import { Person } from './person.interface';
 //   personss: number[];
 // }
 
-export interface AprobalMatrix {
+export interface AprovalMatrix {
   id?: number;
   levelAprobation: number;
   costCenterId: number;

@@ -10,6 +10,8 @@ using System.Threading.Tasks;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Entities;
 using WebApplication1.Models;
+using Newtonsoft.Json;
+using WebApplication1.Helpers;
 
 namespace WebApplication1.Controllers
 {
@@ -42,21 +44,41 @@ namespace WebApplication1.Controllers
         ///// </summary>
         ///// <param name="billing"></param>
         ///// <returns></returns>
-        //[HttpPost]
-        //[Route("SaveBilling")]
-        //public RequestResult<Billing> SaveBilling(Billing billing)
-        //{
-        //    return _billingAppService.SaveBilling(billing);
-        //}
-
-
         [HttpPost]
         [Route("SaveBilling")]
-        public RequestResult<Billing> SaveBilling(Billing billing)
+        public RequestResult<Billing> SaveBilling(string billing)
         {
-            return _billingAppService.SaveBilling(billing);
-            
+            var file = Request.Form.Files[0];
+            if (file != null)
+            {
+                Billing bill = JsonConvert.DeserializeObject<Billing>(billing);
+                //Billing billing = new Billing();
+                return _billingAppService.SaveBilling(bill, file);
+            }
+            return RequestResult<Billing>.CreateUnSuccesfull("No se ha cargado ninguna factura");
+
+
         }
+
+
+        /// <summary>
+        /// Export datasource file
+        /// </summary>
+        /// <param name="nameFile">Name File to download</param>
+        /// <returns></returns>
+        [HttpGet("DownloadFile")]
+        public ActionResult DownloadFile(string nameFile)
+        {
+            var res = _billingAppService.DownloadFile(nameFile);
+            if (res.IsSuccesfull)
+            {
+                return File(res.Result, MimeType.GetMimeType(nameFile.Split(".")[1]), nameFile);
+            }
+
+            return null;
+
+        }
+
         /// <summary>
         /// Get billing by Id
         /// </summary>

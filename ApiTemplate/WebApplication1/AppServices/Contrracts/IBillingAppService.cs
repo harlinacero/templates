@@ -11,10 +11,11 @@ namespace WebApplication1.AppServices.Contrracts
     public interface IBillingAppService
     {
         RequestResult<IEnumerable<Billing>> GetAllBilling();
-        RequestResult<Billing> SaveBilling(Billing billing);
+        RequestResult<Billing> SaveBilling(Billing billing, IFormFile file);
         RequestResult<Billing> GetBillingById(int id);
         RequestResult<IEnumerable<Status>> GetStates();
         RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling();
-        
+
+        RequestResult<byte[]> DownloadFile(string nameFile);
     }
 }

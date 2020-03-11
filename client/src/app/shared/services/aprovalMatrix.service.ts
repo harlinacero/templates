@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Urls } from '../interfaces/urls';
 import { ServiceBase } from './service.base';
-import { AprobalMatrix } from '../interfaces/aprovalMatrix.interface';
+import { AprovalMatrix } from '../interfaces/aprovalMatrix.interface';
 import { RequestResult } from '../interfaces/requestResult.interface';
 import { Money } from '../interfaces/money.interface';
 
@@ -28,10 +28,10 @@ export class AprovalMatrixService {
   }
 
   GetAllAprovalMatrix() {
-    return this.http.get<RequestResult<AprobalMatrix[]>>(`${this.urls.urlbase}AprovaMatrix/GetAllAprovalMatrix`);
+    return this.http.get<RequestResult<AprovalMatrix[]>>(`${this.urls.urlbase}AprovaMatrix/GetAllAprovalMatrix`);
   }
 
-  SaveAprovalMatrix(levelsAproval: AprobalMatrix[]) {
-    return this.http.post<RequestResult<AprobalMatrix[]>>(`${this.urls.urlbase}AprovaMatrix/SaveAprovalMatrix`, levelsAproval);
+  SaveAprovalMatrix(levelsAproval: AprovalMatrix[]) {
+    return this.http.post<RequestResult<AprovalMatrix[]>>(`${this.urls.urlbase}AprovaMatrix/SaveAprovalMatrix`, levelsAproval);
   }
 }

@@ -17,7 +17,8 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="documentType">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Documento </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.documentNumber}} </mat-cell>
+            <mat-cell *matCellDef="let row">{{this.getDocumentName(row.documentType).resume }} {{row.documentNumber}}
+            </mat-cell>
         </ng-container>
 
 

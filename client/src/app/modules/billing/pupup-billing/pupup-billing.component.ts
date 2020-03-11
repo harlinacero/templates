@@ -18,6 +18,7 @@ import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FileValidator } from 'ngx-material-file-input';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { AprovalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -36,9 +37,11 @@ export class PupupBillingComponent implements OnInit {
   moneys: Money[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
+  fileValues: File;
   disabled = false;
   isVisible = false;
-
+  aprovalMatrices: AprovalMatrix[] = [];
+  canCreate = false;
 
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
     // tslint:disable-next-line: align
@@ -50,18 +53,20 @@ export class PupupBillingComponent implements OnInit {
     // tslint:disable-next-line: align
     private formBuilder: FormBuilder, private httpClient: HttpClient) {
     this.data = bill;
-
+    dialogRef.disableClose = true;
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
     this.getAllTypeBilling();
     this.getAllMoneys();
     this.getAllStates();
+    this.getAllAprovalMatrix();
 
     if (this.data.id > 0) {
       this.title = 'Modificar Factura';
       this.disabled = true; // cambiar
       this.isVisible = (this.data.stateid === StatusBillingEnum.Rechazada) ? true : false;
+
     } else {
       this.disabled = false;
       this.setFieldsVisible(this.data.stateid);
@@ -143,6 +148,15 @@ export class PupupBillingComponent implements OnInit {
       });
   }
 
+  getAllAprovalMatrix() {
+    this.aprovalMatrixService.GetAllAprovalMatrix()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.aprovalMatrices = res.result;
+        }
+      })
+  }
+
   setFieldsVisible(event) {
     if (event === StatusBillingEnum.Rechazada) {
       this.isVisible = true;
@@ -151,13 +165,79 @@ export class PupupBillingComponent implements OnInit {
     }
   }
 
+  validateCostCenter(costcenterId) {
+    const aprovals = this.aprovalMatrices.find(ap => {
+      if (ap.costCenterId === costcenterId) {
+        return ap;
+      }
+    });
+    if (!!aprovals) {
+      this.canCreate = true;
+    } else {
+      alert('El centro de costo no tiene matriz de aprobación');
+      this.canCreate = false;
+      return;
+    }
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+
+
+  onFileSelected() {
+    const inputNode = document.querySelector('#file') as HTMLInputElement;
+    const label = document.getElementById('labelFile');
+    if (inputNode.files.length > 0) {
+      this.fileValues = inputNode.files[0];
+      label.innerText = this.fileValues.name;
+    } else {
+      label.innerText = '';
+    }
+
+  }
+
+  validateForm() {
+    this.canCreate = true;
+
+    if (!(!!this.data.numberBilling))
+      this.canCreate = false;
+    if (!(!!this.data.billingType))
+      this.canCreate = false;
+    if (!(!!this.data.providerId))
+      this.canCreate = false;
+    if (!(!!this.data.productType))
+      this.canCreate = false;
+    if (!(!!this.data.costcenterId))
+      this.canCreate = false;
+    if (!(!!this.data.moneyId))
+      this.canCreate = false;
+    if (!(!!this.data.valueBill && this.data.valueBill > 0))
+      this.canCreate = false;
+    if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0))
+      this.canCreate = false;
+    if (!(!!this.data.dateBilling))
+      this.canCreate = false;
+    if (!(!!this.data.dateFiled))
+      this.canCreate = false;
+    if (!(!!this.data.dateLimit))
+      this.canCreate = false;
+    if (!(!!this.fileValues))
+      this.canCreate = false;
+
+    if (this.canCreate) {
+      this.save();
+    } else {
+      alert('Valide nuevamente los datos');
+      this.dialogRef.disableClose = false;
+    }
+  }
+
   save() {
+
     this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
-    this.billingService.SaveBilling(this.data).subscribe(res => {
+    this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Se ha modificado la factura');
       } else {

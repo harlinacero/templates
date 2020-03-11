@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,8 +12,10 @@ namespace WebApplication1.DomainServices.Contracts
     {
         RequestResult<IEnumerable<Billing>> GetAllBilling();
         RequestResult<Billing> GetBillingById(int id);
-        RequestResult<Billing> SaveBilling(Billing billing);
+        RequestResult<Billing> SaveBilling(IFormFile file, Billing billing);
         RequestResult<IEnumerable<Status>> GetStates();
         RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling();
+
+        RequestResult<byte[]> DownloadFile(string nameFile);
     }
 }

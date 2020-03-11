@@ -12,7 +12,7 @@ export class ControlErrorHelperService {
     controlErros(res: RequestResult<any>) {
         try {
             if (!res.isSuccesfull) {
-                console.log(res);
+                alert(res.message);
             }
         } catch (e) {
             //alert('Error Inesperado');
