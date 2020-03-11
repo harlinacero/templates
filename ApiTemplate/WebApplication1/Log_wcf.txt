@@ -3,3 +3,6 @@ Archivo Creado:
 -------------------
 Dato: 23503: inserción o actualización en la tabla «billing» viola la llave foránea «fk_bill_stateid»
 Fecha: 8/03/2020 5:43:55 p. m.
+-------------------
+Dato: The connection is already in state 'Executing'
+Fecha: 8/03/2020 8:40:46 p. m.
