@@ -52,7 +52,6 @@ export class BillingComponent implements OnInit, AfterViewInit {
     this.getAllProducts();
     this.getAllProviders();
     this.getAllBillings();
-
   }
 
   ngOnInit() {
@@ -196,7 +195,8 @@ export class BillingComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
       height: 'auto',
       width: 'auto',
-      data: row
+      data: row,
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -208,9 +208,9 @@ export class BillingComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
       height: 'auto',
       width: 'auto',
-      data: this.billing
+      data: this.billing,
+      disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
       this.getAllBillings();
     });

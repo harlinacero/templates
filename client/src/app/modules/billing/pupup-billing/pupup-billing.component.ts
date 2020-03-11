@@ -18,6 +18,7 @@ import { of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { FileValidator } from 'ngx-material-file-input';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { AprovalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -39,7 +40,8 @@ export class PupupBillingComponent implements OnInit {
   fileValues: File;
   disabled = false;
   isVisible = false;
-
+  aprovalMatrices: AprovalMatrix[] = [];
+  canCreate = false;
 
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
     // tslint:disable-next-line: align
@@ -51,13 +53,14 @@ export class PupupBillingComponent implements OnInit {
     // tslint:disable-next-line: align
     private formBuilder: FormBuilder, private httpClient: HttpClient) {
     this.data = bill;
-
+    dialogRef.disableClose = true;
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
     this.getAllTypeBilling();
     this.getAllMoneys();
     this.getAllStates();
+    this.getAllAprovalMatrix();
 
     if (this.data.id > 0) {
       this.title = 'Modificar Factura';
@@ -145,11 +148,35 @@ export class PupupBillingComponent implements OnInit {
       });
   }
 
+  getAllAprovalMatrix() {
+    this.aprovalMatrixService.GetAllAprovalMatrix()
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.aprovalMatrices = res.result;
+        }
+      })
+  }
+
   setFieldsVisible(event) {
     if (event === StatusBillingEnum.Rechazada) {
       this.isVisible = true;
     } else {
       this.isVisible = false;
+    }
+  }
+
+  validateCostCenter(costcenterId) {
+    const aprovals = this.aprovalMatrices.find(ap => {
+      if (ap.costCenterId === costcenterId) {
+        return ap;
+      }
+    });
+    if (!!aprovals) {
+      this.canCreate = true;
+    } else {
+      alert('El centro de costo no tiene matriz de aprobación');
+      this.canCreate = false;
+      return;
     }
   }
 
@@ -169,6 +196,42 @@ export class PupupBillingComponent implements OnInit {
       label.innerText = '';
     }
 
+  }
+
+  validateForm() {
+    this.canCreate = true;
+
+    if (!(!!this.data.numberBilling))
+      this.canCreate = false;
+    if (!(!!this.data.billingType))
+      this.canCreate = false;
+    if (!(!!this.data.providerId))
+      this.canCreate = false;
+    if (!(!!this.data.productType))
+      this.canCreate = false;
+    if (!(!!this.data.costcenterId))
+      this.canCreate = false;
+    if (!(!!this.data.moneyId))
+      this.canCreate = false;
+    if (!(!!this.data.valueBill && this.data.valueBill > 0))
+      this.canCreate = false;
+    if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0))
+      this.canCreate = false;
+    if (!(!!this.data.dateBilling))
+      this.canCreate = false;
+    if (!(!!this.data.dateFiled))
+      this.canCreate = false;
+    if (!(!!this.data.dateLimit))
+      this.canCreate = false;
+    if (!(!!this.fileValues))
+      this.canCreate = false;
+
+    if (this.canCreate) {
+      this.save();
+    } else {
+      alert('Valide nuevamente los datos');
+      this.dialogRef.disableClose = false;
+    }
   }
 
   save() {

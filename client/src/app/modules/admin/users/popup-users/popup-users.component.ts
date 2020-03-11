@@ -22,8 +22,9 @@ export class PopupUsersComponent {
   constructor(
     public dialogRef: MatDialogRef<PopupUsersComponent>,
     @Inject(MAT_DIALOG_DATA) public person: Person, private userService: AdminService) {
-    person.password = atob(person.password);
+
     this.data = person;
+    this.data.password = atob(person.password);
     this.getRoles();
     this.getDocuments();
     if (this.data.id > 0) {

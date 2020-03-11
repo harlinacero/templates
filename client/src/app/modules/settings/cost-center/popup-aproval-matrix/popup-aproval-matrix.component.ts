@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { AprobalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
+import { AprovalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { AdminService } from '../../../../shared/services/admin.service';
 import { Person } from 'src/app/shared/interfaces/person.interface';
@@ -17,7 +17,7 @@ import { Money } from 'src/app/shared/interfaces/money.interface';
 export class PopupAprovalMatrixComponent implements OnInit {
 
   title = 'Matriz de Aprobación ';
-  matrix: AprobalMatrix[] = [];
+  matrix: AprovalMatrix[] = [];
   ownerForm: FormGroup;
   id: number;
   costCenter: CostCenter;
@@ -104,7 +104,7 @@ export class PopupAprovalMatrixComponent implements OnInit {
 
 
   addLevel() {
-    const newLevel: AprobalMatrix = {
+    const newLevel: AprovalMatrix = {
       costCenterId: this.costCenter.id,
       dateModified: new Date(),
       daysToAprobate: 0,

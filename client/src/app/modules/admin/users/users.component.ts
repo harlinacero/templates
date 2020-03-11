@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
       if (res.isSuccesfull) {
         this.persons = res.result.map(person => {
           person.dateModified = new Date(person.dateModified);
-          person.documentNumber = this.getDocumentName(person.documentType).resume + person.documentNumber;
+          person.documentNumber = person.documentNumber;
           return person;
         });
         this.dataSource = new MatTableDataSource(res.result);

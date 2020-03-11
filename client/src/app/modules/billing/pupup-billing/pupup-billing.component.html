@@ -1,12 +1,11 @@
 <div class="box">
     <mat-card-header>
-        <mat-card-title>{{title}} {{data.id}}</mat-card-title>
+        <mat-card-title>{{title}} {{data.numberBilling}}</mat-card-title>
     </mat-card-header>
 
     <!-- enctype="multipart/form-data" method="post"  -->
     <form class="example-form" enctype="multipart/form-data" method="post">
         <div mat-dialog-content>
-
 
             <div *ngIf="data.id > 0">
                 <a href="{{data.routeFile}}"></a>
@@ -17,6 +16,7 @@
                 <mat-label>No. Factura</mat-label>
                 <input type="number" min="0" matInput [(ngModel)]="data.numberBilling" name="numberBilling"
                     [disabled]="disabled" required>
+                <span style="color: red;" id="numberBilling-error"></span>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
@@ -28,6 +28,7 @@
                         {{pro.businessName}}
                     </mat-option>
                 </mat-select>
+                <span style="color: red;" id="providerId-error"></span>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
@@ -53,7 +54,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Centro de Costo</mat-label>
                 <mat-select [(value)]="data.costcenterId" [(ngModel)]="data.costcenterId" name="costcenterid"
-                    [disabled]="disabled" required>
+                    [disabled]="disabled" required (selectionChange)="validateCostCenter($event.value)">
                     <mat-option *ngFor="let pro of costCenters" [(value)]="pro.id">
                         {{pro.name}}
                     </mat-option>
@@ -72,13 +73,13 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tasa de Cambio</mat-label>
-                <input type="text" matInput [(ngModel)]="data.exchangeRate" name="exchangerate"
+                <input type="number" matInput [(ngModel)]="data.exchangeRate" name="exchangerate"
                     value="{{data.exchangeRate }}" [disabled]="disabled">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Valor</mat-label>
-                <input type="text" currencyMask min="0" matInput [(ngModel)]="data.valueBill" name="exchangerate"
+                <input type="number" currencyMask min="0" matInput [(ngModel)]="data.valueBill" name="exchangerate"
                     value="{{data.valueBill }}" [disabled]="disabled">
             </mat-form-field>
 
@@ -115,7 +116,8 @@
 
             <div class="file-content">
                 <mat-label id="labelFile"></mat-label>
-                <button type="button" mat-raised-button (click)="fileInput.click()"> <i class="fa fa-file-pdf-o"></i>
+                <button type="button" mat-raised-button (click)="fileInput.click()" *ngIf="!disabled"> <i
+                        class="fa fa-file-pdf-o"></i>
                     Adjuntar Factura</button>
                 <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" accept="application/pdf">
             </div>
@@ -124,7 +126,7 @@
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
             <button mat-button class="btn btn-success" [mat-dialog-close]="data" cdkFocusInitial
-                (click)="save()">Guardar</button>
+                (click)="validateForm()">Guardar</button>
         </div>
 
 

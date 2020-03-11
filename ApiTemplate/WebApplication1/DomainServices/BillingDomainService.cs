@@ -6,6 +6,7 @@ using System.IO;
 using WebApplication1.DataAccess.Repository;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
+using WebApplication1.Helpers;
 using WebApplication1.Models;
 
 namespace WebApplication1.DomainServices
@@ -126,7 +127,10 @@ namespace WebApplication1.DomainServices
         private RequestResult<Billing> AddBilling(Billing billing, string newPath)
         {
             if (_billingRepo.Add(billing))
+            {
+                Mail.SendEmail("harlinacero@gmail.com", "harferace@hotmail.com", "h4rl1n4cer0", "Prueba email", "amdsfamdsfamdfasdmfasmdfasmdf");
                 return RequestResult<Billing>.CreateSuccesfull(billing);
+            }
 
             File.Delete(newPath);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo crear");
