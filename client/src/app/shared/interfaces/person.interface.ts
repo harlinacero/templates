@@ -1,4 +1,4 @@
-export interface Person {
+export class Person {
   id: number;
   documentType: number;
   documentNumber: string;
@@ -15,7 +15,7 @@ export interface Person {
   dateModified: Date;
 }
 
-export interface DocumentType {
+export class DocumentType {
   id: number;
   resume: string;
   name: string;

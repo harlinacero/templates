@@ -19,6 +19,7 @@ import { catchError, map } from 'rxjs/operators';
 import { FileValidator } from 'ngx-material-file-input';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { AprovalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
+import { ArraySortPipe } from './../../../shared/pipes/arraySort.pipe';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -180,6 +181,9 @@ export class PupupBillingComponent implements OnInit {
     }
   }
 
+
+
+
   onNoClick(): void {
     this.dialogRef.close();
   }
@@ -216,9 +220,9 @@ export class PupupBillingComponent implements OnInit {
     if (!(!!this.data.costcenterId)) {
       this.canCreate = false;
     }
-    if (!(!!this.data.moneyId)) {
-      this.canCreate = false;
-    }
+    // if (!(!!this.data.moneyId)) {
+    //   this.canCreate = false;
+    // }
     if (!(!!this.data.valueBill && this.data.valueBill > 0)) {
       this.canCreate = false;
     }
@@ -238,11 +242,37 @@ export class PupupBillingComponent implements OnInit {
       this.canCreate = false;
     }
 
+    this.validateMaxValue(this.data.costcenterId, this.data.valueBill);
+
     if (this.canCreate) {
       this.save();
     } else {
       alert('Valide nuevamente los datos');
       this.dialogRef.disableClose = false;
+    }
+  }
+
+  validateMaxValue(costcenterId: any, valueBill: number) {
+    let currentmatrix = [];
+    for (const matrix of this.aprovalMatrices) {
+      if (matrix.costCenterId === costcenterId) {
+        currentmatrix.push(matrix);
+      }
+    }
+
+    if (currentmatrix.length > 0) {
+      const sorts = new ArraySortPipe();
+      const matrixOrder = sorts.transform(currentmatrix, 'levelAprobation');
+      const level: AprovalMatrix = matrixOrder[currentmatrix.length - 1];
+      if (!!level) {
+        if (level.valueMax < valueBill) {
+          alert('El valor máximo permitido para el centro el centro de costo seleccionado es ' + level.valueMax);
+          this.canCreate = false;
+        }
+      }
+
+    } else {
+      alert('El centro de costo no tiene matriz de aprobación');
     }
   }
 

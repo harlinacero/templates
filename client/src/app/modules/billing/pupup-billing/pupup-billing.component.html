@@ -56,18 +56,18 @@
                 </mat-select>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
+            <!-- <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Moneda</mat-label>
                 <mat-select [(value)]="data.moneyId" [(ngModel)]="data.moneyId" name="moneyid" [disabled]="disabled" required>
                     <mat-option *ngFor="let pro of moneys" [(value)]="pro.id">
                         {{pro.unitymoney}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tasa de Cambio</mat-label>
-                <input type="number" matInput [(ngModel)]="data.exchangeRate" name="exchangerate" value="{{data.exchangeRate }}" [disabled]="disabled">
+                <input type="number" min="0" matInput [(ngModel)]="data.exchangeRate" name="exchangerate" value="{{data.exchangeRate }}" [disabled]="disabled">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">

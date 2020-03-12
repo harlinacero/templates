@@ -21,7 +21,8 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Status> _stateRepo;
         private readonly IRepository<TypeBilling> _typeBilingRepo;
         private readonly IRepository<VW_BillingData> _billingDataRepo;
-
+        private readonly IRepository<AprovalProcess> _processAprovalRepo;
+        private readonly IRepository<AprovalMatrix> _aprobalmatrixRepo;
         /// <summary>
         /// Current path repository of dashboards files
         /// </summary>
@@ -34,12 +35,15 @@ namespace WebApplication1.DomainServices
 
         #region Builder
         public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo, IRepository<TypeBilling> typeBilingRepo,
-            IRepository<VW_BillingData> billingDataRepo, IHostingEnvironment env)
+            IRepository<VW_BillingData> billingDataRepo, IRepository<AprovalProcess> processAprovalRepo,
+            IRepository<AprovalMatrix> aprobalmatrixRepo, IHostingEnvironment env)
         {
             _billingRepo = billingRepo;
             _stateRepo = stateRepo;
             _typeBilingRepo = typeBilingRepo;
             _billingDataRepo = billingDataRepo;
+            _processAprovalRepo = processAprovalRepo;
+            _aprobalmatrixRepo = aprobalmatrixRepo;
             _env = env;
         }
         #endregion
@@ -132,17 +136,70 @@ namespace WebApplication1.DomainServices
 
         private RequestResult<Billing> AddBilling(Billing billing, string newPath)
         {
-            if (_billingRepo.Add(billing))
+            var newBilling = _billingRepo.AddWithReturn(billing);
+            if (newBilling != null)
             {
-                string subject = GetSubject(billing);
-                string bodyMessage = GetMessage(billing);
-                Mail.SendEmail("harlinacero@gmail.com", "harferace@hotmail.com", "h4rl1n4cer0", subject, bodyMessage, billing.RouteFile);
-                return RequestResult<Billing>.CreateSuccesfull(billing);
-            }
+                if (AddBillingprocess(newBilling))
+                {
+                    return RequestResult<Billing>.CreateSuccesfull(newBilling);
+                }
 
+                _billingRepo.Remove(newBilling);
+            }
             File.Delete(newPath);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo crear");
         }
+
+
+        private bool AddBillingprocess(Billing newBilling)
+        {
+            if (BeginProcessHistory(newBilling))
+            {
+                string subject = GetSubject(newBilling);
+                string bodyMessage = GetMessage(newBilling);
+
+                if (bodyMessage != null)
+                {
+                    Mail.SendEmail("harlinacero@gmail.com", "harferace@hotmail.com", "h4rl1n4cer0", subject, bodyMessage, newBilling.RouteFile);
+                    return true;
+                }
+
+                return false;
+            }
+
+            return false;
+        }
+
+
+        private bool BeginProcessHistory(Billing billing)
+        {
+            var matrixlevels = _aprobalmatrixRepo.ListByWhere($"{nameof(AprovalMatrix.CostCenterId)} = {billing.CostcenterId}").OrderBy(x => x.LevelAprobation).ToList();
+            if (matrixlevels.Count > 0)
+            {
+                foreach (var item in matrixlevels)
+                {
+                    var process = new AprovalProcess()
+                    {
+                        Billingid = billing.Id,
+                        Comments = "",
+                        Daterequest = DateTime.Now,
+                        DateModified = DateTime.Now,
+                        Statusid = (int)EnumStatusBilling.ProcesoArobacion,
+                        UserChange = billing.UserChange
+                    };
+
+                    if (!_processAprovalRepo.Add(process))
+                        _billingRepo.Remove(billing);
+                }
+
+                return true;
+            }
+
+            return false;
+
+        }
+
+
 
         private string GetMessage(Billing billing)
         {
@@ -185,7 +242,7 @@ namespace WebApplication1.DomainServices
 
             sql.Append("SELECT * ");
             sql.Append("FROM VW_BILLING_DATA ");
-            sql.Append($"WHERE ESTADOID = {(int)EnumStatusBilling.ProcesoArobación} AND ");
+            sql.Append($"WHERE ESTADOID = {(int)EnumStatusBilling.ProcesoArobacion} AND ");
             sql.Append($"LEVELAPROBATION = {1} AND ");
             sql.Append($"NUMEROFACTURA = {numberBilling}");
 

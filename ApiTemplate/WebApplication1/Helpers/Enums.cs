@@ -7,7 +7,7 @@ namespace WebApplication1.Helpers
 {
     public enum EnumStatusBilling
     {
-        ProcesoArobación = 1,
+        ProcesoArobacion = 1,
         Aprobada,
         Rechazada,
         Cancelada

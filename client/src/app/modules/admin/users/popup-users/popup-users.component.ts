@@ -24,11 +24,11 @@ export class PopupUsersComponent {
     @Inject(MAT_DIALOG_DATA) public person: Person, private userService: AdminService) {
 
     this.data = person;
-    this.data.password = atob(person.password);
     this.getRoles();
     this.getDocuments();
     if (this.data.id > 0) {
       this.title = 'Modificar Usuario';
+      this.data.password = atob(person.password);
     }
   }
 

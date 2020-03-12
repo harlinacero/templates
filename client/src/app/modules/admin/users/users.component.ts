@@ -74,7 +74,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     const person: Person = this.getPerson(0, '', '', 1, '', '', '', '', '', '', '', 1);
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: this.person
     });
 
@@ -87,7 +87,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.person = event;
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: this.person
     });
 

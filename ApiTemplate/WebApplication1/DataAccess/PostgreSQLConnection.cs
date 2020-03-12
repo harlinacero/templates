@@ -97,6 +97,7 @@ namespace WebApplication1.DataAccess
         {
             try
             {
+                cnnPsql.Close();
                 cnnPsql.Open();
                 trPsql = cnnPsql.BeginTransaction();
                 try

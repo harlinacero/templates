@@ -194,7 +194,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   setAprovalMatrix(row) {
     const dialogRef = this.dialog.open(PupupBillingComponent, {
       height: 'auto',
-      width: 'auto',
+      width: '600px',
       data: row,
       disableClose: true
     });

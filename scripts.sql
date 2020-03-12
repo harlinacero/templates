@@ -295,6 +295,7 @@ CREATE TABLE aprovalmatrix
   valuemax double precision,
   userchange integer,
   datemodified timestamp without time zone,
+  CONSTRAINT pk_aprovalmatrix PRIMARY KEY (id),
   CONSTRAINT fk_bill_moneyid FOREIGN KEY (moneyid)
       REFERENCES money (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -310,6 +311,7 @@ WITH (
 );
 ALTER TABLE aprovalmatrix
   OWNER TO postgres;
+
 
 -- Table: status
 
@@ -374,9 +376,6 @@ CREATE TABLE billing
   CONSTRAINT fk_bill_costcenterid FOREIGN KEY (costcenterid)
       REFERENCES costcenter (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_bill_moneyid FOREIGN KEY (moneyid)
-      REFERENCES money (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
   CONSTRAINT fk_bill_providerid FOREIGN KEY (providerid)
       REFERENCES provider (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION,
@@ -389,6 +388,7 @@ WITH (
 );
 ALTER TABLE billing
   OWNER TO postgres;
+
 
 CREATE TABLE typeBilling
 (
@@ -412,35 +412,45 @@ VALUES
 ('Licencias Software', 'LIC', 'Licencias de software', 0, now());
 
 
-CREATE VIEW VW_BILLING_DATA
-AS
-SELECT 	B.NUMBERBILLING AS NUMEROFACTURA, 
-	PRO.BUSINESSNAME AS PROVEEDOR, 
-	PRO.NIT AS NIT, 
-	TB.NAME AS TIPOFACTURA, 
-	CASE B.PRODUCTTYPE WHEN 1 THEN 'PRODUCTO' WHEN 2 THEN 'SERVICIO' ELSE 'OTRO' END AS TIPOPRODUCTO,
-	CC.NAME AS COSTCENTER,
-	CONCAT(MO.CODE || ' ' ||TO_CHAR(B.EXCHANGERATE, '999,999,999,999')) AS TASACAMBIO, 
-	CONCAT(MO.CODE || ' ' ||TO_CHAR(B.VALUEBILL, '999,999,999,999')) AS VALOR,
-	B.DATEBILLING AS FECHAFACTURA,
-	B.DATELIMIT AS FECHALIMITE,
-	B.DATEFILED AS FECHARADICADO,
-	B.ROUTEFILE AS PDF, 
-	ST.NAME AS ESTADO, 
-	ST.COLOR AS COLOR,
-	am.levelaprobation as NivelAprobacion,
-	am.daysToaprobate as DiasAprobación,
-	CONCAT(MO.CODE || ' ' ||TO_CHAR(am.valueMin, '999,999,999,999')) as ValorMinimo,
-	CONCAT(MO.CODE || ' ' ||TO_CHAR(am.ValueMax, '999,999,999,999')) as ValorMaximo,
-	CONCAT(PE.FIRSTNAME || '' || PE.SECONDNAME || ' '|| PE.LASTNAME || '' || PE.SECONDLASTNAME) AS APROBADOR,
-	PE.EMAIL EMAIL,
-	B.STATEID ESTADOID,
-	AM.LEVELAPROBATION LEVELAPROBATION 
-FROM BILLING B
-INNER JOIN PROVIDER PRO ON PRO.ID = B.PROVIDERID
-INNER JOIN TYPEBILLING TB ON TB.ID = B.BILLINGTYPE
-INNER JOIN COSTCENTER CC ON CC.ID = B.COSTCENTERID
-INNER JOIN MONEY MO ON MO.ID = B.MONEYID
-INNER JOIN STATUS ST ON ST.ID = B.STATEID
-INNER JOIN APROVALMATRIX AM ON AM.COSTCENTERID = B.COSTCENTERID
-INNER JOIN PERSON PE ON PE.ID = AM.PERSONID
+-- View: vw_billing_data
+
+-- DROP VIEW vw_billing_data;
+
+CREATE OR REPLACE VIEW vw_billing_data AS 
+ SELECT b.numberbilling AS numerofactura,
+    am.levelaprobation,
+    concat((((((pe.firstname::text || ''::text) || pe.secondname::text) || ' '::text) || pe.lastname::text) || ''::text) || pe.secondlastname::text) AS aprobador,
+    cc.name AS costcenter,
+    concat((mo.code::text || ' '::text) || to_char(b.exchangerate, '999,999,999,999'::text)) AS tasacambio,
+    concat((mo.code::text || ' '::text) || to_char(b.valuebill, '999,999,999,999'::text)) AS valor,
+    b.datebilling AS fechafactura,
+    b.datelimit AS fechalimite,
+    b.datefiled AS fecharadicado,
+    am.daystoaprobate AS "diasaprobación",
+    concat((mo.code::text || ' '::text) || to_char(am.valuemin, '999,999,999,999'::text)) AS valorminimo,
+    concat((mo.code::text || ' '::text) || to_char(am.valuemax, '999,999,999,999'::text)) AS valormaximo,
+    pro.businessname AS proveedor,
+    pro.nit,
+    tb.name AS tipofactura,
+        CASE b.producttype
+            WHEN 1 THEN 'PRODUCTO'::text
+            WHEN 2 THEN 'SERVICIO'::text
+            ELSE 'OTRO'::text
+        END AS tipoproducto,
+    b.routefile AS pdf,
+    st.name AS estado,
+    st.color,
+    am.levelaprobation AS nivelaprobacion,
+    pe.email,
+    b.stateid AS estadoid
+   FROM billing b
+     JOIN provider pro ON pro.id = b.providerid
+     JOIN typebilling tb ON tb.id = b.billingtype
+     JOIN costcenter cc ON cc.id = b.costcenterid
+     JOIN status st ON st.id = b.stateid
+     JOIN aprovalmatrix am ON am.costcenterid = b.costcenterid
+     JOIN money mo ON mo.id = am.moneyid
+     JOIN person pe ON pe.id = am.personid;
+
+ALTER TABLE vw_billing_data
+  OWNER TO postgres;

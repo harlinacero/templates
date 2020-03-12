@@ -39,3 +39,33 @@ Fecha: 11/03/2020 1:04:48 a. m.
 -------------------
 Dato: Connection is not open
 Fecha: 11/03/2020 1:04:49 a. m.
+-------------------
+Dato: 25P02: transacción abortada, las órdenes serán ignoradas hasta el fin de bloque de transacción
+Fecha: 11/03/2020 9:17:47 p. m.
+-------------------
+Dato: The process cannot access the file 'C:\Users\harfe\Documents\Proyectos\templates\ApiTemplate\WebApplication1\Log_wcf.txt' because it is being used by another process.
+Fecha: 11/03/2020 9:17:47 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 11/03/2020 9:19:26 p. m.
+-------------------
+Dato: 23503: inserción o actualización en la tabla «person» viola la llave foránea «fk_roleid»
+Fecha: 11/03/2020 9:22:51 p. m.
+-------------------
+Dato: 42P01: no existe la relación «aprovalprocess»
+Fecha: 11/03/2020 11:22:45 p. m.
+-------------------
+Dato: 42703: no existe la columna «acorddays» en la relación «aprovalprocess»
+Fecha: 11/03/2020 11:23:05 p. m.
+-------------------
+Dato: 42703: no existe la columna «acorddays» en la relación «aprovalprocess»
+Fecha: 11/03/2020 11:23:06 p. m.
+-------------------
+Dato: This NpgsqlTransaction has completed; it is no longer usable.
+Fecha: 12/03/2020 12:18:08 a. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM public.Billing
+Fecha: 12/03/2020 12:20:39 a. m.
+-------------------
+Dato: Connection already open
+Fecha: 12/03/2020 12:21:36 a. m.

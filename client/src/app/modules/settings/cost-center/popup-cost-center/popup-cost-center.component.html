@@ -5,12 +5,12 @@
 
     <form class="example-form">
         <div mat-dialog-content>
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Nombre</mat-label>
                 <input matInput [(ngModel)]="data.name" name="name" required>
             </mat-form-field>
 
-            <mat-form-field class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Descripción</mat-label>
                 <input matInput [(ngModel)]="data.description" name="description" required>
             </mat-form-field>
@@ -18,8 +18,7 @@
         </div>
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data"
-                cdkFocusInitial>Guardar</button>
+            <button mat-button class="btn btn-success" (click)="save()" [mat-dialog-close]="data" cdkFocusInitial>Guardar</button>
         </div>
     </form>
 
