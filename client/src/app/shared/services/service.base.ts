@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { environment } from 'src/environments/environment';
-
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { URLS, SESSION } from '../globals/localStorage.const';
 
 @Injectable()
 export class ServiceBase {
@@ -24,12 +23,12 @@ export class ServiceBase {
   getUrls() {
     this.http.get('./assets/config/urls.json').subscribe(res => {
       this.urls = res;
-      localStorage.setItem('urls', JSON.stringify(this.urls));
+      localStorage.setItem(URLS, JSON.stringify(this.urls));
     });
   }
 
   validateSession() {
-    const session = localStorage.getItem('session');
+    const session = localStorage.getItem(SESSION);
     if (!(!!session)) {
       this.router.navigate(['login']);
     }

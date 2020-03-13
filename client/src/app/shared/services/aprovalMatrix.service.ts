@@ -6,6 +6,7 @@ import { ServiceBase } from './service.base';
 import { AprovalMatrix } from '../interfaces/aprovalMatrix.interface';
 import { RequestResult } from '../interfaces/requestResult.interface';
 import { Money } from '../interfaces/money.interface';
+import { URLS } from '../globals/localStorage.const';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class AprovalMatrixService {
   urls: Urls;
 
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
-    this.urls = JSON.parse(localStorage.getItem('urls'));
+    this.urls = JSON.parse(localStorage.getItem(URLS));
     if (this.urls === undefined) {
       this.serviceBase.validateSession();
     }

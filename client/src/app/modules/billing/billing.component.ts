@@ -24,7 +24,7 @@ import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
 })
 export class BillingComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'moneyid', 'exchangerate',
+  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'exchangerate',
     'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
 
   dataSource: MatTableDataSource<any>;
@@ -152,7 +152,6 @@ export class BillingComponent implements OnInit, AfterViewInit {
 
   getNameById(nameList: string, id: number) {
     if (!(!!id)) {
-      console.log(nameList);
       return;
     }
 
@@ -169,9 +168,6 @@ export class BillingComponent implements OnInit, AfterViewInit {
       case 'costcenterid':
         const cost = this.costCenters.find(co => co.id === id);
         return (!!cost) ? cost.name : '';
-      case 'moneyid':
-        const money = this.moneys.find(mo => mo.id === id);
-        return (!!money) ? money.code : '';
       case 'stateid':
         const stat = this.states.find(st => st.id === id);
         return (!!stat) ? stat.name : '';

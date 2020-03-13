@@ -277,11 +277,10 @@ export class PupupBillingComponent implements OnInit {
   }
 
   save() {
-
     this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
     this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
       if (res.isSuccesfull) {
-        alert('Se ha modificado la factura');
+        alert('Se ha agregado la factura');
       } else {
         this.helper.controlErros(res);
       }

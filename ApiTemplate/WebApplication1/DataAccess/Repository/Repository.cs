@@ -88,9 +88,9 @@ namespace WebApplication1.DataAccess.Repository
             {
                 var newValue = props[i].GetValue(entity, null);
                 if (newValue.GetType().Equals(typeof(string)))
-                    sql.Append(props[i].Name  + " = '" + newValue + "'");
+                    sql.Append(props[i].Name + " = '" + newValue + "'");
                 if (newValue.GetType().Equals(typeof(int)))
-                    sql.Append(props[i].Name +" = " + newValue); 
+                    sql.Append(props[i].Name + " = " + newValue);
                 if (newValue.GetType().Equals(typeof(DateTime)))
                     sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
                 if (newValue.GetType().Equals(typeof(Boolean)))
@@ -121,7 +121,7 @@ namespace WebApplication1.DataAccess.Repository
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT * FROM " + typeof(T).Name + " WHERE Id = " + id);
             var list = _postgreSQLConnection.ListAll2(sql.ToString());
-            if(list != null)
+            if (list != null)
             {
                 var entity = ConvertDataTable<T>(list);
                 return entity.FirstOrDefault();
@@ -239,16 +239,18 @@ namespace WebApplication1.DataAccess.Repository
             foreach (DataColumn column in dr.Table.Columns)
             {
                 var pro = temp.GetProperties().First(x => x.Name.Equals(column.ColumnName, StringComparison.OrdinalIgnoreCase));
-                var columnName = dr[column.ColumnName];
-                var columValdiate = (columnName == DBNull.Value) ? string.Empty : columnName;
+                var columnValue = dr[column.ColumnName];
+                //var type = columnValue.GetType(columnValue);
+                var columValdiate = (Convert.IsDBNull(columnValue)) ? null : columnValue;
 
                 if (pro != null)
-                {                    
+                {
                     pro.SetValue(obj, columValdiate, null);
                 }
             }
             return obj;
         }
+
 
         public static T ConvertDBNull<T>(object value, Func<object, T> conversionFunction)
         {

@@ -13,6 +13,7 @@ import { Providers } from 'src/app/shared/interfaces/providers.interface';
 import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
 import { Role } from 'src/app/shared/interfaces/role.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
+import { URLS } from '../globals/localStorage.const';
 
 
 
@@ -23,7 +24,7 @@ export class AdminService {
   urls: Urls;
 
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
-    this.urls = JSON.parse(localStorage.getItem('urls'));
+    this.urls = JSON.parse(localStorage.getItem(URLS));
     if (this.urls === undefined) {
       this.serviceBase.validateSession();
     }

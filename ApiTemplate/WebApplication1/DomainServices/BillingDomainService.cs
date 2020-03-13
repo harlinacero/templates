@@ -84,10 +84,10 @@ namespace WebApplication1.DomainServices
                         file.CopyTo(stream);
                     }
 
-                    var billingEntity = _billingRepo.GetById(billing.NumberBilling);
-                    billing.RouteFile = newPath;
-                    if (billingEntity != null)
-                        return UpdateBilling(billing);
+                    //var billingEntity = _billingRepo.GetById(billing.NumberBilling);
+                    //billing.RouteFile = newPath;
+                    //if (billingEntity != null)
+                    //    return UpdateBilling(billing);
 
                     return AddBilling(billing, newPath);
                 }
@@ -136,35 +136,44 @@ namespace WebApplication1.DomainServices
 
         private RequestResult<Billing> AddBilling(Billing billing, string newPath)
         {
-            var newBilling = _billingRepo.AddWithReturn(billing);
-            if (newBilling != null)
-            {
-                if (AddBillingprocess(newBilling))
-                {
-                    return RequestResult<Billing>.CreateSuccesfull(newBilling);
-                }
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT * FROM fn_begin_process_aproval (");
+            sql.Append($"{billing.NumberBilling}, ");
+            sql.Append($"{billing.ProviderId}, ");
+            sql.Append($"{billing.BillingType}, ");
+            sql.Append($"{billing.ProductType}, ");
+            sql.Append($"{billing.CostcenterId}, ");
+            sql.Append($"{billing.ExchangeRate}, ");
+            sql.Append($"'{DateTime.Parse(billing.DateBilling.ToString())}', ");
+            sql.Append($"'{DateTime.Parse(billing.DateLimit.ToString())}' ,");
+            sql.Append($"'{DateTime.Parse(billing.DateFiled.ToString())}' ,");
+            sql.Append($"{billing.ValueBill}, ");
+            sql.Append($"'{newPath}', ");
+            sql.Append($"'{billing.UserChange}')");
 
-                _billingRepo.Remove(newBilling);
+            if (_billingRepo.CustomQuery(sql.ToString()))
+            {
+                string subject = GetSubject(billing);
+                string bodyMessage = GetMessage(billing);
+                SendMail(subject, bodyMessage, newPath);
+                return RequestResult<Billing>.CreateSuccesfull(billing);
             }
+
+
             File.Delete(newPath);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo crear");
         }
 
 
-        private bool AddBillingprocess(Billing newBilling)
+        private bool SendMail(string subject, string bodyMessage, string path)
         {
-            if (BeginProcessHistory(newBilling))
+            //string subject = GetSubject(newBilling);
+            //string bodyMessage = GetMessage(newBilling);
+
+            if (bodyMessage != null)
             {
-                string subject = GetSubject(newBilling);
-                string bodyMessage = GetMessage(newBilling);
-
-                if (bodyMessage != null)
-                {
-                    Mail.SendEmail("harlinacero@gmail.com", "harferace@hotmail.com", "h4rl1n4cer0", subject, bodyMessage, newBilling.RouteFile);
-                    return true;
-                }
-
-                return false;
+                Mail.SendEmail("harlinacero@gmail.com", "harferace@hotmail.com", "h4rl1n4cer0", subject, bodyMessage, path);
+                return true;
             }
 
             return false;

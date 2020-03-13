@@ -1,3 +1,4 @@
+import { Session } from './../interfaces/session.interface';
 import { Injectable } from '@angular/core';
 import { Urls } from '../interfaces/urls';
 import { HttpClient, HttpParams } from '@angular/common/http';
@@ -6,17 +7,20 @@ import { Billing } from '../interfaces/billing.interface';
 import { RequestResult } from '../interfaces/requestResult.interface';
 import { Status } from '../interfaces/status.interface';
 import { TypeBilling } from '../interfaces/typeBilling.interface';
+import { SESSION, URLS } from '../globals/localStorage.const';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BillingService {
 
-  urls: Urls;
+  private urls: Urls;
+  private session: Session;
 
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
-    this.urls = JSON.parse(localStorage.getItem('urls'));
-    if (this.urls === undefined) {
+    this.urls = JSON.parse(localStorage.getItem(URLS));
+    this.session = JSON.parse(localStorage.getItem(SESSION));
+    if (this.urls === undefined || this.session === undefined) {
       this.serviceBase.validateSession();
     }
   }
@@ -33,7 +37,7 @@ export class BillingService {
 
 
   SaveBilling(billing: Billing, file: File) {
-
+    billing.userChange = this.session.person.id;
     let formData = new FormData()
     formData.set('uploadFile', file, file.name);
     let params = new HttpParams()

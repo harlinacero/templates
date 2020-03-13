@@ -14,7 +14,6 @@ namespace WebApplication1.DomainServices.Entities
         public int BillingType { get; set; }
         public int ProductType { get; set; }
         public int CostcenterId { get; set; }
-        public int MoneyId { get; set; }
         public double ExchangeRate { get; set; }
         public DateTime DateBilling { get; set; }
         public DateTime DateLimit { get; set; }

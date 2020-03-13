@@ -319,7 +319,7 @@ ALTER TABLE aprovalmatrix
 
 CREATE TABLE status
 (
-  id serial NOT NULL,
+  id integer NOT NULL,
   name character varying(40),
   userchange integer,
   datemodified timestamp without time zone,
@@ -332,19 +332,17 @@ ALTER TABLE status
   OWNER TO postgres;
 
 
-INSERT INTO status (name, userChange, dateModified)
+INSERT INTO status (id, name, userChange, dateModified)
 VALUES
-('En Proceso Aprobación', 0, now()),
-('Aprobada', 0, now()),
-('Rechazada', 0, now()),
-('Cancelada', 0, now());
+(1, 'En Proceso Aprobación', 0, now(), color),
+(2, 'Aprobada', 0, now(), '#4586c7'),
+(3, 'Rechazada', 0, now(), '#287531'),
+(4, 'Cancelada', 0, now(), '#585858')
+(5, 'Pendiente a Tiempo', 0, now(), '#D2EC13'),
+(6, 'A tiempo', 0, now(), '#13EC44' ),
+(7, 'Tarde', 0, now(), '#EB0F0F');
 
-alter table status add column color varchar(10);
 
-update status set color = '#4586c7' where id = 1;
-update status set color = '#287531' where id = 2;
-update status set color = '#585858' where id = 3;
-update status set color = '#ab3030' where id = 4;
 
 -- Table: billing
 
@@ -454,3 +452,298 @@ CREATE OR REPLACE VIEW vw_billing_data AS
 
 ALTER TABLE vw_billing_data
   OWNER TO postgres;
+
+-- Table: aprovalbillingprocess
+
+-- DROP TABLE aprovalbillingprocess;
+
+CREATE TABLE aprovalbillingprocess
+(
+  id serial NOT NULL,
+  billingid integer,
+  levelaproval integer,
+  personaprovalid integer,
+  daterequest timestamp without time zone,
+  datechange timestamp without time zone,
+  userchange integer,
+  datemodified timestamp without time zone,
+  statusid integer,
+  observations text,
+  CONSTRAINT aprovalbillingprocess_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_billing_id FOREIGN KEY (billingid)
+      REFERENCES billing (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_person_aproval_id FOREIGN KEY (personaprovalid)
+      REFERENCES person (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE aprovalbillingprocess
+  OWNER TO postgres;
+
+-- Function: fn_begin_process_aproval(integer, integer, integer, integer, integer, integer, text, text, text, integer, text, integer)
+
+-- DROP FUNCTION fn_begin_process_aproval(integer, integer, integer, integer, integer, integer, text, text, text, integer, text, integer);
+
+CREATE OR REPLACE FUNCTION fn_begin_process_aproval(
+    newnumberbilling integer,
+    newproviderid integer,
+    newbillingtype integer,
+    newproducttype integer,
+    newcostcenterid integer,
+    newexchangerate integer,
+    newdatebilling text,
+    newdatelimit text,
+    newdatefiled text,
+    newvaluebill integer,
+    newroutefile text,
+    newuserchange integer)
+  RETURNS boolean AS
+$BODY$
+-- Declaramos las variables
+DECLARE idLastBilling INTEGER;
+	totalLevelsAproval INTEGER;
+	rowAprobalMatrix aprovalmatrix%rowtype;
+	rowPerson RECORD;
+		
+BEGIN
+	-- Insertamos la factura
+	INSERT INTO Billing (
+			NumberBilling, 
+			ProviderId, 
+			BillingType, 
+			ProductType, 
+			CostcenterId,
+			ExchangeRate, 
+			DateBilling, 
+			DateLimit, 
+			DateFiled, 
+			ValueBill, 
+			DateCreated, 
+			Stateid,
+			RouteFile, 
+			UserChange, 
+			DateModified) 
+	VALUES (
+			newNumberBilling, 
+			newProviderId, 
+			newBillingType, 
+			newProductType, 
+			newCostcenterId,
+			newExchangeRate, 
+			TO_TIMESTAMP(newDateBilling, 'DD/MM/YYYY HH:MI'), 
+			TO_TIMESTAMP(newDateLimit, 'DD/MM/YYYY HH:MI'), 
+			TO_TIMESTAMP(newDateFiled, 'DD/MM/YYYY HH:MI'), 
+			newValueBill, 
+			now(), 
+			1,
+			newRouteFile, 
+			newUserChange, 
+			now());
+
+
+	-- BUSCAMOS LOS APROBADORES DE LA FACTURA POR CENTRO DE COSTO
+	SELECT ID INTO IDLASTBILLING
+		FROM BILLING 
+		WHERE NUMBERBILLING = NEWNUMBERBILLING;
+
+	-- INICIAMOS EL PROCESO DE APROBACIóN, POR DEFECTO, EL ESTADO ES EN PROCESO
+	--BUSCAMOS LOS APROVADORES DE ACUERDO A LA MATRIX DE APROBACIóN
+	 FOR ROWAPROBALMATRIX IN SELECT * FROM APROVALMATRIX
+	    WHERE COSTCENTERID = NEWCOSTCENTERID
+		ORDER BY LEVELAPROBATION
+	    LOOP
+		
+		INSERT INTO APROBALBILLINGPROCESS
+		(
+			BILLINGID,
+			LEVELAPROVAL,
+			PERSONAPROVALID,
+			DATEREQUEST,
+			DATECHANGE,
+			USERCHANGE,
+			DATEMODIFIED,
+			STATUSID
+		) VALUES (
+			IDLASTBILLING,
+			ROWAPROBALMATRIX.LEVELAPROBATION,
+			ROWAPROBALMATRIX.PERSONID,
+			NOW(),
+			NOW(),
+			NEWUSERCHANGE,
+			NOW(),
+			5
+			);
+	    END LOOP;
+
+	RETURN TRUE;
+ 
+END
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION fn_begin_process_aproval(integer, integer, integer, integer, integer, integer, text, text, text, integer, text, integer)
+  OWNER TO postgres;
+
+CREATE OR REPLACE FUNCTION fn_continue_process_aproval
+(
+  newNumberBilling integer, 
+  newStateId integer,
+  newUserChange integer,
+  newObservations text	
+)
+RETURNS TABLE(statusBilling integer, returnTo text, email text)
+AS
+$BODY$
+DECLARE -- Declaramos las variables
+	rowBilling billing%rowtype;
+	rowaprovalbillingprocess aprovalbillingprocess%rowtype;
+	rowAprovalmatrix aprovalmatrix%rowtype;
+	nextAprovalLevel integer;
+BEGIN
+-- Verificar estado actual de la factura
+	SELECT * INTO rowBilling 
+	  FROM billing
+	  where numberbilling = newNumberBilling;
+	
+	IF rowBilling.stateId <> 1 THEN 
+		RETURN 	query
+		SELECT rowBilling.id as Status,
+		      '' as ReturnTo,
+		      '' as Email;  
+	END IF;
+
+-- Verificar Si el nivel de aprobación corresponde al usuario 
+
+-- Modificar estado y observaciones	
+	SELECT * INTO rowaprovalbillingprocess 
+	FROM aprovalbillingprocess
+	WHERE billingId = rowBilling.id
+		and personAprovalId = newUserChange;
+
+	SELECT * INTO rowAprovalmatrix
+	FROM aprovalmatrix 
+	WHERE costcenterId = rowBilling.costCenterId
+		AND personId = newUserChange;
+
+
+	UPDATE aprovalbillingprocess SET
+		dateChange = now(),
+		userChange = newUserChange,
+		dateModified = now(),
+		statusid = newStateId,
+		observations = newObservations
+	where id = rowaprovalbillingprocess.id
+		and personAprovalId = newUserChange;
+
+	-- Verificar siguiente paso en el proceso
+	IF newStateId = 3 THEN -- Factura rechazada
+		-- Actualizamos la factura con estado rechazado
+		UPDATE BILLING SET
+			dateModified = now(),
+			userChange = newUserChange,
+			causerRejection = newObservations,
+			stateId = 3,
+			userRejection = newUserChange
+		WHERE ID = rowBilling.ID;
+
+		
+		RETURN QUERY
+		SELECT newStateId, BUSIESSNAME, EMAIL
+		FROM PROVIDER 
+		WHERE ID = rowBilling.PROVIDERID;
+	END IF;
+			
+	-- Validar si existen más niveles
+	select  
+		CASE WHEN personAprovalId IS NULL THEN 0 
+		ELSE personAprovalId END INTO nextAprovalLevel
+		from aprovalbillingprocess 
+		where  billingId =  rowBilling.id and 
+		levelAproval = rowaprovalbillingprocess.levelAprobal;
+
+	-- si existe se cambia el registro del proceso
+	IF nextAprovalLevel > 0 THEN
+		select  
+			newStateId, 
+			concat (p.firstname || ''|| p.lastname),
+			p.email
+		from aprovalbillingprocess ap
+			inner join person p on p.id = ap.personAprovalId
+			where  billingId = rowBilling.id and 
+		 levelAproval = rowaprovalbillingprocess.levelAprobal + 1;
+	ELSE
+		
+		UPDATE BILLING SET
+			dateModified = now(),
+			userChange = newUserChange,
+			causerRejection = newObservations,
+			stateId = 2,
+			userRejection = newUserChange
+		WHERE ID = rowBilling.ID;
+
+
+		RETURN QUERY
+		SELECT  newStateId, 
+			businessname,
+			emailtreasure
+		FROM company
+		WHERE ID = 1;
+	END IF;
+	
+END
+$BODY$
+LANGUAGE 'plpgsql' ;	
+
+		
+		RETURN QUERY
+		SELECT INTO newStateId, BUSIESSNAME, EMAIL
+		FROM PROVIDER 
+		WHERE ID = rowBilling.PROVIDERID;
+	END IF;
+			
+	-- Validar si existen más niveles
+	select  
+		CASE WHEN personAprovalId IS NULL THEN 0 
+		ELSE personAprovalId END INTO nextAprovalLevel2
+		from aprovalbillingprocess 
+		where  billingId =  rowBilling.id and 
+		and levelAproval = rowaprovalbillingprocess.levelAprobal;
+
+	-- si existe se cambia el registro del proceso
+	IF nextAprovalLevel2 > 0 THEN
+		select  
+		newStateId, 
+		concat (p.firstname || ''|| p.lastname),
+		p.email
+		from aprovalbillingprocess ap
+			inner join person p on p.id = ap.personAprovalId
+			where  billingId = rowBilling.id and 
+		and levelAproval = rowaprovalbillingprocess.levelAprobal + 1;
+	ELSE
+		
+		UPDATE BILLING SET
+			dateModified = now(),
+			userChange = newUserChange
+			causerRejection = newObservations,
+			stateId = 2
+			userRejection = newUserChange
+		WHERE ID = rowBilling.ID;
+
+
+		RETURN QUERY
+		SELECT  newStateId, 
+			businessname,
+			emailtreasure
+		FROM company
+		WHERE ID = 1
+	END IF;
+	
+END
+$BODY$
+LANGUAGE 'plpgsql' ;	
+
+-- Si no existen más usuarios en el proceso retorna al proveedor o a la empresa
+-- Si retorna otro usuario continua el proceso
