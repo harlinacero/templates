@@ -17,5 +17,6 @@ namespace WebApplication1.AppServices.Contrracts
         RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling();
 
         RequestResult<byte[]> DownloadFile(string nameFile);
+        RequestResult<string> ContinueAprovalProcess(string numberbilling, int userCode, int newStatus, string observations);
     }
 }

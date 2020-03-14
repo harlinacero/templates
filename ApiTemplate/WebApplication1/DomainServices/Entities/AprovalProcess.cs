@@ -5,13 +5,14 @@ using System.Threading.Tasks;
 
 namespace WebApplication1.DomainServices.Entities
 {
-    public class AprovalProcess : EntityBase
+    public class AprovalBillingProcess : EntityBase
     {
         public int Billingid { get; set; }
-        public DateTime Daterequest { get; set; }
-        public DateTime Dateaproval { get; set; }
-        public int Totaldays { get; set; }
+        public int LevelAproval { get; set; }
+        public int PersonAprovalId { get; set; }
+        public DateTime DateRequest { get; set; }
+        public DateTime DateChange { get; set; }
         public int Statusid { get; set; }
-        public string Comments { get; set; }
+        public string Observations { get; set; }
     }
 }

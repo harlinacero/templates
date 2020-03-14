@@ -1,8 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
@@ -73,7 +71,7 @@ namespace WebApplication1.AppServices
             }
             catch (Exception ex)
             {
-               return RequestResult<byte[]>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<byte[]>.CreateUnSuccesfull(ex.Message);
             }
         }
 
@@ -96,12 +94,22 @@ namespace WebApplication1.AppServices
             {
                 return _billingDomainService.GetAllTypeBilling();
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
                 return RequestResult<IEnumerable<TypeBilling>>.CreateUnSuccesfull(ex.Message);
             }
         }
 
-     
+        public RequestResult<string> ContinueAprovalProcess(string numberbilling, int userCode, int newStatus, string observations)
+        {
+            try
+            {
+                return _billingDomainService.ContinueAprovalProcess(numberbilling, userCode, newStatus, observations);
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<string>.CreateUnSuccesfull(ex.Message);
+            }
+        }
     }
 }

@@ -61,6 +61,19 @@ namespace WebApplication1.Controllers
         }
 
 
+        ///// <summary>
+        ///// Update or add billing
+        ///// </summary>
+        ///// <param name="billing"></param>
+        ///// <returns></returns>
+        [HttpPost]
+        [Route("ContinueAprovalProcess")]
+        public RequestResult<string> ContinueAprovalProcess(string Numberbilling, int UserCode, int newStatus, string observations)
+        {
+
+            return _billingAppService.ContinueAprovalProcess(Numberbilling, UserCode, newStatus, observations);
+        }
+
         /// <summary>
         /// Export datasource file
         /// </summary>

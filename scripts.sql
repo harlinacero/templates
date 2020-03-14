@@ -313,15 +313,15 @@ ALTER TABLE aprovalmatrix
   OWNER TO postgres;
 
 
--- Table: status
+-- Table: select * from  status
 
 -- DROP TABLE status;
-
 CREATE TABLE status
 (
   id integer NOT NULL,
   name character varying(40),
   userchange integer,
+color varchar(10), 
   datemodified timestamp without time zone,
   CONSTRAINT status_pkey PRIMARY KEY (id)
 )
@@ -332,12 +332,12 @@ ALTER TABLE status
   OWNER TO postgres;
 
 
-INSERT INTO status (id, name, userChange, dateModified)
+INSERT INTO status (id, name, userChange, dateModified, color)
 VALUES
-(1, 'En Proceso Aprobación', 0, now(), color),
+(1, 'En Proceso Aprobación', 0, now(),'#00569d'),
 (2, 'Aprobada', 0, now(), '#4586c7'),
 (3, 'Rechazada', 0, now(), '#287531'),
-(4, 'Cancelada', 0, now(), '#585858')
+(4, 'Cancelada', 0, now(), '#585858'),
 (5, 'Pendiente a Tiempo', 0, now(), '#D2EC13'),
 (6, 'A tiempo', 0, now(), '#13EC44' ),
 (7, 'Tarde', 0, now(), '#EB0F0F');
@@ -388,7 +388,11 @@ ALTER TABLE billing
   OWNER TO postgres;
 
 
-CREATE TABLE typeBilling
+-- Table: typebilling
+
+-- DROP TABLE typebilling;
+
+CREATE TABLE typebilling
 (
   id serial NOT NULL,
   name character varying(40),
@@ -400,8 +404,9 @@ CREATE TABLE typeBilling
 WITH (
   OIDS=FALSE
 );
-ALTER TABLE status
+ALTER TABLE typebilling
   OWNER TO postgres;
+
 
 INSERT INTO typeBilling (name, code, description, userchange, datemodified)
 VALUES
@@ -409,6 +414,36 @@ VALUES
 ('Servicios Privados', 'SER_PRI', 'Servicios privados', 0, now()),
 ('Licencias Software', 'LIC', 'Licencias de software', 0, now());
 
+
+-- Table: aprovalbillingprocess
+
+-- DROP TABLE aprovalbillingprocess;
+
+CREATE TABLE aprovalbillingprocess
+(
+  id serial NOT NULL,
+  billingid integer,
+  levelaproval integer,
+  personaprovalid integer,
+  daterequest timestamp without time zone,
+  datechange timestamp without time zone,
+  userchange integer,
+  datemodified timestamp without time zone,
+  statusid integer,
+  observations text,
+  CONSTRAINT aprovalbillingprocess_pkey PRIMARY KEY (id),
+  CONSTRAINT fk_billing_id FOREIGN KEY (billingid)
+      REFERENCES billing (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT fk_person_aproval_id FOREIGN KEY (personaprovalid)
+      REFERENCES person (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE aprovalbillingprocess
+  OWNER TO postgres;
 
 -- View: vw_billing_data
 
@@ -453,35 +488,7 @@ CREATE OR REPLACE VIEW vw_billing_data AS
 ALTER TABLE vw_billing_data
   OWNER TO postgres;
 
--- Table: aprovalbillingprocess
 
--- DROP TABLE aprovalbillingprocess;
-
-CREATE TABLE aprovalbillingprocess
-(
-  id serial NOT NULL,
-  billingid integer,
-  levelaproval integer,
-  personaprovalid integer,
-  daterequest timestamp without time zone,
-  datechange timestamp without time zone,
-  userchange integer,
-  datemodified timestamp without time zone,
-  statusid integer,
-  observations text,
-  CONSTRAINT aprovalbillingprocess_pkey PRIMARY KEY (id),
-  CONSTRAINT fk_billing_id FOREIGN KEY (billingid)
-      REFERENCES billing (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION,
-  CONSTRAINT fk_person_aproval_id FOREIGN KEY (personaprovalid)
-      REFERENCES person (id) MATCH SIMPLE
-      ON UPDATE NO ACTION ON DELETE NO ACTION
-)
-WITH (
-  OIDS=FALSE
-);
-ALTER TABLE aprovalbillingprocess
-  OWNER TO postgres;
 
 -- Function: fn_begin_process_aproval(integer, integer, integer, integer, integer, integer, text, text, text, integer, text, integer)
 
@@ -587,6 +594,8 @@ $BODY$
 ALTER FUNCTION fn_begin_process_aproval(integer, integer, integer, integer, integer, integer, text, text, text, integer, text, integer)
   OWNER TO postgres;
 
+
+
 CREATE OR REPLACE FUNCTION fn_continue_process_aproval
 (
   newNumberBilling integer, 
@@ -657,6 +666,7 @@ BEGIN
 	END IF;
 			
 	-- Validar si existen más niveles
+	
 	select  
 		CASE WHEN personAprovalId IS NULL THEN 0 
 		ELSE personAprovalId END INTO nextAprovalLevel
@@ -696,54 +706,4 @@ BEGIN
 END
 $BODY$
 LANGUAGE 'plpgsql' ;	
-
 		
-		RETURN QUERY
-		SELECT INTO newStateId, BUSIESSNAME, EMAIL
-		FROM PROVIDER 
-		WHERE ID = rowBilling.PROVIDERID;
-	END IF;
-			
-	-- Validar si existen más niveles
-	select  
-		CASE WHEN personAprovalId IS NULL THEN 0 
-		ELSE personAprovalId END INTO nextAprovalLevel2
-		from aprovalbillingprocess 
-		where  billingId =  rowBilling.id and 
-		and levelAproval = rowaprovalbillingprocess.levelAprobal;
-
-	-- si existe se cambia el registro del proceso
-	IF nextAprovalLevel2 > 0 THEN
-		select  
-		newStateId, 
-		concat (p.firstname || ''|| p.lastname),
-		p.email
-		from aprovalbillingprocess ap
-			inner join person p on p.id = ap.personAprovalId
-			where  billingId = rowBilling.id and 
-		and levelAproval = rowaprovalbillingprocess.levelAprobal + 1;
-	ELSE
-		
-		UPDATE BILLING SET
-			dateModified = now(),
-			userChange = newUserChange
-			causerRejection = newObservations,
-			stateId = 2
-			userRejection = newUserChange
-		WHERE ID = rowBilling.ID;
-
-
-		RETURN QUERY
-		SELECT  newStateId, 
-			businessname,
-			emailtreasure
-		FROM company
-		WHERE ID = 1
-	END IF;
-	
-END
-$BODY$
-LANGUAGE 'plpgsql' ;	
-
--- Si no existen más usuarios en el proceso retorna al proveedor o a la empresa
--- Si retorna otro usuario continua el proceso

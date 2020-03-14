@@ -156,16 +156,6 @@ namespace WebApplication1.DataAccess.Repository
             listEntity = ConvertDataTable<T>(list);
 
             return listEntity;
-            //if (orderByClass.IsAscending)
-            //{
-            //    return _context.Set<T>().Where(where).OrderBy(orderByClass.OrderBy)
-            //    .Take(parameters.Top).ToList();
-            //}
-            //else
-            //{
-            //    return _context.Set<T>().Where(where).OrderByDescending(orderByClass.OrderBy)
-            //    .Take(parameters.Top).ToList();
-            //}
         }
 
         public IEnumerable<T> ListByWhere(string sql)

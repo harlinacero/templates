@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Mail;
 
 
@@ -20,12 +21,6 @@ namespace WebApplication1.Helpers
                 UseDefaultCredentials = false,
                 Credentials = new NetworkCredential(fromAddress, fromPassword)
             };
-            //using (var message = new MailMessage(fromAddress, toAddress)
-            //{
-            //    Subject = subject,
-            //    Body = body,
-            //    IsBodyHtml = true
-            //})
 
             try
             {
@@ -37,8 +32,9 @@ namespace WebApplication1.Helpers
                 smtp.Send(message);
                 return true;
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
+                
                 return false;
             }
         }

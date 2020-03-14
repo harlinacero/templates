@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace WebApplication1.Helpers
+﻿namespace WebApplication1.Helpers
 {
     public enum EnumStatusBilling
     {
         ProcesoArobacion = 1,
         Aprobada,
         Rechazada,
-        Cancelada
+        Cancelada,
+        PendienteTiempo,
+        ATiempo,
+        Tarde
+
 
     }
 }
