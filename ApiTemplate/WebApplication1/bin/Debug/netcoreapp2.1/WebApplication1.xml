@@ -216,6 +216,12 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:WebApplication1.Controllers.BillingController.GetDetailBilling(System.Int32)">
+            <summary>
+            Get all billing
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:WebApplication1.Controllers.CompanyController.GetCompany">
             <summary>
             Get all roles
@@ -298,6 +304,64 @@
             <summary>
             Environment vars
             </summary>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetAllBilling">
+            <summary>
+            Get all billings
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetBillingById(System.Int32)">
+            <summary>
+            Get list of billing
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.SaveBilling(Microsoft.AspNetCore.Http.IFormFile,WebApplication1.DomainServices.Entities.Billing)">
+            <summary>
+            Save billing and begin process aproval
+            </summary>
+            <param name="file"></param>
+            <param name="billing"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.DownloadFile(System.String)">
+            <summary>
+            Donwnload file of billing
+            </summary>
+            <param name="nameFile"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetStates">
+            <summary>
+            Get lsit of status
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetAllTypeBilling">
+            <summary>
+            Get list of types billing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.ContinueAprovalProcess(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="numberbilling"></param>
+            <param name="userCode"></param>
+            <param name="newStatus"></param>
+            <param name="observations"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.VerifyNextLevelAproval(System.Collections.Generic.List{WebApplication1.DomainServices.Entities.VW_billing_data},WebApplication1.DomainServices.Entities.Billing)">
+            <summary>
+            validate if process continue or finish
+            </summary>
+            <param name="process"></param>
+            <param name="billing"></param>
+            <returns></returns>
         </member>
         <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetAllPerson">
             <summary>

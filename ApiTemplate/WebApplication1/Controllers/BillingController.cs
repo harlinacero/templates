@@ -66,12 +66,12 @@ namespace WebApplication1.Controllers
         ///// </summary>
         ///// <param name="billing"></param>
         ///// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         [Route("ContinueAprovalProcess")]
-        public RequestResult<string> ContinueAprovalProcess(string Numberbilling, int UserCode, int newStatus, string observations)
+        public RequestResult<string> ContinueAprovalProcess(string numberbilling, int userCode, int newStatus, string observations)
         {
 
-            return _billingAppService.ContinueAprovalProcess(Numberbilling, UserCode, newStatus, observations);
+            return _billingAppService.ContinueAprovalProcess(numberbilling, userCode, newStatus, observations);
         }
 
         /// <summary>
@@ -125,6 +125,17 @@ namespace WebApplication1.Controllers
         public RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling()
         {
             return _billingAppService.GetAllTypeBilling();
+        }
+
+        /// <summary>
+        /// Get all billing
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetDetailBilling")]
+        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling)
+        {
+            return _billingAppService.GetDetailBilling(numberBilling);
         }
 
         #endregion

@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Session } from '../../interfaces/session.interface';
+import { SESSION } from '../../globals/localStorage.const';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this.isExpandSidebar = false;
-    const sessionString = localStorage.getItem('session');
+    const sessionString = localStorage.getItem(SESSION);
     if (!!sessionString) {
       const session: Session = JSON.parse(sessionString);
       this.menuIcon = 'fa fa-bars';

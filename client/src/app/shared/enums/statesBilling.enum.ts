@@ -1,7 +1,9 @@
 export enum StatusBillingEnum {
-'En Proceso Aprobación' = 1,
+'ProcesoAprobacion' = 1,
 'Aprobada',
 'Rechazada',
-'Cancelada'
-
+'Cancelada',
+'PendienteTiempo',
+'ATiempo',
+'Tarde'
 }

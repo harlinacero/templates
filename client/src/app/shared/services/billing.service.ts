@@ -8,6 +8,7 @@ import { RequestResult } from '../interfaces/requestResult.interface';
 import { Status } from '../interfaces/status.interface';
 import { TypeBilling } from '../interfaces/typeBilling.interface';
 import { SESSION, URLS } from '../globals/localStorage.const';
+import { vw_billing_data } from '../interfaces/vw_billing_data.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -53,5 +54,15 @@ export class BillingService {
   GetAllTypesBilling() {
     return this.http.get<RequestResult<TypeBilling[]>>(`${this.urls.urlbase}Billing/GetAllTypeBilling`);
   }
+
+  GetDetailBilling(numberbilling: number) {
+    return this.http.get<RequestResult<vw_billing_data[]>>(`${this.urls.urlbase}Billing/GetDetailBilling?numberBilling=` + numberbilling);
+  }
+
+  ContinueAprovalProcess(numberbilling: string, newStatus: number, observations: string) {
+    const params = `numberbilling=${numberbilling}&userCode=${this.session.person.id}&newStatus=${newStatus}&observations=${observations}`;
+    return this.http.get<RequestResult<string>>(`${this.urls.urlbase}Billing/ContinueAprovalProcess?${params}`);
+  }
+
 
 }

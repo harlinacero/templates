@@ -1,0 +1,184 @@
+<button (click)="return()"><i class="fa fa-arrow-left"></i> Salir</button>
+
+<div class="container">
+    <app-title [title]="title" [icon]="'fa fa-file-text-o'"></app-title>
+</div>
+
+<div *ngIf="!!detailBilling && !!detailBilling[0]">
+    <div class="container-group">
+        <div class="group-field">
+            <div class="title-group">Factura</div>
+            <div class="value-group">{{detailBilling[0].numeroFactura}}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Proveedor</div>
+            <div class="value-group">{{detailBilling[0].proveedor}}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Referencia</div>
+            <div class="value-group">{{detailBilling[0].tipoProducto}}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Fecha Factura</div>
+            <div class="value-group">{{detailBilling[0].fechaFactura | date}}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Fecha Vencimiento</div>
+            <div class="value-group">{{detailBilling[0].fechaLimite | date }}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Valor</div>
+            <div class="value-group">{{detailBilling[0].valorText}}</div>
+        </div>
+        <div class="group-field">
+            <div class="title-group">Área</div>
+            <div class="value-group">{{detailBilling[0].costCenter}}</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="example-container mat-elevation-z8" *ngIf="!!dataSource">
+    <!-- 'levelaproval', 'aprovalperson', 'dateRequest', 'dateResponse', 'acordingDays', 'executiondays', 'indicator', 'comments' -->
+    <mat-table [dataSource]="dataSource" matSort>
+
+        <ng-container matColumnDef="levelaproval">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Nivel</mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.levelAprobation}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="aprovalperson">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Responsable </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.aprobador}} </mat-cell>
+        </ng-container>
+
+
+        <ng-container matColumnDef="dateRequest">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Solicitud </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fechaSolicitudText }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="dateResponse">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Respuesta </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.fechaRespestaAprobadorText}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="acordingDays">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Dias Pactados </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{ row.diasPactados}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="executiondays">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Dias Ejecución </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.diasRespuesta }} </mat-cell>
+        </ng-container>
+
+
+        <!-- Area Column -->
+        <ng-container matColumnDef="indicator">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador</mat-header-cell>
+            <mat-cell *matCellDef="let row" [ngStyle]="{'background': row.colorIndicador}"> {{row.estadoAprobacion }}
+            </mat-cell>
+        </ng-container>
+
+        <!-- Value Column -->
+        <ng-container matColumnDef="comments">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Observaciones </mat-header-cell>
+            <mat-cell *matCellDef="let row"> {{row.observaciones }} </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;">
+        </mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+
+<div mat-dialog-actions class="buttons" *ngIf="isRequestAvailable">
+    <!-- <button mat-button class="btn btn-danger" (click)="regectBilling()">Rechazar</button> -->
+    <button mat-button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectedlModal">
+    Rechazar
+  </button>
+    <!-- <button mat-button class="btn btn-success" (click)="aprovalBilling()">Aprobar</button> -->
+    <button mat-button type="button" class="btn btn-success" data-toggle="modal" data-target="#aprovalModal">
+    Aprobar
+  </button>
+</div>
+
+
+
+<!-- Modal -->
+<!-- <div class="modal fade" id="aprovalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                asdf
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" (click)="aprovalBilling()">Aprobar</button>
+            </div>
+        </div>
+    </div>
+</div> -->
+
+
+
+<div class="modal fade" id="aprovalModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" *ngIf="!!detailBilling">
+                <h5 class="modal-title" id="exampleModalLabel">Aprobar Factura <span>{{detailBilling[0].numeroFactura}}</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">Observaciones:</label>
+                        <textarea class="form-control" id="message-text"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" (click)="aprovalBilling()">Aprobar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="rejectedlModal" tabindex="-1" role="dialog" aria-labelledby="rejectedlModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" *ngIf="!!detailBilling">
+                <h5 class="modal-title" id="exampleModalLabel">Rechazar Factura <span>{{detailBilling[0].numeroFactura}}</span>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="rejectionCause" class="col-form-label">Causal de Rechazo:</label>
+                        <textarea class="form-control" id="rejectionCause"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-success" (click)="regectBilling()">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>

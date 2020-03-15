@@ -89,15 +89,17 @@ namespace WebApplication1.DataAccess.Repository
                 var newValue = props[i].GetValue(entity, null);
                 if (newValue.GetType().Equals(typeof(string)))
                     sql.Append(props[i].Name + " = '" + newValue + "'");
-                if (newValue.GetType().Equals(typeof(int)))
+                else if (newValue.GetType().Equals(typeof(int)))
                     sql.Append(props[i].Name + " = " + newValue);
-                if (newValue.GetType().Equals(typeof(DateTime)))
+                else if (newValue.GetType().Equals(typeof(DateTime)))
                     sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
-                if (newValue.GetType().Equals(typeof(Boolean)))
+                else if (newValue.GetType().Equals(typeof(Boolean)))
                     sql.Append(props[i].Name + " = " + newValue);
-                if (newValue.GetType().Equals(typeof(float)))
+                else if (newValue.GetType().Equals(typeof(float)))
                     sql.Append(props[i].Name + " = " + newValue);
-                if (newValue.GetType().Equals(typeof(Double)))
+                else if (newValue.GetType().Equals(typeof(Double)))
+                    sql.Append(props[i].Name + " = " + newValue);
+                else
                     sql.Append(props[i].Name + " = " + newValue);
 
                 if (i < props.Count - 1)

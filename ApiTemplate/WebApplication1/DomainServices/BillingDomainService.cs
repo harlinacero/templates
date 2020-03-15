@@ -20,7 +20,7 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Billing> _billingRepo;
         private readonly IRepository<Status> _stateRepo;
         private readonly IRepository<TypeBilling> _typeBilingRepo;
-        private readonly IRepository<VW_BillingData> _billingDataRepo;
+        private readonly IRepository<VW_billing_data> _billingDataRepo;
         private readonly IRepository<AprovalBillingProcess> _processAprovalRepo;
         private readonly IRepository<AprovalMatrix> _aprobalmatrixRepo;
         private readonly IRepository<Person> _personRepo;
@@ -40,7 +40,7 @@ namespace WebApplication1.DomainServices
 
         #region Builder
         public BillingDomainService(IRepository<Billing> billingRepo, IRepository<Status> stateRepo, IRepository<TypeBilling> typeBilingRepo,
-            IRepository<VW_BillingData> billingDataRepo, IRepository<AprovalBillingProcess> processAprovalRepo,
+            IRepository<VW_billing_data> billingDataRepo, IRepository<AprovalBillingProcess> processAprovalRepo,
             IRepository<AprovalMatrix> aprobalmatrixRepo, IRepository<Person> personRepo,
             IRepository<Provider> providerRepo, IRepository<Company> companyRepo,
             IRepository<CostCenter> costCenterRepo,
@@ -59,12 +59,22 @@ namespace WebApplication1.DomainServices
             _env = env;
         }
         #endregion
+
+        /// <summary>
+        /// Get all billings
+        /// </summary>
+        /// <returns></returns>
         public RequestResult<IEnumerable<Billing>> GetAllBilling()
         {
             var list = _billingRepo.ListAll();
             return RequestResult<IEnumerable<Billing>>.CreateSuccesfull(list);
         }
 
+        /// <summary>
+        /// Get list of billing
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public RequestResult<Billing> GetBillingById(int id)
         {
             var billing = _billingRepo.GetById(id);
@@ -76,7 +86,12 @@ namespace WebApplication1.DomainServices
         }
 
 
-
+        /// <summary>
+        /// Save billing and begin process aproval
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="billing"></param>
+        /// <returns></returns>
         public RequestResult<Billing> SaveBilling(IFormFile file, Billing billing)
         {
 
@@ -96,11 +111,6 @@ namespace WebApplication1.DomainServices
                         file.CopyTo(stream);
                     }
 
-                    //var billingEntity = _billingRepo.GetById(billing.NumberBilling);
-                    //billing.RouteFile = newPath;
-                    //if (billingEntity != null)
-                    //    return UpdateBilling(billing);
-
                     return AddBilling(billing, newPath);
                 }
 
@@ -116,7 +126,11 @@ namespace WebApplication1.DomainServices
             }
         }
 
-
+        /// <summary>
+        /// Donwnload file of billing
+        /// </summary>
+        /// <param name="nameFile"></param>
+        /// <returns></returns>
         public RequestResult<byte[]> DownloadFile(string nameFile)
         {
             var path = Path.Combine(_env.ContentRootPath + CURRENT_PATH, nameFile);
@@ -129,99 +143,132 @@ namespace WebApplication1.DomainServices
             return null;
         }
 
-
+        /// <summary>
+        /// Get lsit of status
+        /// </summary>
+        /// <returns></returns>
         public RequestResult<IEnumerable<Status>> GetStates()
         {
             var list = _stateRepo.ListAll();
             return RequestResult<IEnumerable<Status>>.CreateSuccesfull(list);
         }
 
-
+        /// <summary>
+        /// Get list of types billing
+        /// </summary>
+        /// <returns></returns>
         public RequestResult<IEnumerable<TypeBilling>> GetAllTypeBilling()
         {
             var list = _typeBilingRepo.ListAll();
             return RequestResult<IEnumerable<TypeBilling>>.CreateSuccesfull(list);
         }
 
+
+        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling)
+        {
+            var list = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = {numberBilling}").ToList();
+            if (list != null && list.Count > 0)
+                return RequestResult<IEnumerable<VW_billing_data>>.CreateSuccesfull(list);
+
+            return RequestResult<IEnumerable<VW_billing_data>>.CreateUnSuccesfull("La factura no fue encontrada");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="numberbilling"></param>
+        /// <param name="userCode"></param>
+        /// <param name="newStatus"></param>
+        /// <param name="observations"></param>
+        /// <returns></returns>
         public RequestResult<string> ContinueAprovalProcess(string numberbilling, int userCode, int newStatus, string observations)
         {
             var billing = _billingRepo.ListByWhere($"{nameof(Billing.NumberBilling)} = {numberbilling}").FirstOrDefault();
             if (billing != null)
             {
-                var matrix = _aprobalmatrixRepo.ListByWhere($"{nameof(AprovalMatrix.CostCenterId)} = {billing.CostcenterId}").OrderBy(x => x.LevelAprobation);
-                var process = _processAprovalRepo.ListByWhere($"{nameof(AprovalBillingProcess.Billingid)} = {billing.Id}").OrderBy(x => x.LevelAproval);
+                var process = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = {numberbilling}").ToList();
                 billing.Stateid = newStatus;
                 billing.UserChange = userCode;
                 billing.DateModified = DateTime.Now;
-                return VerifyNextLevelAproval(matrix.ToList(), process, billing);
+                billing.CasueRejection = observations;
+                return VerifyNextLevelAproval(process, billing);
             }
 
 
             return RequestResult<string>.CreateUnSuccesfull($"La factura con número {numberbilling} no fue encontrada");
         }
 
-        private RequestResult<string> VerifyNextLevelAproval(List<AprovalMatrix> matrix, IOrderedEnumerable<AprovalBillingProcess> process, Billing billing)
+        /// <summary>
+        /// validate if process continue or finish
+        /// </summary>
+        /// <param name="process"></param>
+        /// <param name="billing"></param>
+        /// <returns></returns>
+        private RequestResult<string> VerifyNextLevelAproval(List<VW_billing_data> process, Billing billing)
         {
-            AprovalBillingProcess aprovalProcess = new AprovalBillingProcess();
-            foreach (var level in matrix)
+            var currentProcessLevel = process.Find(pro => pro.PersonAprovalId == billing.UserChange);
+            var nextProcessLevel = process.Find(pro => pro.LevelAprobation == currentProcessLevel.LevelAprobation + 1);
+            AprovalBillingProcess aprovalProcess = _processAprovalRepo.GetById(currentProcessLevel.IdProces);
+            aprovalProcess.Observations = billing.CasueRejection;
+            aprovalProcess.PersonAprovalId = billing.UserChange;
+            aprovalProcess.DateChange = DateTime.Now;
+            aprovalProcess.Statusid = billing.Stateid;
+            aprovalProcess.DateModified = DateTime.Now;
+
+            if (nextProcessLevel == null)
             {
-                aprovalProcess = process.ToList().Find(pro => pro.LevelAproval == level.LevelAprobation);
-                if (aprovalProcess != null)
-                {
-                    aprovalProcess.Observations = billing.CasueRejection;
-                    aprovalProcess.PersonAprovalId = billing.UserChange;
-                    aprovalProcess.DateChange = DateTime.Now;
-                    aprovalProcess.Statusid = billing.Stateid;
-                    aprovalProcess.DateModified = DateTime.Now;
-                    continue;
-                }
+                billing.CasueRejection = currentProcessLevel.Observaciones;
+                return FinishProcess(billing, aprovalProcess, currentProcessLevel);
+            }
+            else if (billing.ValueBill <= currentProcessLevel.ValorMaximo && billing.ValueBill > currentProcessLevel.ValorMinimo)
+            {
+                billing.CasueRejection = currentProcessLevel.Observaciones;
+                return FinishProcess(billing, aprovalProcess, currentProcessLevel);
+            }
+            else
+            {
+                billing.Stateid = (billing.DateLimit < DateTime.Now) ? (int)EnumStatusBilling.ATiempo : (int)EnumStatusBilling.Tarde;
+                return ContinueNextLevel(billing, aprovalProcess, currentProcessLevel, nextProcessLevel);
             }
 
-            foreach (var level in matrix)
-            {
-                if (billing.ValueBill <= level.ValueMax && billing.ValueBill > level.ValueMin)
-                {
-                    return FinishProcess(billing, aprovalProcess);
-                }
-                else
-                {
-                    return SearchNextLevel(billing, aprovalProcess, level, process.ToList());
-                }
-            }
-
-            return FinishProcess(billing, aprovalProcess);
-
-        }
-
-        private RequestResult<string> SearchNextLevel(Billing billing, AprovalBillingProcess aprovalProcess, AprovalMatrix level, List<AprovalBillingProcess> aprovalProcessList)
-        {
-            var nextLevel = aprovalProcessList.Find(next => next.LevelAproval == level.LevelAprobation + 1);
-
-            if (nextLevel != null)
-            {
-                nextLevel.DateRequest = DateTime.Now;
-                nextLevel.DateModified = DateTime.Now;
-                nextLevel.DateChange = DateTime.Now;
-                nextLevel.Statusid = (int)EnumStatusBilling.PendienteTiempo;
-            }
-
-            _processAprovalRepo.Update(nextLevel);
-            _processAprovalRepo.Update(aprovalProcess);
-            _billingRepo.Update(billing);
-
-            BuildEmail(billing, nextLevel.PersonAprovalId);
-
-            return RequestResult<string>.CreateSuccesfull("Proceso de Aprobación finalizado");
         }
 
 
 
+        private RequestResult<string> ContinueNextLevel(Billing billing, AprovalBillingProcess aprovalProcess, VW_billing_data currentProcessLevel, VW_billing_data nextProcessLevel)
+        {
+            var nextProcess = _processAprovalRepo.GetById(nextProcessLevel.IdProces);
 
-        private RequestResult<string> FinishProcess(Billing billing, AprovalBillingProcess aprovalProcess)
+            // Actualizamos el nivel actual
+            var responsedate = DateTime.Now - currentProcessLevel.FechaSolicitud;
+            var newStatus = responsedate.Days < currentProcessLevel.DiasPactados ? (int)EnumStatusBilling.Aprobada : (int)EnumStatusBilling.Tarde;
+            aprovalProcess.Statusid = newStatus;
+            aprovalProcess.DateModified = DateTime.Now;
+            aprovalProcess.DateChange = DateTime.Now;
+
+            //Actualizamos el nuevo nivel y Notificamos al siguiente aprobador
+            nextProcess.Statusid = (int)EnumStatusBilling.ATiempo;
+            nextProcess.DateRequest = DateTime.Now;
+            nextProcess.Observations = "";
+            _processAprovalRepo.Update(aprovalProcess);
+            _processAprovalRepo.Update(nextProcess);
+            _billingRepo.Update(billing);
+
+            SendMailToNextLevelAprobal(billing, nextProcessLevel);
+
+            return RequestResult<string>.CreateSuccesfull("Proceso de Aprobación actualizado");
+        }
+
+
+
+
+        private RequestResult<string> FinishProcess(Billing billing, AprovalBillingProcess aprovalProcess, VW_billing_data currentProcessLevel)
         {
             _processAprovalRepo.Update(aprovalProcess);
             _billingRepo.Update(billing);
-            BuildEmail(billing);
+
+
+            BuildEmail(billing, currentProcessLevel);
             return RequestResult<string>.CreateSuccesfull("Proceso de Aprobación finalizado");
         }
 
@@ -261,65 +308,50 @@ namespace WebApplication1.DomainServices
 
 
 
-        private void BuildEmail(Billing billing, int personAprovalId = 0)
+        private void BuildEmail(Billing billing, VW_billing_data currentProcessLevel)
         {
-            string nameDestiny = "", address = "";
-            if (personAprovalId != 0)
-            {
-                SendMailToNextLevelAprobal(billing, personAprovalId);
-            }
-            else
-            {
-                switch (billing.Stateid)
-                {
-                    case (int)EnumStatusBilling.Aprobada:
-                        SendMailBillingAprobated(billing);
-                        break;
-                    case (int)EnumStatusBilling.Rechazada:
-                        var provider = _providerRepo.GetById(billing.ProviderId);
-                        if (provider != null)
-                        {
-                            nameDestiny = provider.BusinessName;
-                            address = provider.Email;
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
 
-
+            switch (billing.Stateid)
+            {
+                case (int)EnumStatusBilling.Aprobada:
+                    SendMailBillingAprobated(billing, currentProcessLevel);
+                    break;
+                case (int)EnumStatusBilling.Rechazada:
+                    SendMailBillingRejected(billing, currentProcessLevel);
+                    break;
+                default:
+                    break;
+            }
 
         }
 
-        private void SendMailBillingAprobated(Billing billing)
+        private void SendMailBillingRejected(Billing billing, VW_billing_data currentProcessLevel)
         {
-            StringBuilder message = new StringBuilder();
-            var compa = _companyRepo.ListAll().FirstOrDefault();
-            var bodyBilling =GetMessage(billing);
-            if (compa != null)
-            {
-                //nameDestiny = compa.BusinessName;
-                //address = compa.EmailTreasury;
-                var subject = GetSubject(billing);
-                message.Append("<p>{}<p>");
-                message.Append(bodyBilling);
-
-            }
+            StringBuilder newSubject = new StringBuilder();
+            var subject = GetSubject(billing);
+            newSubject.Append(subject);
+            newSubject.Append($"Su factura {billing.NumberBilling} fue rechazada");
+            var bodyBilling = GetMessage(billing);
+            SendMail(newSubject.ToString(), currentProcessLevel.EmailProveedor, bodyBilling, currentProcessLevel.Pdf);
         }
 
-        private void SendMailToNextLevelAprobal(Billing billing, int personAprovalId)
+        private void SendMailBillingAprobated(Billing billing, VW_billing_data currentProcessLevel)
         {
-            var nextAproval = _personRepo.GetById(personAprovalId);
-            if (nextAproval != null)
-            {
-                var nameDestiny = $"{nextAproval.FirstName} {nextAproval.SecondName} {nextAproval.LastName} {nextAproval.SecondName}";
-                var address = nextAproval.Email;
-                var subject = GetSubject(billing);
-                var bodyMessage = GetMessage(billing);
+            StringBuilder newSubject = new StringBuilder();
+            var subject = GetSubject(billing);
+            newSubject.Append(subject);
+            newSubject.Append($"Factura {billing.NumberBilling} del Proveedor {currentProcessLevel.Proveedor} ha sido aprobada por el area {currentProcessLevel.CostCenter}");
+            newSubject.Append("Por favor tramitar el pago correspondiente, según datos adjuntos.");
+            var bodyBilling = GetMessage(billing);
+            SendMail(newSubject.ToString(), currentProcessLevel.EmailCompany, bodyBilling, currentProcessLevel.Pdf);
+        }
 
-                SendMail(subject, address, bodyMessage, billing.RouteFile);
-            }
+        private void SendMailToNextLevelAprobal(Billing billing, VW_billing_data data)
+        {
+            var subject = GetSubject(billing);
+            var bodyMessage = GetMessage(billing);
+
+            SendMail(subject, data.EmailAprobator, bodyMessage, billing.RouteFile);
 
         }
 
@@ -381,17 +413,17 @@ namespace WebApplication1.DomainServices
         {
             StringBuilder message = new StringBuilder();
             var newBilling = GetBillingByNumber(billing.NumberBilling);
-           
+
             if (newBilling != null)
             {
-                message.Append($"<h1>Factura No. {newBilling.Numerofactura}</h1>");
+                message.Append($"<h1>Factura No. {newBilling.NumeroFactura}</h1>");
                 message.Append($"<h2>Proveedor. {newBilling.Proveedor}</h2>");
-                message.Append($"<p>Producto: {newBilling.Tipoproducto}</p>");
-                message.Append($"<p>Centro de Costo: { newBilling.Costcenter}</p>");
+                message.Append($"<p>Producto: {newBilling.TipoProducto}</p>");
+                message.Append($"<p>Centro de Costo: { newBilling.CostCenter}</p>");
                 message.Append($"<p>Valor: {newBilling.Valor}</p>");
-                message.Append($"<p>Fecha Factura: {newBilling.Fechafactura.ToLongDateString()}</p>");
-                message.Append($"<p>Fecha Límite: {newBilling.Fechalimite.ToLongDateString()}</p>");
-                message.Append($"<p>Por favor actualizar el estado de la factura antes de {newBilling.Diasaprobación}</p>");
+                message.Append($"<p>Fecha Factura: {newBilling.FechaFactura.ToLongDateString()}</p>");
+                message.Append($"<p>Fecha Límite: {newBilling.FechaLimite.ToLongDateString()}</p>");
+                message.Append($"<p>Por favor actualizar el estado de la factura antes de {newBilling.DiasPactados} dias</p>");
             }
 
             return message.ToString();
@@ -411,20 +443,18 @@ namespace WebApplication1.DomainServices
             return message.ToString();
         }
 
-        private string GetSubjectFinish(Billing billing)
-        {
-            throw new NotImplementedException();
-        }
 
-        private VW_BillingData GetBillingByNumber(int numberBilling)
+        private VW_billing_data GetBillingByNumber(int numberBilling, int levelAprobation = 0)
         {
             StringBuilder sql = new StringBuilder();
 
             sql.Append("SELECT * ");
             sql.Append("FROM VW_BILLING_DATA ");
             sql.Append($"WHERE ESTADOID = {(int)EnumStatusBilling.ProcesoArobacion} AND ");
-            sql.Append($"LEVELAPROBATION = {1} AND ");
             sql.Append($"NUMEROFACTURA = {numberBilling}");
+
+            if (levelAprobation != 0)
+                sql.Append($" AND LEVELAPROBATION = {levelAprobation}");
 
 
             var query = _billingDataRepo.CustomList(sql.ToString()).ToList();
@@ -435,7 +465,6 @@ namespace WebApplication1.DomainServices
 
             return null;
         }
-
 
     }
 }

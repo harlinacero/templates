@@ -21,8 +21,6 @@ export class PopupCompanyComponent implements OnInit {
   constructor(public dialogRef: MatDialogRef<PopupCompanyComponent>, @Inject(MAT_DIALOG_DATA) public company: Company,
               private companyService: CompanyService) {
 
-    console.log(company);
-
     if (company === null) {
       this.data = {
         accountableInterface: true,

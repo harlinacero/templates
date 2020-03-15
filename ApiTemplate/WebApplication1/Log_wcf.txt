@@ -1,0 +1,41 @@
+Archivo Creado:
+14/03/2020 9:21:09 a. m.
+-------------------
+Dato: 42P01: no existe la relación «aprobalbillingprocess»
+Fecha: 14/03/2020 9:21:09 a. m.
+-------------------
+Dato: 42P01: no existe la relación «aprobalbillingprocess»
+Fecha: 14/03/2020 9:23:01 a. m.
+-------------------
+Dato: 42P01: no existe la relación «vw_billingdata»
+Fecha: 14/03/2020 12:55:01 p. m.
+-------------------
+Dato: 42P01: no existe la relación «vw_billingdata»
+Fecha: 14/03/2020 12:55:46 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:28:33 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:31:01 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:35:10 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:37:30 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:40:08 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 14/03/2020 6:40:47 p. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 14/03/2020 9:27:06 p. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 15/03/2020 1:57:13 a. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 15/03/2020 2:08:43 a. m.

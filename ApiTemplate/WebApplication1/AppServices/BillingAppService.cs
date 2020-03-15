@@ -111,5 +111,18 @@ namespace WebApplication1.AppServices
                 return RequestResult<string>.CreateUnSuccesfull(ex.Message);
             }
         }
+
+        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling)
+        {
+            try
+            {
+                return _billingDomainService.GetDetailBilling(numberBilling);
+            }
+            catch (Exception ex )
+            {
+
+                return RequestResult<IEnumerable<VW_billing_data>>.CreateUnSuccesfull(ex.Message);
+            }
+        }
     }
 }

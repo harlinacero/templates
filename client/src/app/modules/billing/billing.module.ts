@@ -5,13 +5,15 @@ import { CommonModule } from '@angular/common';
 import { BillingComponent } from './billing.component';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
 import { MAT_DIALOG_DATA } from '@angular/material';
+import { DetailbillingComponent } from './detailbilling/detailbilling.component';
 
 
 
 @NgModule({
   declarations: [
     BillingComponent,
-    PupupBillingComponent
+    PupupBillingComponent,
+    DetailbillingComponent
   ],
   imports: [
     CommonModule,

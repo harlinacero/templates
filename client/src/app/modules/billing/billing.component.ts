@@ -1,3 +1,5 @@
+import { HttpParams } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit, Provider } from '@angular/core';
 import { ServiceBase } from 'src/app/shared/services/service.base';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
@@ -44,14 +46,13 @@ export class BillingComponent implements OnInit, AfterViewInit {
     // tslint:disable-next-line: align
     private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService,
     // tslint:disable-next-line: align
-    public dialog: MatDialog) {
+    public dialog: MatDialog, private route: ActivatedRoute, private router: Router) {
     this.getAllCostCenters();
+    this.getAllTypeBilling();
     this.getAllMoneys();
     this.getAllStates();
-    this.getAllTypeBilling();
     this.getAllProducts();
     this.getAllProviders();
-    this.getAllBillings();
   }
 
   ngOnInit() {
@@ -135,11 +136,12 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getAllTypeBilling() {
+  async getAllTypeBilling() {
     this.billingService.GetAllTypesBilling()
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.typesBilling = res.result;
+          this.getAllBillings();
         } else {
           this.helper.controlErros(res);
         }
@@ -156,12 +158,15 @@ export class BillingComponent implements OnInit, AfterViewInit {
     }
 
     switch (nameList) {
+      case 'billingtype':
+        // if (!!this.typesBilling) {
+        //   return '';
+        // }
+        const type = this.typesBilling.find(x => x.id === id);
+        return (!!type) ? type.code : '';
       case 'providerid':
         const prov = this.providers.find(p => p.id === id);
         return (!!prov) ? prov.businessName : '';
-      case 'billingtype':
-        const type = this.typesBilling.find(x => x.id === id);
-        return (!!type) ? type.code : '';
       case 'producttype':
         const prod = this.products.find(pro => pro.id === id);
         return (!!prod) ? prod.code : '';
@@ -188,16 +193,9 @@ export class BillingComponent implements OnInit, AfterViewInit {
   }
 
   setAprovalMatrix(row) {
-    const dialogRef = this.dialog.open(PupupBillingComponent, {
-      height: 'auto',
-      width: '600px',
-      data: row,
-      disableClose: true
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      this.getAllBillings();
-    });
+    this.router.navigate(['billing','detailbilling', row.numberBilling]);
+
   }
 
   addCostCenter() {
