@@ -23,8 +23,8 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<VW_billing_data> _billingDataRepo;
         private readonly IRepository<AprovalBillingProcess> _processAprovalRepo;
         private readonly IRepository<AprovalMatrix> _aprobalmatrixRepo;
-        private readonly IRepository<Person> _personRepo;
-        private readonly IRepository<Provider> _providerRepo;
+        //private readonly IRepository<Person> _personRepo;
+        //private readonly IRepository<Provider> _providerRepo;
         private readonly IRepository<Company> _companyRepo;
         private readonly IRepository<CostCenter> _costCenterRepo;
 
@@ -52,8 +52,8 @@ namespace WebApplication1.DomainServices
             _billingDataRepo = billingDataRepo;
             _processAprovalRepo = processAprovalRepo;
             _aprobalmatrixRepo = aprobalmatrixRepo;
-            _personRepo = personRepo;
-            _providerRepo = providerRepo;
+            //_personRepo = personRepo;
+            //_providerRepo = providerRepo;
             _companyRepo = companyRepo;
             _costCenterRepo = costCenterRepo;
             _env = env;
@@ -223,6 +223,7 @@ namespace WebApplication1.DomainServices
             else if (billing.ValueBill <= currentProcessLevel.ValorMaximo && billing.ValueBill > currentProcessLevel.ValorMinimo)
             {
                 billing.CasueRejection = currentProcessLevel.Observaciones;
+                billing.UserRejection = billing.UserChange;
                 return FinishProcess(billing, aprovalProcess, currentProcessLevel);
             }
             else
@@ -293,13 +294,17 @@ namespace WebApplication1.DomainServices
 
             if (_billingRepo.CustomQuery(sql.ToString()))
             {
+                VW_billing_data process = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = {billing.NumberBilling} AND " +
+                    $"{nameof(VW_billing_data.LevelAprobation)} = {1}").FirstOrDefault();
 
-                string subject = GetSubject(billing);
-                string bodyMessage = GetMessage(billing);
-                SendMail(subject, "harferace@hotmail.com", bodyMessage, newPath);
+                if (process != null)
+                {
+                    string subject = GetSubject(billing);
+                    string bodyMessage = GetMessage(billing);
+                    SendMail(subject, process.EmailAprobator, bodyMessage, newPath);
+                }
                 return RequestResult<Billing>.CreateSuccesfull(billing);
             }
-
 
             File.Delete(newPath);
             return RequestResult<Billing>.CreateUnSuccesfull("No se pudo crear");
@@ -371,43 +376,6 @@ namespace WebApplication1.DomainServices
         }
 
 
-        private bool BeginProcessHistory(Billing billing)
-        {
-            var matrixlevels = _aprobalmatrixRepo.ListByWhere($"{nameof(AprovalMatrix.CostCenterId)} = {billing.CostcenterId}").OrderBy(x => x.LevelAprobation).ToList();
-            if (matrixlevels.Count > 0)
-            {
-                foreach (var item in matrixlevels)
-                {
-                    var process = new AprovalBillingProcess()
-                    {
-                        Billingid = billing.Id,
-                        Observations = "",
-                        DateRequest = DateTime.Now,
-                        DateModified = DateTime.Now,
-                        Statusid = (int)EnumStatusBilling.ProcesoArobacion,
-                        UserChange = billing.UserChange
-                    };
-
-                    if (!_processAprovalRepo.Add(process))
-                        _billingRepo.Remove(billing);
-                }
-
-                return true;
-            }
-
-            return false;
-
-        }
-
-
-        private RequestResult<Billing> UpdateBilling(Billing billing)
-        {
-            if (_billingRepo.Update(billing))
-                return RequestResult<Billing>.CreateSuccesfull(billing);
-            return RequestResult<Billing>.CreateUnSuccesfull("No se pudo actualizar");
-        }
-
-
 
         private string GetMessage(Billing billing)
         {
@@ -450,7 +418,7 @@ namespace WebApplication1.DomainServices
 
             sql.Append("SELECT * ");
             sql.Append("FROM VW_BILLING_DATA ");
-            sql.Append($"WHERE ESTADOID = {(int)EnumStatusBilling.ProcesoArobacion} AND ");
+            sql.Append($"WHERE ");
             sql.Append($"NUMEROFACTURA = {numberBilling}");
 
             if (levelAprobation != 0)

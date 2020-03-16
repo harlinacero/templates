@@ -12,6 +12,7 @@ namespace WebApplication1.DataAccess.Repository
         bool Add(T entity);
         T AddWithReturn(T entity);
         void Remove(T entity);
+        void RemoveByWhere(T entity, string where);
         bool Update(T entity);
         T GetById(int id);
         IEnumerable<T> ListByParam(Parameters<T> parameters);

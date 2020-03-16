@@ -39,3 +39,15 @@ Fecha: 15/03/2020 1:57:13 a. m.
 -------------------
 Dato: 42703: no existe la columna «estadoid»
 Fecha: 15/03/2020 2:08:43 a. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 15/03/2020 10:00:05 p. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 15/03/2020 10:11:07 p. m.
+-------------------
+Dato: 42703: no existe la columna «estadoid»
+Fecha: 15/03/2020 10:16:58 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «ANDLevelAprobation»
+Fecha: 15/03/2020 11:46:05 p. m.

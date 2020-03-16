@@ -118,6 +118,15 @@ namespace WebApplication1.DataAccess.Repository
             _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
+
+        public void RemoveByWhere(T entity, string where)
+        {
+            StringBuilder sql = new StringBuilder();
+            var type = entity.GetType();
+            sql.Append("DELETE FROM " + type.Name + " WHERE " + where);
+            _postgreSQLConnection.ExecuteQuery(sql.ToString());
+        }
+
         public T GetById(int id)
         {
             StringBuilder sql = new StringBuilder();

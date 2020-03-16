@@ -76,28 +76,49 @@ namespace WebApplication1
                 app.UseHsts();
             }
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-                c.RoutePrefix = string.Empty;
-            });
+            //Obtenemos el nombre de la aplicación URL
+            string appNameURI = Configuration.GetValue<string>("AppNameURI")?.Trim() ?? "/";
+            appNameURI = (!appNameURI.StartsWith("/") ? ("/" + appNameURI) : appNameURI);
+            appNameURI = (!appNameURI.EndsWith("/") ? (appNameURI + "/") : appNameURI);
 
-            app.UseCors("AllowAllHeaders");
-            app.UseHttpsRedirection();
+            string swaggerEndPoint = $"{appNameURI}swagger/v1/swagger.json";
+
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseCookiePolicy();
+            app.UseCors("AllowAllHeaders");
+            app.UseMvc();
 
-            app.UseMvc(routes =>
+            app.UseSwagger();
+            app.UseSwaggerUI(s =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                s.RoutePrefix = "api";
+                s.SwaggerEndpoint(swaggerEndPoint, "Appointment Template API Documentation V1");
             });
+
+
+            //// Enable middleware to serve generated Swagger as a JSON endpoint.
+            //app.UseSwagger();
+
+            //// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            //// specifying the Swagger JSON endpoint.
+            //app.UseSwaggerUI(c =>
+            //{
+            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            //    c.RoutePrefix = string.Empty;
+            //});
+
+            //app.UseCors("AllowAllHeaders");
+            //app.UseHttpsRedirection();
+            //app.UseStaticFiles();
+            //app.UseCookiePolicy();
+
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //});
         }
     }
 }
