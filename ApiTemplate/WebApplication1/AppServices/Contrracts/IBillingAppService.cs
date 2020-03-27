@@ -10,7 +10,7 @@ namespace WebApplication1.AppServices.Contrracts
 {
     public interface IBillingAppService
     {
-        RequestResult<IEnumerable<Billing>> GetAllBilling();
+        RequestResult<IEnumerable<Vw_billing>> GetAllBilling();
         RequestResult<Billing> SaveBilling(Billing billing, IFormFile file);
         RequestResult<Billing> GetBillingById(int id);
         RequestResult<IEnumerable<Status>> GetStates();

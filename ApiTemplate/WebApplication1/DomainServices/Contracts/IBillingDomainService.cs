@@ -10,7 +10,7 @@ namespace WebApplication1.DomainServices.Contracts
 {
     public interface IBillingDomainService
     {
-        RequestResult<IEnumerable<Billing>> GetAllBilling();
+        RequestResult<IEnumerable<Vw_billing>> GetAllBilling();
         RequestResult<Billing> GetBillingById(int id);
         RequestResult<Billing> SaveBilling(IFormFile file, Billing billing);
         RequestResult<IEnumerable<Status>> GetStates();

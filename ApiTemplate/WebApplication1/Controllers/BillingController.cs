@@ -35,7 +35,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllBilling")]
-        public RequestResult<IEnumerable<Billing>> GetAllBilling()
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling()
         {
             return _billingAppService.GetAllBilling();
         }

@@ -51,3 +51,6 @@ Fecha: 15/03/2020 10:16:58 p. m.
 -------------------
 Dato: 42601: error de sintaxis en o cerca de «ANDLevelAprobation»
 Fecha: 15/03/2020 11:46:05 p. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM Person WHERE DocumentNumber = 'CCCC2341234'
+Fecha: 26/03/2020 11:35:12 p. m.

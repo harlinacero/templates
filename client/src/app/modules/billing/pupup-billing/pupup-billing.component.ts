@@ -41,8 +41,11 @@ export class PupupBillingComponent implements OnInit {
   fileValues: File;
   disabled = false;
   isVisible = false;
+  exchaneRateVisible = false;
   aprovalMatrices: AprovalMatrix[] = [];
   canCreate = false;
+
+  MONEY = 'MoneyId';
 
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
     // tslint:disable-next-line: align
@@ -198,6 +201,22 @@ export class PupupBillingComponent implements OnInit {
       label.innerText = this.fileValues.name;
     } else {
       label.innerText = '';
+    }
+
+  }
+
+  toggleExchangeRate(event, type) {
+    if (this.data.moneyId !== this.moneys.find(mo => mo.code === 'COP').id) {
+      this.exchaneRateVisible = true;
+    } else {
+      this.exchaneRateVisible = false;
+    }
+
+  }
+
+  convertValueBillToCOP(event, type) {
+    if (this.data.moneyId !== this.moneys.find(mo => mo.code === 'COP').id) {
+      this.data.valueBill = event.target.value * this.data.exchangeRate;
     }
 
   }

@@ -21,6 +21,7 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Status> _stateRepo;
         private readonly IRepository<TypeBilling> _typeBilingRepo;
         private readonly IRepository<VW_billing_data> _billingDataRepo;
+        private readonly IRepository<Vw_billing> _billRepo;
         private readonly IRepository<AprovalBillingProcess> _processAprovalRepo;
         private readonly IRepository<AprovalMatrix> _aprobalmatrixRepo;
         //private readonly IRepository<Person> _personRepo;
@@ -44,6 +45,7 @@ namespace WebApplication1.DomainServices
             IRepository<AprovalMatrix> aprobalmatrixRepo, IRepository<Person> personRepo,
             IRepository<Provider> providerRepo, IRepository<Company> companyRepo,
             IRepository<CostCenter> costCenterRepo,
+            IRepository<Vw_billing> billRepo,
             IHostingEnvironment env)
         {
             _billingRepo = billingRepo;
@@ -52,8 +54,7 @@ namespace WebApplication1.DomainServices
             _billingDataRepo = billingDataRepo;
             _processAprovalRepo = processAprovalRepo;
             _aprobalmatrixRepo = aprobalmatrixRepo;
-            //_personRepo = personRepo;
-            //_providerRepo = providerRepo;
+            _billRepo = billRepo;
             _companyRepo = companyRepo;
             _costCenterRepo = costCenterRepo;
             _env = env;
@@ -64,10 +65,10 @@ namespace WebApplication1.DomainServices
         /// Get all billings
         /// </summary>
         /// <returns></returns>
-        public RequestResult<IEnumerable<Billing>> GetAllBilling()
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling()
         {
-            var list = _billingRepo.ListAll();
-            return RequestResult<IEnumerable<Billing>>.CreateSuccesfull(list);
+            var list = _billRepo.ListAll();
+            return RequestResult<IEnumerable<Vw_billing>>.CreateSuccesfull(list);
         }
 
         /// <summary>

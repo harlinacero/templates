@@ -14,14 +14,14 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>No. Factura</mat-label>
-                <input type="number" min="0" matInput [(ngModel)]="data.numberBilling" name="numberBilling" [disabled]="disabled" required>
+                <input type="number" min="0" matInput [(ngModel)]="data.numberBilling" name="numberBilling" required>
                 <span style="color: red;" id="numberBilling-error"></span>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Proveedor</mat-label>
                 <!-- <input matInput [(ngModel)]="data.providerid" name="businessName" disabled="disabled" required> -->
-                <mat-select [(value)]="data.providerId" [(ngModel)]="data.providerId" name="providerid" [disabled]="disabled" required>
+                <mat-select [(value)]="data.providerId" [(ngModel)]="data.providerId" name="providerid" required>
                     <mat-option *ngFor="let pro of providers" [(value)]="pro.id">
                         {{pro.businessName}}
                     </mat-option>
@@ -32,7 +32,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo Factura</mat-label>
                 <!-- <input matInput [(ngModel)]="data.billingtype" name="billingtype" disabled="disabled" required> -->
-                <mat-select [(value)]="data.billingType" [(ngModel)]="data.billingType" name="billingtype" [disabled]="disabled" required>
+                <mat-select [(value)]="data.billingType" [(ngModel)]="data.billingType" name="billingtype" required>
                     <mat-option *ngFor="let type of typesBilling" [(value)]="type.id">
                         {{type.name}}
                     </mat-option>
@@ -41,7 +41,7 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo Producto</mat-label>
-                <mat-select [(value)]="data.productType" [(ngModel)]="data.productType" name="producttype" matNativeControl [disabled]="disabled" required>
+                <mat-select [(value)]="data.productType" [(ngModel)]="data.productType" name="producttype" matNativeControl required>
                     <mat-option value=1>Producto </mat-option>
                     <mat-option value=2>Servicio </mat-option>
                 </mat-select>
@@ -49,49 +49,55 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Centro de Costo</mat-label>
-                <mat-select [(value)]="data.costcenterId" [(ngModel)]="data.costcenterId" name="costcenterid" [disabled]="disabled" required (selectionChange)="validateCostCenter($event.value)">
+                <mat-select [(value)]="data.costcenterId" [(ngModel)]="data.costcenterId" name="costcenterid" required (selectionChange)="validateCostCenter($event.value)">
                     <mat-option *ngFor="let pro of costCenters" [(value)]="pro.id">
                         {{pro.name}}
                     </mat-option>
                 </mat-select>
             </mat-form-field>
 
-            <!-- <mat-form-field appearance="outline" class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Moneda</mat-label>
-                <mat-select [(value)]="data.moneyId" [(ngModel)]="data.moneyId" name="moneyid" [disabled]="disabled" required>
+                <mat-select [(value)]="data.moneyId" [(ngModel)]="data.moneyId" name="moneyId" id="moneyId" (selectionChange)="toggleExchangeRate($event, MONEY)" required>
                     <mat-option *ngFor="let pro of moneys" [(value)]="pro.id">
                         {{pro.unitymoney}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field> -->
+            </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width" *ngIf="exchaneRateVisible">
                 <mat-label>Tasa de Cambio</mat-label>
-                <input type="number" min="0" matInput [(ngModel)]="data.exchangeRate" name="exchangerate" value="{{data.exchangeRate }}" [disabled]="disabled">
+                <input type="number" min="0" matInput [(ngModel)]="data.exchangeRate" id="exchangerate" name="exchangerate" value="{{data.exchangeRate }}">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width" *ngIf="exchaneRateVisible">
+                <mat-label>Valor Factura</mat-label>
+                <input type="number" currencyMask min="0" matInput name="valueBillExangeRate" id="valueBillExangeRate" (keyup)="convertValueBillToCOP($event)">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
-                <mat-label>Valor</mat-label>
-                <input type="number" currencyMask min="0" matInput [(ngModel)]="data.valueBill" name="exchangerate" value="{{data.valueBill }}" [disabled]="disabled">
+                <mat-label>Valor COP</mat-label>
+                <input type="number" currencyMask min="0" matInput [(ngModel)]="data.valueBill" name="valueBill" value="{{ data.valueBill }}" [readOnly]="exchaneRateVisible">
             </mat-form-field>
+
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha factura</mat-label>
-                <input matInput [matDatepicker]="datebilling" [(ngModel)]="data.dateBilling" name="datebilling" [disabled]="disabled">
+                <input matInput [matDatepicker]="datebilling" [(ngModel)]="data.dateBilling" name="datebilling">
                 <mat-datepicker-toggle matSuffix [for]="datebilling"></mat-datepicker-toggle>
                 <mat-datepicker #datebilling [startAt]="datebilling"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha Límite</mat-label>
-                <input matInput [matDatepicker]="datelimit" [(ngModel)]="data.dateLimit" name="datelimit" [disabled]="disabled">
+                <input matInput [matDatepicker]="datelimit" [(ngModel)]="data.dateLimit" name="datelimit">
                 <mat-datepicker-toggle matSuffix [for]="datelimit"></mat-datepicker-toggle>
                 <mat-datepicker #datelimit [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha Radicado</mat-label>
-                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.dateFiled" name="datefiled" [disabled]="disabled">
+                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.dateFiled" name="datefiled">
                 <mat-datepicker-toggle matSuffix [for]="datefiled"></mat-datepicker-toggle>
                 <mat-datepicker #datefiled [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
@@ -105,8 +111,8 @@
             <div class="file-content">
                 <mat-label id="labelFile"></mat-label>
                 <button type="button" mat-raised-button (click)="fileInput.click()" *ngIf="!disabled"> <i
-                        class="fa fa-file-pdf-o"></i>
-                    Adjuntar Factura</button>
+            class="fa fa-file-pdf-o"></i>
+          Adjuntar Factura</button>
                 <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" accept="application/pdf">
             </div>
 

@@ -19,7 +19,7 @@ namespace WebApplication1.AppServices
         }
 
 
-        public RequestResult<IEnumerable<Billing>> GetAllBilling()
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling()
         {
             try
             {
@@ -28,7 +28,7 @@ namespace WebApplication1.AppServices
             catch (Exception ex)
             {
 
-                return RequestResult<IEnumerable<Billing>>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<Vw_billing>>.CreateUnSuccesfull(ex.Message);
             }
         }
 

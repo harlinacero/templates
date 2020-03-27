@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Urls } from '../interfaces/urls';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ServiceBase } from './service.base';
-import { Billing } from '../interfaces/billing.interface';
+import { Billing, Vw_billing } from '../interfaces/billing.interface';
 import { RequestResult } from '../interfaces/requestResult.interface';
 import { Status } from '../interfaces/status.interface';
 import { TypeBilling } from '../interfaces/typeBilling.interface';
@@ -28,7 +28,7 @@ export class BillingService {
 
 
   GetAllBilling() {
-    return this.http.get<RequestResult<Billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
+    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
   }
 
   // SaveBilling(levelsAproval: Billing) {

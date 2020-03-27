@@ -4,7 +4,7 @@ import { Component, OnInit, ViewChild, AfterViewInit, Provider } from '@angular/
 import { ServiceBase } from 'src/app/shared/services/service.base';
 import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
 import { ValueTransformer } from '@angular/compiler/src/util';
-import { Billing } from 'src/app/shared/interfaces/billing.interface';
+import { Billing, Vw_billing } from 'src/app/shared/interfaces/billing.interface';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { Money } from 'src/app/shared/interfaces/money.interface';
@@ -26,18 +26,18 @@ import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
 })
 export class BillingComponent implements OnInit, AfterViewInit {
 
-  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid', 'exchangerate',
-    'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid'];
+  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid',
+    'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid', 'indicator'];
 
   dataSource: MatTableDataSource<any>;
   providers: Providers[] = [];
-  billings: Billing[] = [];
+  billings: Vw_billing[] = [];
   products: Product[] = [];
   costCenters: CostCenter[] = [];
   moneys: Money[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
-  billing: Billing;
+  billing: Vw_billing;
 
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: false }) sort: MatSort;
@@ -47,12 +47,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
     private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService,
     // tslint:disable-next-line: align
     public dialog: MatDialog, private route: ActivatedRoute, private router: Router) {
-    this.getAllCostCenters();
-    this.getAllTypeBilling();
-    this.getAllMoneys();
-    this.getAllStates();
-    this.getAllProducts();
-    this.getAllProviders();
+    this.getAllBillings();
   }
 
   ngOnInit() {
@@ -77,114 +72,6 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
-  getAllProviders() {
-    this.adminService.getAllProviders()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.providers = res.result;
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-  getAllProducts() {
-    this.adminService.getAllProducts()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.products = res.result;
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-  getAllCostCenters() {
-    this.adminService.getAllCostCenter()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.costCenters = res.result;
-
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-
-
-  getAllMoneys() {
-    this.aprovalMatrixService.getAllMoney()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.moneys = res.result;
-
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-  getAllStates() {
-    this.billingService.GetAllStates()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.states = res.result;
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-  async getAllTypeBilling() {
-    this.billingService.GetAllTypesBilling()
-      .subscribe(res => {
-        if (res.isSuccesfull) {
-          this.typesBilling = res.result;
-          this.getAllBillings();
-        } else {
-          this.helper.controlErros(res);
-        }
-      });
-  }
-
-
-
-
-
-  getNameById(nameList: string, id: number) {
-    if (!(!!id)) {
-      return;
-    }
-
-    switch (nameList) {
-      case 'billingtype':
-        // if (!!this.typesBilling) {
-        //   return '';
-        // }
-        const type = this.typesBilling.find(x => x.id === id);
-        return (!!type) ? type.code : '';
-      case 'providerid':
-        const prov = this.providers.find(p => p.id === id);
-        return (!!prov) ? prov.businessName : '';
-      case 'producttype':
-        const prod = this.products.find(pro => pro.id === id);
-        return (!!prod) ? prod.code : '';
-      case 'costcenterid':
-        const cost = this.costCenters.find(co => co.id === id);
-        return (!!cost) ? cost.name : '';
-      case 'stateid':
-        const stat = this.states.find(st => st.id === id);
-        return (!!stat) ? stat.name : '';
-    }
-  }
-
-  getColorById(stateid) {
-    const state = this.states.find(st => st.id === stateid);
-    return (!!state) ? state.color : 'red';
-  }
-
-
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -193,9 +80,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   }
 
   setAprovalMatrix(row) {
-
-    this.router.navigate(['billing','detailbilling', row.numberBilling]);
-
+    this.router.navigate(['billing', 'detailbilling', row.numeroFactura]);
   }
 
   addCostCenter() {
@@ -212,3 +97,5 @@ export class BillingComponent implements OnInit, AfterViewInit {
 
 
 }
+
+
