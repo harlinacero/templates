@@ -11,4 +11,10 @@ namespace WebApplication1.DomainServices.Entities
         public string Name { get; set; }
         public string Component { get; set; }
     }
+
+    public class MenuByRole : EntityBase
+    {        
+        public int IdRole { get; set; }
+        public int IdMenu { get; set; }
+    }
 }

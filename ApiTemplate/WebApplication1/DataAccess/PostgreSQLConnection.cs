@@ -70,13 +70,22 @@ namespace WebApplication1.DataAccess
         {
             if (File.Exists("Log_wcf.txt"))
             {
-                using (System.IO.StreamWriter sw = new System.IO.StreamWriter("Log_wcf.txt", true))
+                try
                 {
-                    sw.WriteLine("-------------------");
-                    sw.WriteLine("Dato: {0}", texto);
-                    sw.Write("Fecha: ");
-                    sw.WriteLine(DateTime.Now);
+                    using (System.IO.StreamWriter sw = new System.IO.StreamWriter("Log_wcf.txt", true))
+                    {
+                        sw.WriteLine("-------------------");
+                        sw.WriteLine("Dato: {0}", texto);
+                        sw.Write("Fecha: ");
+                        sw.WriteLine(DateTime.Now);
+                    }
                 }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+                
             }
             else
             {

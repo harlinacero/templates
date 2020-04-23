@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Entities;
+using WebApplication1.DTOs;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
@@ -66,7 +67,7 @@ namespace WebApplication1.Controllers
         /// <returns></returns>
         [HttpGet]
         [Route("GetAllRole")]
-        public RequestResult<IEnumerable<Role>> GetAllRole()
+        public RequestResult<IEnumerable<RoleDTO>> GetAllRole()
         {
             return _adminAppService.GetAllRole();
         }
@@ -74,10 +75,11 @@ namespace WebApplication1.Controllers
         /// Update or add role
         /// </summary>
         /// <param name="role"></param>
+        /// <param name="menus"></param>
         /// <returns></returns>
         [HttpPost]
         [Route("SaveRole")]
-        public RequestResult<Role> SaveRole(Role role)
+        public RequestResult<Role> SaveRole(RoleDTO role)
         {
             return _adminAppService.SaveRole(role);
         }

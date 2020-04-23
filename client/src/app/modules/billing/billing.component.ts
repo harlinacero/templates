@@ -1,10 +1,9 @@
 import { HttpParams } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Component, OnInit, ViewChild, AfterViewInit, Provider } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ServiceBase } from 'src/app/shared/services/service.base';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialog } from '@angular/material';
-import { ValueTransformer } from '@angular/compiler/src/util';
-import { Billing, Vw_billing } from 'src/app/shared/interfaces/billing.interface';
+import { MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
+import { Vw_billing } from 'src/app/shared/interfaces/billing.interface';
 import { Product } from 'src/app/shared/interfaces/product.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { Money } from 'src/app/shared/interfaces/money.interface';
@@ -16,7 +15,6 @@ import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.serv
 import { Status } from 'src/app/shared/interfaces/status.interface';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
 import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
-import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
 
 
 @Component({
@@ -25,11 +23,13 @@ import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
   styleUrls: ['./billing.component.scss']
 })
 export class BillingComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort: MatSort;
 
-  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid',
-    'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid', 'indicator'];
+  dataSource = new MatTableDataSource();
+  displayedColumns = ['numeroFactura', 'proveedor', 'tipoFactura', 'tipoProducto', 'costCenter',
+    'fechaFactura', 'fechaLimite', 'fechaRadicado', 'valorText', 'estado', 'indicador'];
 
-  dataSource: MatTableDataSource<any>;
   providers: Providers[] = [];
   billings: Vw_billing[] = [];
   products: Product[] = [];
@@ -39,14 +39,11 @@ export class BillingComponent implements OnInit, AfterViewInit {
   typesBilling: TypeBilling[];
   billing: Vw_billing;
 
-  @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
-  @ViewChild(MatSort, { static: false }) sort: MatSort;
+
 
   constructor(private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
-    // tslint:disable-next-line: align
-    private aprovalMatrixService: AprovalMatrixService, private helper: ControlErrorHelperService,
-    // tslint:disable-next-line: align
-    public dialog: MatDialog, private route: ActivatedRoute, private router: Router) {
+    private helper: ControlErrorHelperService,
+    public dialog: MatDialog, private router: Router) {
     this.getAllBillings();
   }
 
@@ -55,7 +52,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    this.dataSource.sort = this.sort;
   }
 
   getAllBillings() {
@@ -63,7 +60,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.billings = res.result;
-          this.dataSource = new MatTableDataSource(res.result);
+          this.dataSource = new MatTableDataSource(this.billings);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
         } else {
@@ -90,6 +87,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
       data: this.billing,
       disableClose: true
     });
+
     dialogRef.afterClosed().subscribe(result => {
       this.getAllBillings();
     });

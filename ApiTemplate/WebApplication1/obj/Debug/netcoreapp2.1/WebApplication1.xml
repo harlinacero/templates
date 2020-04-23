@@ -30,7 +30,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.AppServices.AdminAppService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
+        <member name="M:WebApplication1.AppServices.AdminAppService.SaveRole(WebApplication1.DTOs.RoleDTO)">
             <summary>
             Update or add role
             </summary>
@@ -77,7 +77,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
+        <member name="M:WebApplication1.AppServices.Contrracts.IAdminAppService.SaveRole(WebApplication1.DTOs.RoleDTO)">
             <summary>
             Update or add role
             </summary>
@@ -150,11 +150,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.AdminController.SaveRole(WebApplication1.DomainServices.Entities.Role)">
+        <member name="M:WebApplication1.Controllers.AdminController.SaveRole(WebApplication1.DTOs.RoleDTO)">
             <summary>
             Update or add role
             </summary>
             <param name="role"></param>
+            <param name="menus"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.Controllers.AdminController.GetRoleById(System.Int32)">
@@ -389,11 +390,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SaveRole(WebApplication1.DomainServices.Entities.Role)">
+        <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.SaveRole(WebApplication1.DomainServices.Entities.Role,System.Collections.Generic.IEnumerable{WebApplication1.DomainServices.Entities.Menu})">
             <summary>
             Update or add role
             </summary>
             <param name="role"></param>
+            <param name="menus"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.DomainServices.Contracts.IAdminDomainService.GetRoleById(System.Int32)">

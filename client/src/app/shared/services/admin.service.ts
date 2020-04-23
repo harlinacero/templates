@@ -11,7 +11,7 @@ import { RequestResult } from 'src/app/shared/interfaces/requestResult.interface
 
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
 import { Person, DocumentType } from 'src/app/shared/interfaces/person.interface';
-import { Role } from 'src/app/shared/interfaces/role.interface';
+import { Role, RoleDTO } from 'src/app/shared/interfaces/role.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { URLS } from '../globals/localStorage.const';
 
@@ -43,10 +43,10 @@ export class AdminService {
   }
 
   getAllRoles() {
-    return this.http.get<RequestResult<Role[]>>(`${this.urls.urlbase}Admin/GetAllRole`);
+    return this.http.get<RequestResult<RoleDTO[]>>(`${this.urls.urlbase}Admin/GetAllRole`);
   }
 
-  saveRole(role: Role) {
+  saveRole(role: RoleDTO) {
     return this.http.post<RequestResult<Role>>(`${this.urls.urlbase}Admin/SaveRole`, role);
   }
 

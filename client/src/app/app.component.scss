@@ -1,24 +1,29 @@
-.wrapper {
-    display: flex;
-    align-items: stretch;
-    width: 100%;
+// .wrapper {
+//     display: flex;
+//     align-items: stretch;
+//     width: 100%;
+//     height: 100%;
+//     overflow: hidden;
+//     #content {
+//         height: 100%;
+//         width: 100%;
+//         overflow: hidden;
+//         -webkit-background-size: cover;
+//         -moz-background-size: cover;
+//         -o-background-size: cover;
+//         background-size: cover;
+//         /* Resize the background image to cover the entire container */
+//         // .custom-container {
+//         //     overflow: auto;
+//         //     height: 100%;
+//         //     padding: 1em;
+//         // }
+//     }
+// }
+.custom-container {
     height: 100%;
     overflow: hidden;
-    #content {
-        height: 100%;
-        width: 100%;
-        overflow: hidden;
-        -webkit-background-size: cover;
-        -moz-background-size: cover;
-        -o-background-size: cover;
-        background-size: cover;
-        /* Resize the background image to cover the entire container */
-        .custom-container {
-            overflow: auto;
-            height: 100%;
-            padding: 2em 2em 5em 2em;
-        }
-    }
+    // padding: 1em;
 }
 
 p {

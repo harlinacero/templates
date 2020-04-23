@@ -1,0 +1,9 @@
+<div class="wrapper" id="wrapper">
+    <app-sidemenu [widthSidebar]="widthSidebar" *ngIf="!!session"></app-sidemenu>
+    <div id="content" role="main">
+        <app-navbar (emitExpandSidebar)="toggleSidebar($event)" *ngIf="!!session"> </app-navbar>
+        <div class="custom-container">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

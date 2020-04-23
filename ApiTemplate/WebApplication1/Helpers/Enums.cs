@@ -2,13 +2,13 @@
 {
     public enum EnumStatusBilling
     {
-        ProcesoArobacion = 1,
-        Aprobada,
-        Rechazada,
-        Cancelada,
-        PendienteTiempo,
-        ATiempo,
-        Tarde
+        InAprovalProcess = 1,
+        Aprobated,
+        Rejected,
+        Canceled,
+        PendingOnTime,
+        OnTime,
+        Late
 
 
     }

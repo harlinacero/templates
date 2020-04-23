@@ -7,7 +7,7 @@ import { UsersComponent } from './users/users.component';
 import { RolesComponent } from './roles/roles.component';
 import { PopupComponent } from './roles/popup/popup.component';
 import { PopupUsersComponent } from './users/popup-users/popup-users.component';
-import { MAT_DIALOG_DATA } from '@angular/material';
+import { MAT_DIALOG_DATA, MatCheckboxModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher } from '@angular/material';
 import { ProvidersComponent } from './providers/providers.component';
 import { PopupProviderComponent } from './providers/popup-provider/popup-provider.component';
 import { ProductsComponent } from './products/products.component';
@@ -29,6 +29,7 @@ import { PopupProductsComponent } from './products/popup-products/popup-products
   imports: [
     CommonModule,
     AdminRoutingModule,
+    MatCheckboxModule,
     SharedModule
   ],
   entryComponents: [
@@ -37,7 +38,8 @@ import { PopupProductsComponent } from './products/popup-products/popup-products
     PopupProviderComponent,
     PopupProductsComponent
   ], providers: [
-    { provide: MAT_DIALOG_DATA, useValue: { float: 'always' } }
+    { provide: MAT_DIALOG_DATA, useValue: { float: 'always' } },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ]
 })
 export class AdminModule { }

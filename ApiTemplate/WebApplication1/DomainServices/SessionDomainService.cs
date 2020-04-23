@@ -20,12 +20,14 @@ namespace WebApplication1.DomainServices
         private readonly IRepository<Role> _roleRepo;
         private readonly IRepository<Person> _personRepo;
         private readonly IRepository<Menu> _menuRepo;
+        private readonly IRepository<MenuByRole> _menuByRoleRepo;
 
-        public SessionDomainService(IRepository<Role> roleRepo, IRepository<Person> personRepo, IRepository<Menu> menuRepo)
+        public SessionDomainService(IRepository<Role> roleRepo, IRepository<Person> personRepo, IRepository<Menu> menuRepo, IRepository<MenuByRole> menuByRoleRepo)
         {
             _roleRepo = roleRepo;
             _personRepo = personRepo;
             _menuRepo = menuRepo;
+            _menuByRoleRepo = menuByRoleRepo;
         }
 
 
@@ -34,44 +36,19 @@ namespace WebApplication1.DomainServices
 
             var where = $"{nameof(Person.DocumentNumber)} = '{login.UserName}'";
             var account = _personRepo.ListByWhere(where).FirstOrDefault();
-            var menus = _menuRepo.ListAll();
+            var menusByRol = _menuByRoleRepo.ListByWhere($"{nameof(MenuByRole.IdRole)} = {account.RoleId}");
+            var indexes = string.Join(",", (from me in menusByRol select me.IdMenu).ToList());
+            var menus = _menuRepo.ListByWhere($"{nameof(Menu.Id)} IN ({indexes})").ToList();
+
             if (account == null)
                 return RequestResult<Account>.CreateUnSuccesfull("El usuario no existe");
 
             if (account.Password != login.Password)
                 return RequestResult<Account>.CreateUnSuccesfull("El usuario y la cotraseña no coinciden");
 
+            if (menus.Count <= 0)
+                return RequestResult<Account>.CreateUnSuccesfull("El usuario no tiene acceso permitido");
 
-            //List<Menu> menus = new List<Menu>()
-            //{
-            //    new Menu
-            //    {
-            //        Icon = "fa fa-home",
-            //        Component  ="/home",
-            //        Name = "Inicio"
-            //    },
-
-            //    new Menu
-            //    {
-            //        Icon = "fa fa-file-text-o",
-            //        Name  ="Gestión de Facturas",
-            //        Component = "/billing"
-            //    },
-
-            //    new Menu
-            //    {
-            //        Icon = "fa fa-home",
-            //        Name= "Inicio",
-            //        Component = "/home"
-            //    }
-            //};
-            //        {  },
-            //{ icon: "fa fa-file-text-o", name: "Gestión de Facturas", component: "/billing" },
-            //{ icon: "fa fa-shopping-cart", name: "Órdenes de Compra", component: "/shopping" },
-            //{ icon: "fa fa-users", name: "Administración", component: "/admin" },
-            //{ icon: "fa fa-line-chart", name: "Informes", component: "/reports" },
-            //{ icon: "fa fa-cog", name: "Configuración", component: "/settings" }
-            
             var session = new Account()
             {
                 Person = account,

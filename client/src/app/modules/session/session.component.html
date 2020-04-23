@@ -1,21 +1,35 @@
-<div class="loginpage" *ngIf="!session">
+<div class="loginpage" id="loginpage" *ngIf="!session" style="background-image: url(./assets/images/loginImage.jpg)">
 
-    <div id="logreg-forms">
+    <div class="logreg-forms">
         <form class="form-signin">
-            <!-- <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Sign in</h1> -->
+            <!-- <h1 class="h3 mb-3 font-weight-normal" style="text-align: center"> Bienvenido</h1> -->
             <div class="img-enterprise center">
-                <img src="./assets/images/enterpriseImage.png" alt="Empresa ">
+                <img src="./assets/images/mistica.png" alt="Empresa ">
             </div>
 
-            <input type="text" #username name="username" placeholder="Username" class="form-control " required=" " autofocus=" ">
-            <input type="password" #password name="password" placeholder="Password" class="form-control " required=" ">
+            <!-- <h5 style="text-align: center"> Mistca Sofware</h5> -->
+
+
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                <input type="text" #username name="username" placeholder="Username" class="form-control " required=" " autofocus=" ">
+            </div>
+            <div class="input-group form-group">
+                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                <input type="password" #password name="password" placeholder="Password" class="form-control " required=" ">
+            </div>
 
             <button type="submit" (click)="logIn(username.value, password.value, $event)" id="login-button" class="btn btn-success btn-block">
-            Ingresar
-          </button>
-            <a href="# " id="forgot_pswd ">¿Olvidaste tu contraseña?</a>
-            <hr>
+        Ingresar
+      </button>
+            <div class="forgott-pwd">
+                <a href="# " id="forgot_pswd">¿Olvidaste tu contraseña?</a>
+            </div>
+
         </form>
     </div>
 
+    <div class="copyright">
+        <span>Mística - Copyright © 2020 Free Developer Team</span>
+    </div>
 </div>

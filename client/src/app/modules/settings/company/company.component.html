@@ -1,46 +1,40 @@
 <div *ngIf="!!company">
-    <div class="row">
+    <!-- <div class="row">
         <div class="header">
-            <h1>{{ company.businessName}}</h1>
+            <h4>{{ company.businessName}}</h4>
         </div>
-    </div>
-    <div class="row">
-        <div class="content">
-            <div class="col">
-                <div class="row">
-                    <span class="data-title">Nit</span>
-                    <span class="data-text">{{company.nit}}</span>
-                </div>
+    </div> -->
+    <div class="container-company">
+        <div class="header-company">
+            <div class="image-company">
+                <img src="./assets/images/enterpriseImage.png" alt="logo">
+            </div>
+            <div class="title-text-company">
+                <h4>{{ company.businessName}}</h4>
+                <span class="data-title">Nit: <b>{{company.nit}}</b></span>
+            </div>
+        </div>
 
-                <div class="row">
-                    <span class="data-title">Email Princial</span>
-                    <span class="data-text">{{company.emailCompany}}</span>
-                </div>
 
-                <div class="row">
-                    <span class="data-title">Email Secundario</span>
-                    <span class="data-text">{{company.emailTreasury}}</span>
-                </div>
-
-                <div class="row">
-                    <span class="data-title">Módulo de Órdenes de compra</span>
-                    <span class="data-text">{{company.purchaseOrders}}</span>
-                </div>
-
-                <div class="row">
-                    <span class="data-title">Interface Contable</span>
-                    <span class="data-text">{{company.accountableInterface}}</span>
-                </div>
+        <div class="body-company">
+            <div class="field-text-company">
+                <div class="data-title">Email Princial:</div>
+                <div class="data-text">{{company.emailCompany}}</div>
             </div>
 
-            <div class="col">
-                <div class="row">
-                    <span class="data-title">Logotipo</span>
-                    <div class="image">
-                        <img src="./assets/images/enterpriseImage.png" alt="logo">
-                    </div>
-                </div>
+            <div class="field-text-company">
+                <div class="data-title">Email Secundario:</div>
+                <div class="data-text">{{company.emailTreasury}}</div>
+            </div>
 
+            <div class="field-text-company">
+                <div class="data-title">Módulo de Órdenes de compra:</div>
+                <div class="data-text"><span *ngIf="company.purchaseOrders">Si</span><span *ngIf="!company.purchaseOrders">No</span></div>
+            </div>
+
+            <div class="field-text-company">
+                <div class="data-title">Interface Contable:</div>
+                <div class="data-text"><span *ngIf="company.accountableInterface">Si</span><span *ngIf="!company.accountableInterface">No</span></div>
             </div>
         </div>
     </div>

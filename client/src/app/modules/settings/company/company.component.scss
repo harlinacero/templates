@@ -1,34 +1,71 @@
-.row {
-    .header {
-        text-align: center;
-        width: 100%;
-    }
-    .content {
-        width: 100%;
+// .row {
+//     .header {
+//         text-align: center;
+//         width: 100%;
+//         padding: 1em;
+//     }
+//     .content {
+//         width: 100%;
+//         display: flex;
+//         // text-align: center;
+//         padding: 1em;
+//         .col {
+//             .row {
+//                 margin: 1em;
+//                 width: 100%;
+//                 .data-title {
+//                     // font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+//                     font-size: 14px;
+//                 }
+//                 .data-text {
+//                     // font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+//                     border: thin solid rgba($color: #000000, $alpha: 0.5);
+//                     border-radius: 5px;
+//                     padding: 0.2em;
+//                     width: 100%;
+//                     padding-left: 1em;
+//                     font-size: 14px;
+//                 }
+//                 .image {
+//                     border: thin solid rgba($color: #000000, $alpha: 0.5);
+//                     border-radius: 5px;
+//                     padding: 0.2em;
+//                     width: 100%;
+//                     height: 100%;
+//                 }
+//             }
+//         }
+//     }
+// }
+.container-company {
+    width: 100%;
+    height: 100%;
+    padding: 1em;
+    .header-company {
         display: flex;
-        text-align: center;
-        padding: 2em;
-        .col {
-            .row {
-                margin: 1em;
-                width: 100%;
-                .data-title {
-                    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-                }
-                .data-text {
-                    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-                    border: thin solid rgba($color: #000000, $alpha: 0.5);
-                    border-radius: 5px;
-                    padding: 0.2em;
-                    width: 100%;
-                }
-                .image {
-                    border: thin solid rgba($color: #000000, $alpha: 0.5);
-                    border-radius: 5px;
-                    padding: 0.2em;
-                    width: 100%;
-                    height: 100%;
-                }
+        height: 100%;
+        align-items: center;
+        width: 100%;
+        .image-company {}
+        .title-text-company {
+            padding: 2em;
+            .data-title {}
+        }
+    }
+    .body-company {
+        font-size: 14px;
+        overflow: auto;
+        height: 100%;
+        .field-text-company {
+            padding: 0.5em;
+            width: 50%;
+            display: flex;
+            .data-title {
+                font-weight: bold;
+                width: 50%;
+            }
+            .data-text {
+                width: 50%;
             }
         }
     }

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using WebApplication1.AppServices.Contrracts;
 using WebApplication1.DomainServices.Contracts;
 using WebApplication1.DomainServices.Entities;
+using WebApplication1.DTOs;
 using WebApplication1.Models;
 
 namespace WebApplication1.AppServices
@@ -77,7 +78,7 @@ namespace WebApplication1.AppServices
         /// Get all roles
         /// </summary>
         /// <returns></returns>
-        public RequestResult<IEnumerable<Role>> GetAllRole()
+        public RequestResult<IEnumerable<RoleDTO>> GetAllRole()
         {
             try
             {
@@ -86,7 +87,7 @@ namespace WebApplication1.AppServices
             catch (Exception ex )
             {
 
-                return RequestResult<IEnumerable<Role>>.CreateUnSuccesfull(ex.Message);
+                return RequestResult<IEnumerable<RoleDTO>>.CreateUnSuccesfull(ex.Message);
             }
         }
         /// <summary>
@@ -94,11 +95,13 @@ namespace WebApplication1.AppServices
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        public RequestResult<Role> SaveRole(Role role)
+        public RequestResult<Role> SaveRole(RoleDTO role)
         {
             try
             {
-                return _adminDomainService.SaveRole(role);
+                Role rol = role.Role;
+                List<Menu> menus = role.Menus.ToList();
+                return _adminDomainService.SaveRole(rol, menus);
             }
             catch (Exception ex )
             {

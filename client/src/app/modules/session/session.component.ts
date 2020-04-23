@@ -1,3 +1,4 @@
+import { AlertComponent } from './../../shared/components/alert/alert.component';
 import { ServiceBase } from 'src/app/shared/services/service.base';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,7 +16,9 @@ export class SessionComponent implements OnInit {
   intentos = 3;
   session: string;
 
-  constructor(private router: Router, private sessionService: Sessionervice) { }
+  constructor(private router: Router, private sessionService: Sessionervice) {
+  //  this.loadImage();
+  }
 
   ngOnInit() {
     this.session = localStorage.getItem('session');
@@ -30,7 +33,7 @@ export class SessionComponent implements OnInit {
       .subscribe(res => {
         if (res.isSuccesfull) {
           localStorage.setItem('session', JSON.stringify(res.result));
-          location.reload();
+          // location.reload();
           this.router.navigateByUrl('home');
         } else {
           this.intentos = this.intentos - 1;
@@ -40,6 +43,16 @@ export class SessionComponent implements OnInit {
         }
       });
   }
+
+  // loadImage() {
+  //   const a = document.getElementById('loginpage');
+  //   a.style.backgroundImage = 'url("./assets/images/loginImage.jpg")';
+  //   a.style.backgroundPosition = 'center';
+  //   a.style.backgroundRepeat = 'no-repeat';
+  //   a.style.backgroundSize = 'cover';
+  //   a.style.height = '100vh';
+  //   a.style.background = '0.5';
+  // }
 
 }
 

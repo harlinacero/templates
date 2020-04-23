@@ -5,7 +5,7 @@
     height: 50px;
     justify-content: space-between;
     padding: 0 1em;
-    background-color: #2b2b2b;
+    background-color: rgba(43, 43, 43, 0.8);
     color: #fff;
     color: var(--header-color-icon);
     font-size: 1em;
@@ -45,6 +45,7 @@
                 text-align: center;
                 margin-right: 1em;
                 color: whitesmoke;
+                font-size: 1rem;
                 a {
                     i {
                         font-size: 1.2em;

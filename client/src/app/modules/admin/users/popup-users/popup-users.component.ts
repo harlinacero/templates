@@ -14,10 +14,10 @@ export class PopupUsersComponent {
   title = 'Agregar Usuario';
   currentUser: string;
   data: Person;
-  roles: Role[];
+  roles: Role[] = [];
   documents: DocumentType[];
   email = new FormControl('', [Validators.required, Validators.email]);
-  disabled = true;
+  disabled = false;
 
   constructor(
     public dialogRef: MatDialogRef<PopupUsersComponent>,
@@ -28,7 +28,8 @@ export class PopupUsersComponent {
     this.getDocuments();
     if (this.data.id > 0) {
       this.title = 'Modificar Usuario';
-      this.data.password = atob(person.password);
+      this.disabled = true;
+      // this.data.password = atob(person.password);
     }
   }
 
@@ -40,7 +41,9 @@ export class PopupUsersComponent {
     this.userService.getAllRoles()
       .subscribe(result => {
         if (result.isSuccesfull) {
-          this.roles = result.result;
+          for (const element of result.result) {
+            this.roles.push(element.role);
+          };
         }
       });
   }

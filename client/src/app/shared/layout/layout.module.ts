@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { SidemenuComponent } from './sidemenu/sidemenu.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { TitleComponent } from './title/title.component';
+import { LayoutComponent } from './layout.component';
 
 
 
@@ -11,13 +12,15 @@ import { TitleComponent } from './title/title.component';
   declarations: [
     NavbarComponent,
     SidemenuComponent,
-    TitleComponent
+    TitleComponent,
+    LayoutComponent
   ],
   imports: [
     CommonModule,
     RouterModule
   ],
   exports: [
+    LayoutComponent,
     NavbarComponent,
     SidemenuComponent,
     TitleComponent

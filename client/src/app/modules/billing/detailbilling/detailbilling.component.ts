@@ -1,8 +1,8 @@
 import { ServiceBase } from './../../../shared/services/service.base';
 import { StatusBillingEnum } from './../../../shared/enums/statesBilling.enum';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatTableDataSource, MatPaginator, MatSort, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { BillingService } from 'src/app/shared/services/billing.service';
 import { vw_billing_data } from 'src/app/shared/interfaces/vw_billing_data.interface';
@@ -26,13 +26,12 @@ export class DetailbillingComponent implements OnInit {
   dataSource: MatTableDataSource<any>;
   observations = "";
 
-  constructor(private serviceBase: ServiceBase, private billingService: BillingService, private route: ActivatedRoute,
+  constructor( @Inject(MAT_DIALOG_DATA)  public dialogRef: MatDialogRef<DetailbillingComponent>,private serviceBase: ServiceBase, private billingService: BillingService, private route: ActivatedRoute,
     private router: Router) {
   }
 
   ngOnInit() {
     this.serviceBase.validateSession();
-
     this.numberBilling = this.route.snapshot.paramMap.get('id');
     this.getDetailBilling(parseInt(this.numberBilling));
   }
@@ -81,6 +80,7 @@ export class DetailbillingComponent implements OnInit {
         if (res.isSuccesfull) {
           alert(res.result);
           this.getDetailBilling(parseInt(this.numberBilling));
+          location.reload();
         } else {
           console.log(res);
         }
@@ -100,6 +100,7 @@ export class DetailbillingComponent implements OnInit {
         if (res.isSuccesfull) {
           alert(res.result);
           this.getDetailBilling(parseInt(this.numberBilling));
+          location.reload();
         } else {
           console.log(res);
         }

@@ -66,12 +66,12 @@
                 <input matInput [(ngModel)]="data.phone" name="phone">
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width" *ngIf="!disabled">
                 <mat-label>Contraseña</mat-label>
                 <input matInput [(ngModel)]="data.password" name="password" type="password" required>
             </mat-form-field>
 
-            <mat-form-field appearance="outline" class="example-full-width">
+            <mat-form-field appearance="outline" class="example-full-width" *ngIf="!disabled">
                 <mat-label>Repetir Contraseña</mat-label>
                 <input matInput id="password2" name="password2" (onchange)="validatePassword($event)" type="password" required>
             </mat-form-field>

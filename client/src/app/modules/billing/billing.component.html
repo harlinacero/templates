@@ -1,94 +1,99 @@
-<app-title [title]="'Facturación'" [icon]="'fa fa-file-text-o'"></app-title>
+<app-layout>
 
 
-<div class="example-header">
-    <mat-form-field>
-        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
-    </mat-form-field>
-</div>
-<div class="example-container mat-elevation-z8" *ngIf="!!dataSource">
+    <app-title [title]="'Lista de Facturas'" [icon]="'fa fa-file-text-o'">
+    </app-title>
 
-    <mat-table [dataSource]="dataSource" matSort>
-        <!-- ID Column -->
-        <ng-container matColumnDef="numberbilling">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> No. Factura</mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.numeroFactura}} </mat-cell>
-        </ng-container>
 
-        <!-- Progress Column -->
-        <ng-container matColumnDef="providerid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.proveedor}} </mat-cell>
-        </ng-container>
+    <div class="example-header">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+        </mat-form-field>
+    </div>
+    <div class="example-container" *ngIf="!!dataSource">
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="billingtype">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.tipoFactura}} </mat-cell>
-        </ng-container>
+        <mat-table [dataSource]="dataSource" matSort>
+            <!-- ID Column -->
+            <ng-container matColumnDef="numeroFactura">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> No. Factura</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.numeroFactura}} </mat-cell>
+            </ng-container>
 
-        <ng-container matColumnDef="producttype">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Producto </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.tipoProducto}} </mat-cell>
-        </ng-container>
+            <!-- Progress Column -->
+            <ng-container matColumnDef="proveedor">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.proveedor}} </mat-cell>
+            </ng-container>
 
-        <!-- CostCenter Column -->
-        <ng-container matColumnDef="costcenterid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{ row.costCenter}} </mat-cell>
-        </ng-container>
+            <!-- Name Column -->
+            <ng-container matColumnDef="tipoFactura">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.tipoFactura}} </mat-cell>
+            </ng-container>
 
-        <!-- Date Pay datePay -->
+            <ng-container matColumnDef="tipoProducto">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Producto </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.tipoProducto}} </mat-cell>
+            </ng-container>
 
-        <!-- Date Column -->
-        <ng-container matColumnDef="datebilling">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.fechaFactura | date}} </mat-cell>
-        </ng-container>
+            <!-- CostCenter Column -->
+            <ng-container matColumnDef="costCenter">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.costCenter}} </mat-cell>
+            </ng-container>
 
-        <!-- Date Column -->
-        <ng-container matColumnDef="datelimit">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Límite </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.fechaLimite| date}} </mat-cell>
-        </ng-container>
+            <!-- Date Pay datePay -->
 
-        <!-- Date Column -->
-        <ng-container matColumnDef="datefiled">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Radicado </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.fechaRadicado | date}} </mat-cell>
-        </ng-container>
+            <!-- Date Column -->
+            <ng-container matColumnDef="fechaFactura">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaFactura | date}} </mat-cell>
+            </ng-container>
 
-        <!-- Value Column -->
-        <ng-container matColumnDef="valuebill">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
-            <mat-cell *matCellDef="let row">{{row.valorText }} </mat-cell>
-        </ng-container>
+            <!-- Date Column -->
+            <ng-container matColumnDef="fechaLimite">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Límite </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaLimite| date}} </mat-cell>
+            </ng-container>
 
-        <!-- State Column -->
-        <ng-container matColumnDef="stateid">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.background]="row.colorFactura" [ngStyle]="{'padding-left':'10px'}">
-                {{ row.estado }}
-            </mat-cell>
-        </ng-container>
+            <!-- Date Column -->
+            <ng-container matColumnDef="fechaRadicado">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Radicado </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaRadicado | date}} </mat-cell>
+            </ng-container>
 
-        <!-- Indicator Column -->
-        <ng-container matColumnDef="indicator">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador </mat-header-cell>
-            <mat-cell *matCellDef="let row" [style.background]="row.colorIndicador" [ngStyle]="{'padding-left':'10px'}">
-                {{ row.indicador }}
-            </mat-cell>
-        </ng-container>
+            <!-- Value Column -->
+            <ng-container matColumnDef="valorText">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.valorText }} </mat-cell>
+            </ng-container>
 
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setAprovalMatrix(row)">
-        </mat-row>
-    </mat-table>
+            <!-- State Column -->
+            <ng-container matColumnDef="estado">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.background]="row.colorFactura" [ngStyle]="{'padding-left':'10px', 'color':'#efe8e8'}">
+                    {{ row.estado }}
+                </mat-cell>
+            </ng-container>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-</div>
+            <!-- Indicator Column -->
+            <ng-container matColumnDef="indicador">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.background]="row.colorIndicador" [ngStyle]="{'padding-left':'10px', 'color':'#efe8e8'}">
+                    {{ row.indicador }}
+                </mat-cell>
+            </ng-container>
 
-<button class="mdc-fab" aria-label="Favorite" (click)="addCostCenter()" [title]="'Agregar'">
-  <div class="mdc-fab__ripple"></div>
-  <span class="mdc-fab__icon material-icons">add</span>
-</button>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setAprovalMatrix(row)">
+            </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+
+    <button class="mdc-fab" aria-label="Favorite" (click)="addCostCenter()" [title]="'Agregar'">
+    <div class="mdc-fab__ripple"></div>
+    <span class="mdc-fab__icon material-icons">add</span>
+  </button>
+</app-layout>

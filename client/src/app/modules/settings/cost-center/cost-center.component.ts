@@ -12,7 +12,7 @@ import { PopupAprovalMatrixComponent } from './popup-aproval-matrix/popup-aprova
 })
 export class CostCenterComponent implements OnInit {
 
-  displayedColumns = ['name', 'description', 'actions'];
+  displayedColumns = ['name', 'description', 'actions', 'matriz'];
 
   dataSource: MatTableDataSource<any>;
   costCenters: CostCenter[];

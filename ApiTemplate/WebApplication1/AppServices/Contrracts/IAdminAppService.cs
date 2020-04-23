@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApplication1.DomainServices.Entities;
+using WebApplication1.DTOs;
 using WebApplication1.Models;
 
 namespace WebApplication1.AppServices.Contrracts
@@ -36,13 +37,13 @@ namespace WebApplication1.AppServices.Contrracts
         /// Get all roles
         /// </summary>
         /// <returns></returns>
-        RequestResult<IEnumerable<Role>> GetAllRole();
+        RequestResult<IEnumerable<RoleDTO>> GetAllRole();
         /// <summary>
         /// Update or add role
         /// </summary>
         /// <param name="role"></param>
         /// <returns></returns>
-        RequestResult<Role> SaveRole(Role role);
+        RequestResult<Role> SaveRole(RoleDTO role);
         /// <summary>
         /// Get person by Id
         /// </summary>

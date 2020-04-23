@@ -24,7 +24,7 @@ export class PopupAprovalMatrixComponent implements OnInit {
   moneys: Money[];
   persons: Person[];
   personsWithRol: any[];
-  roles: Role[];
+  roles: Role[] = [];
   canSave = true;
   isValidateForm = false;
   fieldsNoValidate = ['costCenterId', 'levelAprobation', 'dateModified', 'userChange', 'id'];
@@ -60,7 +60,9 @@ export class PopupAprovalMatrixComponent implements OnInit {
     this.adminService.getAllRoles()
       .subscribe(res => {
         if (res.isSuccesfull) {
-          this.roles = res.result;
+          for (const element of res.result) {
+            this.roles.push(element.role);
+          };
           this.getAllPerson();
         }
       });
@@ -189,15 +191,12 @@ export class PopupAprovalMatrixComponent implements OnInit {
   }
 
 
-  // hasError(controlName: string, errorName: string) {
-  //   return this.ownerForm.controls[controlName].hasError(errorName);
-  // }
-
 
   save() {
     this.service.SaveAprovalMatrix(this.matrix).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Matriz de Aprobación actualizada');
+        this.dialogRef.close();
       }
     });
   }

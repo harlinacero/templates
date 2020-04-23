@@ -5,7 +5,9 @@ import { Router } from '@angular/router';
 import { Session } from './../interfaces/session.interface';
 import { URLS, SESSION } from '../globals/localStorage.const';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ServiceBase {
   urls: any;
   session: Session;

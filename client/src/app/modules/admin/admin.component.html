@@ -1,32 +1,34 @@
-<app-title [title]="'Administración'" [icon]="'fa fa-file-text-o'"></app-title>
-<mat-tab-group>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Roles
-        </ng-template>
-        <app-roles></app-roles>
-    </mat-tab>
+<app-layout>
+    <app-title [title]="'Administración'" [icon]="'fa fa-file-text-o'"></app-title>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Roles
+            </ng-template>
+            <app-roles></app-roles>
+        </mat-tab>
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Usuarios
-        </ng-template>
-        <app-users></app-users>
-    </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Usuarios
+            </ng-template>
+            <app-users></app-users>
+        </mat-tab>
 
 
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Proveedores
-        </ng-template>
-        <app-providers></app-providers>
-    </mat-tab>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Productos y Servicios
-        </ng-template>
-        <app-products></app-products>
-    </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Proveedores
+            </ng-template>
+            <app-providers></app-providers>
+        </mat-tab>
+        <!-- <mat-tab>
+          <ng-template mat-tab-label>
+              Productos y Servicios
+          </ng-template>
+          <app-products></app-products>
+      </mat-tab> -->
 
-</mat-tab-group>
+    </mat-tab-group>
+</app-layout>

@@ -12,12 +12,14 @@ import { ServiceBase } from './services/service.base';
 import { ModalComponent } from './components/modal/modal.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ArraySortPipe } from './pipes/arraySort.pipe';
+import { AlertComponent } from './components/alert/alert.component';
 
 @NgModule({
   declarations: [
     TablesComponent,
     ModalComponent,
-    ArraySortPipe
+    ArraySortPipe,
+    AlertComponent
   ],
   imports: [
     AngularFontAwesomeModule,

@@ -245,9 +245,13 @@ export class PupupBillingComponent implements OnInit {
     if (!(!!this.data.valueBill && this.data.valueBill > 0)) {
       this.canCreate = false;
     }
-    if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0)) {
-      this.canCreate = false;
+
+    if(this.data.moneyId !== 1) {
+      if (!(!!this.data.exchangeRate && this.data.exchangeRate > 0)) {
+        this.canCreate = false;
+      }
     }
+
     if (!(!!this.data.dateBilling)) {
       this.canCreate = false;
     }
@@ -279,20 +283,20 @@ export class PupupBillingComponent implements OnInit {
       }
     }
 
-    if (currentmatrix.length > 0) {
-      const sorts = new ArraySortPipe();
-      const matrixOrder = sorts.transform(currentmatrix, 'levelAprobation');
-      const level: AprovalMatrix = matrixOrder[currentmatrix.length - 1];
-      if (!!level) {
-        if (level.valueMax < valueBill) {
-          alert('El valor máximo permitido para el centro el centro de costo seleccionado es ' + level.valueMax);
-          this.canCreate = false;
-        }
-      }
+    // if (currentmatrix.length > 0) {
+    //   const sorts = new ArraySortPipe();
+    //   const matrixOrder = sorts.transform(currentmatrix, 'levelAprobation');
+    //   const level: AprovalMatrix = matrixOrder[currentmatrix.length - 1];
+    //   // if (!!level) {
+    //   //   if (level.valueMax < valueBill) {
+    //   //     alert('El valor máximo permitido para el centro el centro de costo seleccionado es ' + level.valueMax);
+    //   //     this.canCreate = false;
+    //   //   }
+    //   // }
 
-    } else {
-      alert('El centro de costo no tiene matriz de aprobación');
-    }
+    // } else {
+    //   alert('El centro de costo no tiene matriz de aprobación');
+    // }
   }
 
   save() {
@@ -300,6 +304,7 @@ export class PupupBillingComponent implements OnInit {
     this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Se ha agregado la factura');
+        location.reload();
       } else {
         this.helper.controlErros(res);
       }

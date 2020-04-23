@@ -54,3 +54,138 @@ Fecha: 15/03/2020 11:46:05 p. m.
 -------------------
 Dato: A command is already in progress: SELECT * FROM Person WHERE DocumentNumber = 'CCCC2341234'
 Fecha: 26/03/2020 11:35:12 p. m.
+-------------------
+Dato: Unknown message code: 0
+Fecha: 28/03/2020 12:00:19 p. m.
+-------------------
+Dato: Unknown message code: 0
+Fecha: 28/03/2020 12:00:19 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 30/03/2020 9:50:18 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 30/03/2020 9:50:24 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 30/03/2020 9:56:20 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «,»
+Fecha: 30/03/2020 9:56:21 p. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM public.Company
+Fecha: 14/04/2020 9:03:23 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:11 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:21 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:23 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:29 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:32 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:35 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:36:41 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:38:10 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:39:19 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:39:37 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:40:23 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:43:36 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:43:41 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:43:52 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:44:11 p. m.
+-------------------
+Dato: 21000: una subconsulta utilizada como expresión retornó más de un registro
+Fecha: 16/04/2020 9:45:57 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «[»
+Fecha: 18/04/2020 8:30:33 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 18/04/2020 11:29:44 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 18/04/2020 11:30:11 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 18/04/2020 11:31:09 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:33:18 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:34:16 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «;»
+Fecha: 18/04/2020 11:35:51 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:37:55 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:38:07 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:40:31 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 18/04/2020 11:40:48 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 20/04/2020 8:11:20 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 20/04/2020 8:12:00 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «)»
+Fecha: 20/04/2020 8:12:16 p. m.
+-------------------
+Dato: A command is already in progress: SELECT * FROM public.Role
+Fecha: 20/04/2020 8:22:56 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 20/04/2020 8:25:05 p. m.
+-------------------
+Dato: Reset() called on connector with state Connecting
+Fecha: 20/04/2020 8:25:05 p. m.
+-------------------
+Dato: Object reference not set to an instance of an object.
+Fecha: 20/04/2020 8:25:05 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 20/04/2020 10:23:24 p. m.
+-------------------
+Dato: Reset() called on connector with state Connecting
+Fecha: 20/04/2020 10:23:24 p. m.
+-------------------
+Dato: Object reference not set to an instance of an object.
+Fecha: 20/04/2020 10:23:25 p. m.
+-------------------
+Dato: The connection is already in state 'Connecting'
+Fecha: 20/04/2020 10:24:52 p. m.

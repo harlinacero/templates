@@ -8,6 +8,14 @@
         .example-full-width {
             margin: 1em;
         }
+        .example-container {
+            height: 200px;
+            overflow: auto;
+            table {
+                width: 100%;
+                text-align: left;
+            }
+        }
         .btn-block {
             margin: 1em;
         }

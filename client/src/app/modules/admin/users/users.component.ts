@@ -75,7 +75,7 @@ export class UsersComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(PopupUsersComponent, {
       height: 'auto',
       width: '600px',
-      data: this.person
+      data: person
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -121,11 +121,6 @@ export class UsersComponent implements OnInit, AfterViewInit {
   getDocumentName(id: number) {
     if (!!this.documents) {
       return this.documents.find(x => x.id = id);
-      // for (const iterator of this.documents) {
-      //   if (iterator.id === id) {
-      //     return iterator;
-      //   }
-      // }
     }
   }
 
@@ -133,7 +128,9 @@ export class UsersComponent implements OnInit, AfterViewInit {
     this.userService.getAllRoles()
       .subscribe(res => {
         if (res.isSuccesfull) {
-          this.roles = res.result;
+          for (const element of res.result) {
+            this.roles.push(element.role);
+          };
           this.getUsers();
         }
       });

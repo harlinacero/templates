@@ -115,8 +115,6 @@ namespace WebApplication1.DomainServices
                     return AddBilling(billing, newPath);
                 }
 
-
-
                 return RequestResult<Billing>.CreateSuccesfull(billing);
 
             }
@@ -188,15 +186,35 @@ namespace WebApplication1.DomainServices
             if (billing != null)
             {
                 var process = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = {numberbilling}").ToList();
-                billing.Stateid = newStatus;
                 billing.UserChange = userCode;
                 billing.DateModified = DateTime.Now;
                 billing.CasueRejection = observations;
-                return VerifyNextLevelAproval(process, billing);
+                billing.Stateid = newStatus;
+
+                if (newStatus == (int)EnumStatusBilling.Aprobated)
+                {
+                    return VerifyNextLevelAproval(process, billing);
+                }
+                else
+                {
+                    return RejectionBillingProcess(process, billing);
+                }
+
             }
 
 
             return RequestResult<string>.CreateUnSuccesfull($"La factura con número {numberbilling} no fue encontrada");
+        }
+
+        private RequestResult<string> RejectionBillingProcess(List<VW_billing_data> process, Billing billing)
+        {
+            var currentProcessLevel = process.Find(pro => pro.PersonAprovalId == billing.UserChange);
+            AprovalBillingProcess aprovalProcess = _processAprovalRepo.GetById(currentProcessLevel.IdProces);
+            var responsedate = DateTime.Now - currentProcessLevel.FechaSolicitud;
+            var newStatus = responsedate.Days < currentProcessLevel.DiasPactados ? (int)EnumStatusBilling.Aprobated : (int)EnumStatusBilling.Late;
+            aprovalProcess.Statusid = newStatus;
+            aprovalProcess.Observations = billing.CasueRejection;
+            return FinishProcess(billing, aprovalProcess, currentProcessLevel);
         }
 
         /// <summary>
@@ -210,7 +228,9 @@ namespace WebApplication1.DomainServices
             var currentProcessLevel = process.Find(pro => pro.PersonAprovalId == billing.UserChange);
             var nextProcessLevel = process.Find(pro => pro.LevelAprobation == currentProcessLevel.LevelAprobation + 1);
             AprovalBillingProcess aprovalProcess = _processAprovalRepo.GetById(currentProcessLevel.IdProces);
-            aprovalProcess.Observations = billing.CasueRejection;
+            //billing.CasueRejection = currentProcessLevel.Observaciones;
+            
+            aprovalProcess.Observations = (billing.CasueRejection != null) ? billing.CasueRejection : "";
             aprovalProcess.PersonAprovalId = billing.UserChange;
             aprovalProcess.DateChange = DateTime.Now;
             aprovalProcess.Statusid = billing.Stateid;
@@ -218,19 +238,20 @@ namespace WebApplication1.DomainServices
 
             if (nextProcessLevel == null)
             {
-                billing.CasueRejection = currentProcessLevel.Observaciones;
                 return FinishProcess(billing, aprovalProcess, currentProcessLevel);
-            }
-            else if (billing.ValueBill <= currentProcessLevel.ValorMaximo && billing.ValueBill > currentProcessLevel.ValorMinimo)
-            {
-                billing.CasueRejection = currentProcessLevel.Observaciones;
-                billing.UserRejection = billing.UserChange;
-                return FinishProcess(billing, aprovalProcess, currentProcessLevel);
-            }
+            }            
             else
             {
-                billing.Stateid = (billing.DateLimit < DateTime.Now) ? (int)EnumStatusBilling.ATiempo : (int)EnumStatusBilling.Tarde;
-                return ContinueNextLevel(billing, aprovalProcess, currentProcessLevel, nextProcessLevel);
+                if (billing.ValueBill > currentProcessLevel.ValorMaximo)
+                {
+                    billing.Stateid = (int)EnumStatusBilling.InAprovalProcess;
+                    return ContinueNextLevel(billing, aprovalProcess, currentProcessLevel, nextProcessLevel);                 
+                }
+
+                billing.CasueRejection = currentProcessLevel.Observaciones;
+                billing.UserRejection = billing.UserChange;
+                billing.Stateid = (int)EnumStatusBilling.Aprobated;
+                return FinishProcess(billing, aprovalProcess, currentProcessLevel);
             }
 
         }
@@ -243,15 +264,17 @@ namespace WebApplication1.DomainServices
 
             // Actualizamos el nivel actual
             var responsedate = DateTime.Now - currentProcessLevel.FechaSolicitud;
-            var newStatus = responsedate.Days < currentProcessLevel.DiasPactados ? (int)EnumStatusBilling.Aprobada : (int)EnumStatusBilling.Tarde;
+            var newStatus = responsedate.Days < currentProcessLevel.DiasPactados ? (int)EnumStatusBilling.Aprobated : (int)EnumStatusBilling.Late;
+            
             aprovalProcess.Statusid = newStatus;
             aprovalProcess.DateModified = DateTime.Now;
             aprovalProcess.DateChange = DateTime.Now;
 
             //Actualizamos el nuevo nivel y Notificamos al siguiente aprobador
-            nextProcess.Statusid = (int)EnumStatusBilling.ATiempo;
+            nextProcess.Statusid = (int)EnumStatusBilling.OnTime;
             nextProcess.DateRequest = DateTime.Now;
             nextProcess.Observations = "";
+
             _processAprovalRepo.Update(aprovalProcess);
             _processAprovalRepo.Update(nextProcess);
             _billingRepo.Update(billing);
@@ -268,8 +291,6 @@ namespace WebApplication1.DomainServices
         {
             _processAprovalRepo.Update(aprovalProcess);
             _billingRepo.Update(billing);
-
-
             BuildEmail(billing, currentProcessLevel);
             return RequestResult<string>.CreateSuccesfull("Proceso de Aprobación finalizado");
         }
@@ -319,10 +340,10 @@ namespace WebApplication1.DomainServices
 
             switch (billing.Stateid)
             {
-                case (int)EnumStatusBilling.Aprobada:
+                case (int)EnumStatusBilling.Aprobated:
                     SendMailBillingAprobated(billing, currentProcessLevel);
                     break;
-                case (int)EnumStatusBilling.Rechazada:
+                case (int)EnumStatusBilling.Rejected:
                     SendMailBillingRejected(billing, currentProcessLevel);
                     break;
                 default:
@@ -337,7 +358,7 @@ namespace WebApplication1.DomainServices
             var subject = GetSubject(billing);
             newSubject.Append(subject);
             newSubject.Append($"Su factura {billing.NumberBilling} fue rechazada");
-            var bodyBilling = GetMessage(billing);
+            var bodyBilling = newSubject + GetMessage(billing);
             SendMail(newSubject.ToString(), currentProcessLevel.EmailProveedor, bodyBilling, currentProcessLevel.Pdf);
         }
 
@@ -348,14 +369,14 @@ namespace WebApplication1.DomainServices
             newSubject.Append(subject);
             newSubject.Append($"Factura {billing.NumberBilling} del Proveedor {currentProcessLevel.Proveedor} ha sido aprobada por el area {currentProcessLevel.CostCenter}");
             newSubject.Append("Por favor tramitar el pago correspondiente, según datos adjuntos.");
-            var bodyBilling = GetMessage(billing);
+            var bodyBilling = newSubject + GetMessage(billing);
             SendMail(newSubject.ToString(), currentProcessLevel.EmailCompany, bodyBilling, currentProcessLevel.Pdf);
         }
 
         private void SendMailToNextLevelAprobal(Billing billing, VW_billing_data data)
         {
             var subject = GetSubject(billing);
-            var bodyMessage = GetMessage(billing);
+            string bodyMessage = GetSubject(billing) + GetMessage(billing);
 
             SendMail(subject, data.EmailAprobator, bodyMessage, billing.RouteFile);
 
@@ -405,9 +426,10 @@ namespace WebApplication1.DomainServices
         {
             var costCenter = _costCenterRepo.GetById(billing.CostcenterId);
             StringBuilder message = new StringBuilder();
-            message.Append("Notificación Sistema Aprobación Facturas Proveedores");
-            message.Append($"- Solicitud Aprobación Factura {billing.NumberBilling} ");
-            message.Append($"- Area: {costCenter.Name} Fecha Límite: {billing.DateLimit.ToLongDateString()}");
+            message.Append("Notificación Sistema Aprobación Facturas Proveedores ");
+            message.Append($"Solicitud Aprobación Factura {billing.NumberBilling} ");
+            message.Append($"Area: {costCenter.Name} ");
+            message.Append($"Fecha Límite: { billing.DateLimit.ToLongDateString()} ");
 
             return message.ToString();
         }

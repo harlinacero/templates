@@ -87,12 +87,13 @@ namespace WebApplication1.DataAccess.Repository
             for (int i = 0; i < props.Count; i++)
             {
                 var newValue = props[i].GetValue(entity, null);
+
                 if (newValue.GetType().Equals(typeof(string)))
                     sql.Append(props[i].Name + " = '" + newValue + "'");
                 else if (newValue.GetType().Equals(typeof(int)))
                     sql.Append(props[i].Name + " = " + newValue);
                 else if (newValue.GetType().Equals(typeof(DateTime)))
-                    sql.Append(props[i].Name + " = TO_TIMESTAMP('" + DateTime.Parse(newValue.ToString()) + "', 'DD/MM/YYYY HH:MI')");
+                    sql.Append(props[i].Name + " = " + validateDateTime(newValue.ToString()));
                 else if (newValue.GetType().Equals(typeof(Boolean)))
                     sql.Append(props[i].Name + " = " + newValue);
                 else if (newValue.GetType().Equals(typeof(float)))
@@ -109,6 +110,15 @@ namespace WebApplication1.DataAccess.Repository
             return _postgreSQLConnection.ExecuteQuery(sql.ToString());
         }
 
+        private string validateDateTime(string newValue)
+        {
+            if (newValue.ToString() == "1/01/0001 12:00:00 a. m.")
+                return "null";
+            else if (newValue != null)
+                return "TO_TIMESTAMP('" + DateTime.Parse(newValue) + "', 'DD/MM/YYYY HH:MI')";
+            else
+                return null;
+        }
 
         public void Remove(T entity)
         {

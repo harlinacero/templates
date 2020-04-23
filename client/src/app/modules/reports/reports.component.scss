@@ -1,0 +1,9 @@
+::ng-deep .mat-form-field {
+    margin: 0.5em;
+}
+
+::ng-deep .btn:not(:disabled):not(.disabled) {
+    margin: 0.5em;
+    height: 45px;
+    top: -4px;
+}

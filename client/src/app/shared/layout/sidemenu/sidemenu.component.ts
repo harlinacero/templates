@@ -12,12 +12,12 @@ export class SidemenuComponent implements OnInit {
   background: '#7386D5';
 
   menuItems: any[] = [
-    { icon: 'fa fa-home', name: 'Inicio', component: '/home' },
-    { icon: 'fa fa-file-text-o', name: 'Gestión de Facturas', component: '/billing' },
-    { icon: 'fa fa-shopping-cart', name: 'Órdenes de Compra', component: '/shopping' },
-    { icon: 'fa fa-users', name: 'Administración', component: '/admin' },
-    { icon: 'fa fa-line-chart', name: 'Informes', component: '/reports' },
-    { icon: 'fa fa-cog', name: 'Configuración', component: '/settings' }
+    // { icon: 'fa fa-home', name: 'Inicio', component: '/home' },
+    // { icon: 'fa fa-file-text-o', name: 'Gestión de Facturas', component: '/billing' },
+    // { icon: 'fa fa-shopping-cart', name: 'Órdenes de Compra', component: '/shopping' },
+    // { icon: 'fa fa-users', name: 'Administración', component: '/admin' },
+    // { icon: 'fa fa-line-chart', name: 'Informes', component: '/reports' },
+    // { icon: 'fa fa-cog', name: 'Configuración', component: '/settings' }
   ];
 
   constructor() {
@@ -37,7 +37,7 @@ export class SidemenuComponent implements OnInit {
     if (widthSidebar === '250px') {
       return '#fff';
     } else {
-      return 'rgba(43, 43, 43, 0.8)';
+      return 'rgb(51, 51, 51)';
     }
   }
 

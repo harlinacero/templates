@@ -1,20 +1,22 @@
-<app-title [title]="'Configuraciones'" [icon]="'fa fa-file-text-o'">
+<app-layout>
+    <app-title [title]="'Configuraciones'" [icon]="'fa fa-file-text-o'">
 
-</app-title>
-<mat-tab-group>
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Empresa
-        </ng-template>
-        <app-company></app-company>
-    </mat-tab>
+    </app-title>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Empresa
+            </ng-template>
+            <app-company></app-company>
+        </mat-tab>
 
-    <mat-tab>
-        <ng-template mat-tab-label>
-            Matriz de Aprobación
-        </ng-template>
-        <app-cost-center></app-cost-center>
-    </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                Centros de Costo
+            </ng-template>
+            <app-cost-center></app-cost-center>
+        </mat-tab>
 
 
-</mat-tab-group>
+    </mat-tab-group>
+</app-layout>

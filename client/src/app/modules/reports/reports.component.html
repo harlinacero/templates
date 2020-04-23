@@ -1,1 +1,144 @@
-<p>reports works!</p>
+<app-layout>
+    <app-title [title]="'Informes'" [icon]="'fa fa-file-text-o'"></app-title>
+
+
+    <div class="example-header">
+
+        <form class="example-form" enctype="multipart/form-data" method="post">
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>No. Factura</mat-label>
+                <input type="number" min="0" matInput name="numberBilling">
+                <span style="color: red;" id="numberBilling-error"></span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Proveedor</mat-label>
+                <!-- <input matInput [(ngModel)]="data.providerid" name="businessName" disabled="disabled" required> -->
+                <mat-select name="providerid" required>
+                    <mat-option *ngFor="let pro of providers" [(value)]="pro.id">
+                        {{pro.businessName}}
+                    </mat-option>
+                </mat-select>
+                <span style="color: red;" id="providerId-error"></span>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Tipo Factura</mat-label>
+                <!-- <input matInput [(ngModel)]="data.billingtype" name="billingtype" disabled="disabled" required> -->
+                <mat-select name="billingtype" required>
+                    <mat-option *ngFor="let type of typesBilling" [(value)]="type.id">
+                        {{type.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Tipo Producto</mat-label>
+                <mat-select name="producttype" matNativeControl required>
+                    <mat-option value=1>Producto </mat-option>
+                    <mat-option value=2>Servicio </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Centro de Costo</mat-label>
+                <mat-select name="costcenterid">
+                    <mat-option *ngFor="let pro of costCenters" [(value)]="pro.id">
+                        {{pro.name}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <div mat-dialog-actions style="display: inline;">
+                <button mat-button class="btn btn-primary" cdkFocusInitial> <i class="fa fa-search"></i> </button>
+                <button mat-button class="btn btn-secondary" (click)="exportTable()"><i class="fa fa-download"></i> </button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+    <div class="example-container mat-elevation-z8" *ngIf="!!dataSource" #TABLE>
+
+        <mat-table [dataSource]="dataSource" id="ExampleTable" matSort>
+            <!-- ID Column -->
+            <ng-container matColumnDef="numberbilling">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> No. Factura</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.numeroFactura}} </mat-cell>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="providerid">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Proveedor </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.proveedor}} </mat-cell>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="billingtype">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Factura </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.tipoFactura}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="producttype">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Tipo Producto </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.tipoProducto}} </mat-cell>
+            </ng-container>
+
+            <!-- CostCenter Column -->
+            <ng-container matColumnDef="costcenterid">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Centro de Costo </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{ row.costCenter}} </mat-cell>
+            </ng-container>
+
+            <!-- Date Pay datePay -->
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="datebilling">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Factura </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaFactura | date}} </mat-cell>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="datelimit">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Límite </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaLimite| date}} </mat-cell>
+            </ng-container>
+
+            <!-- Date Column -->
+            <ng-container matColumnDef="datefiled">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Fecha Radicado </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.fechaRadicado | date}} </mat-cell>
+            </ng-container>
+
+            <!-- Value Column -->
+            <ng-container matColumnDef="valuebill">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Valor </mat-header-cell>
+                <mat-cell *matCellDef="let row">{{row.valorText }} </mat-cell>
+            </ng-container>
+
+            <!-- State Column -->
+            <ng-container matColumnDef="stateid">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.background]="row.colorFactura" [ngStyle]="{'padding-left':'10px'}">
+                    {{ row.estado }}
+                </mat-cell>
+            </ng-container>
+
+            <!-- Indicator Column -->
+            <ng-container matColumnDef="indicator">
+                <mat-header-cell *matHeaderCellDef mat-sort-header> Indicador </mat-header-cell>
+                <mat-cell *matCellDef="let row" [style.background]="row.colorIndicador" [ngStyle]="{'padding-left':'10px'}">
+                    {{ row.indicador }}
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+
+        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    </div>
+</app-layout>

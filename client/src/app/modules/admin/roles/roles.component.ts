@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Role } from 'src/app/shared/interfaces/role.interface';
+import { Role, RoleDTO } from 'src/app/shared/interfaces/role.interface';
 
 
 import { AdminService } from '../../../shared/services/admin.service';
@@ -21,7 +21,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
   displayedColumns =
     ['id', 'name', 'description'];
   dataSource = new MatTableDataSource();
-  roles: Role[];
+  rolesDTO: RoleDTO[] = [];
+  roles: Role[] = [];
   role: Role;
 
   constructor(private userService: AdminService, public dialog: MatDialog) {
@@ -45,7 +46,11 @@ export class RolesComponent implements OnInit, AfterViewInit {
   getRoles() {
     this.userService.getAllRoles().subscribe(res => {
       if (res.isSuccesfull) {
-        this.roles = res.result;
+        this.rolesDTO = res.result;
+        this.roles = [];
+        for (const element of res.result) {
+          this.roles.push(element.role);
+        };
         this.dataSource = new MatTableDataSource(this.roles);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -55,10 +60,15 @@ export class RolesComponent implements OnInit, AfterViewInit {
 
   openDialog(): void {
     this.role = this.getRole(0, '', '');
+    const roleDTO: RoleDTO = {
+      menuByRole: [],
+      role:  this.getRole(0, '', ''),
+      menus: this.rolesDTO[0].menus
+    }
     const dialogRef = this.dialog.open(PopupComponent, {
       height: 'auto',
       width: 'auto',
-      data: this.role
+      data: roleDTO
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -71,11 +81,11 @@ export class RolesComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(PopupComponent, {
       height: 'auto',
       width: 'auto',
-      data: this.role
+      data: this.rolesDTO.find(ro => ro.role.id === this.role.id)
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.role = result;
+      this.getRoles();
     });
 
   }

@@ -1,6 +1,12 @@
+.container-title {
+    display: flex;
+    justify-content: space-between;
+}
+
 .container-group {
     display: flex;
     flex-flow: wrap;
+    margin-top: 1em;
     margin-bottom: 1em;
     .group-field {
         display: flex;
@@ -13,22 +19,29 @@
         .title-group {
             padding: 0.5em;
             font-size: 14px;
-            font-weight: bold;
+            // font-weight: bold;
             vertical-align: middle;
             width: 40%;
         }
         .value-group {
-            background-color: rgba(145, 145, 145, 0.8);
-            padding: 1em;
+            background-color: #f1efefcc;
+            padding: 0.5em;
             font-size: 14px;
-            width: 50%;
+            vertical-align: middle;
+            width: 40%;
         }
     }
 }
 
+::ng-deep .mat-sort-header-button {
+    color: #000;
+    font-weight: bold;
+}
+
 .buttons {
-    padding: 1em;
-    align-items: right;
+    display: block;
     text-align: right;
-    align-content: right;
+    .btn {
+        margin: 0.5em;
+    }
 }
