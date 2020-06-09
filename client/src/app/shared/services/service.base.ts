@@ -30,12 +30,16 @@ export class ServiceBase {
     });
   }
 
-  validateSession() {
+  validateSession(menu: string = null) {
     const session = localStorage.getItem(SESSION);
-    if (!(!!session)) {
+    if (!session) {
       this.router.navigate(['login']);
     } else {
       this.session = JSON.parse(session);
+      if(!this.session.menus.find(me => me.component === menu)) {
+        this.router.navigate(['/']);
+      }
+
     }
   }
 }

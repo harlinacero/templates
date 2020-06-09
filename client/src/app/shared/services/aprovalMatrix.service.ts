@@ -20,7 +20,7 @@ export class AprovalMatrixService {
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
     this.urls = JSON.parse(localStorage.getItem(URLS));
     if (this.urls === undefined) {
-      this.serviceBase.validateSession();
+      this.serviceBase.validateSession('AprovaMatrix');
     }
   }
 

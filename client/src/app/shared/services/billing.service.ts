@@ -15,6 +15,8 @@ import { vw_billing_data } from '../interfaces/vw_billing_data.interface';
 })
 export class BillingService {
 
+
+
   private urls: Urls;
   private session: Session;
 
@@ -27,9 +29,17 @@ export class BillingService {
   }
 
 
-  GetAllBilling() {
-    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling`);
+  GetAllBilling(startDate?: string, endDate?: string) {
+    const params = (!!startDate && !!endDate) ? `?startDate=${startDate}&endDate=${endDate}` : '';
+    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling` + params);
   }
+
+  GetAllBillingWithParams(numberBilling: string, providerid: string, billingtype: string, producttype: string, costcenterid: string) {
+    const params = `?numberBilling=${numberBilling}&providerid=${providerid}&billingtype=${billingtype}&producttype=${producttype}&costcenterid=${costcenterid}`;
+    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBillingWithParams` + params);
+  }
+
+
 
   // SaveBilling(levelsAproval: Billing) {
   //   return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, levelsAproval);

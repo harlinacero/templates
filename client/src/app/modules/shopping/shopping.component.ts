@@ -12,7 +12,7 @@ export class ShoppingComponent implements OnInit {
   constructor(private serviceBase: ServiceBase, private router: Router) { }
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+    this.serviceBase.validateSession('/shopping');
     this.router.navigate(['billing']);
 
   }

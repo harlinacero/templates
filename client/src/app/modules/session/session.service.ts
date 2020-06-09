@@ -17,5 +17,14 @@ export class Sessionervice {
     return this.http.post<RequestResult<Session>>(`${urlbase}Session/Login`, {username, password});
   }
 
+  sendEmail(email: string) {
+    const urlbase = this.serviceBase.urls.urlbase;
+    return this.http.get<RequestResult<any>>(`${urlbase}Session/SendEmail?email=${email}`);
+  }
+
+  restorePassword(code: string, password: string) {
+    const urlbase = this.serviceBase.urls.urlbase;
+    return this.http.get<RequestResult<any>>(`${urlbase}Session/RestorePassword?code=${code}&password=${password}`);
+  }
 
 }

@@ -20,10 +20,10 @@ import * as XLSX from 'xlsx';
 })
 export class ReportsComponent implements OnInit {
 
-  displayedColumns = ['numberbilling', 'providerid', 'billingtype', 'producttype', 'costcenterid',
-    'datebilling', 'datelimit', 'datefiled', 'valuebill', 'stateid', 'indicator'];
+  displayedColumns = ['numeroFactura', 'proveedor', 'tipoFactura', 'tipoProducto', 'costCenter',
+    'fechaFactura', 'fechaLimite', 'fechaRadicado', 'valorText', 'estado', 'indicador'];
 
-  dataSource: MatTableDataSource<any>;
+  dataSource = new MatTableDataSource();
   billings: Vw_billing[] = [];
   billing: Vw_billing;
   providers: Providers[] = [];
@@ -31,6 +31,14 @@ export class ReportsComponent implements OnInit {
   costCenters: CostCenter[] = [];
   states: Status[] = [];
   typesBilling: TypeBilling[];
+
+  numberBilling: any;
+  providerid: string = '';
+  billingtype: string = '';
+  producttype: string = '';
+  costcenterid: string = '';
+
+
 
   @ViewChild('TABLE', null) table: ElementRef;
   @ViewChild(MatPaginator, { static: false }) paginator: MatPaginator;
@@ -44,7 +52,7 @@ export class ReportsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+    this.serviceBase.validateSession('/reports');
     this.getAllProviders();
     this.getAllProducts();
     this.getAllCostCenters();
@@ -128,10 +136,28 @@ export class ReportsComponent implements OnInit {
     this.dataSource.filter = filterValue;
   }
 
+
+  filterData() {
+    var numberBill = (document.getElementById('numberBilling') as HTMLInputElement).value;
+    this.billingService.GetAllBillingWithParams(numberBill, this.providerid, this.billingtype, this.producttype, this.costcenterid)
+      .subscribe(res => {
+        if (res.isSuccesfull) {
+          this.billings = res.result;
+          this.dataSource = new MatTableDataSource(res.result);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+
+  }
+
   exportTable() {
-  const workSheet = XLSX.utils.json_to_sheet(this.dataSource.data, {header:['dataprop1', 'dataprop2']});
-    const workBook: XLSX.WorkBook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workBook, workSheet);
+    var ws = XLSX.utils.json_to_sheet(this.billings);
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "People");
+    XLSX.writeFile(wb, "sheetjs.xlsx");
   }
 
 }

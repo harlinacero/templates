@@ -11,7 +11,7 @@ export class AdminComponent implements OnInit {
   constructor(private serviceBase: ServiceBase) { }
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+    this.serviceBase.validateSession('/admin');
   }
 
 }

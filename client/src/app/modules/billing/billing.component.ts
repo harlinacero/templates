@@ -38,25 +38,26 @@ export class BillingComponent implements OnInit, AfterViewInit {
   states: Status[] = [];
   typesBilling: TypeBilling[];
   billing: Vw_billing;
-
+  maxDate: Date;
 
 
   constructor(private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
     private helper: ControlErrorHelperService,
     public dialog: MatDialog, private router: Router) {
     this.getAllBillings();
+    this.maxDate = new Date();
   }
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+    this.serviceBase.validateSession('/billing');
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
   }
 
-  getAllBillings() {
-    this.billingService.GetAllBilling()
+  getAllBillings(startDate?: string, endDate?: string) {
+    this.billingService.GetAllBilling(startDate, endDate)
       .subscribe(res => {
         if (res.isSuccesfull) {
           this.billings = res.result;
@@ -69,6 +70,17 @@ export class BillingComponent implements OnInit, AfterViewInit {
       });
   }
 
+  filterBilling() {
+    const startDate = (document.getElementById('startDate') as HTMLInputElement).value;
+    const endDate = (document.getElementById('endDate') as HTMLInputElement).value;
+    if (!!startDate && !!endDate) {
+     this.getAllBillings(new Date(startDate).toDateString(), new Date(endDate).toDateString());
+    } else {
+      (document.getElementById('startDate') as HTMLInputElement).value = null;
+      (document.getElementById('endDate') as HTMLInputElement).value = null;
+      this.getAllBillings();
+    }
+  }
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace

@@ -19,19 +19,13 @@
         </ng-container>
 
         <ng-container matColumnDef="matriz">
-            <th mat-header-cell *matHeaderCellDef> Matriz </th>
-            <td mat-cell *matCellDef="let element">
-                <button class="auxiliar-button" mat-button (click)="setAprovalMatrix(element)"><i
-                        class="material-icons">group_add</i></button>
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-            <th mat-header-cell *matHeaderCellDef> </th>
-            <td mat-cell *matCellDef="let element">
+            <mat-header-cell *matHeaderCellDef style="max-width: 150px; display: grid; text-align: center;"> Matriz </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="max-width: 150px; text-align: center;">
                 <button class="auxiliar-button" mat-button (click)="updateCostCenter(element)"><i
-                      class="material-icons">settings</i></button>
-            </td>
+            class="material-icons">settings</i></button>
+                <button class="auxiliar-button" mat-button (click)="setAprovalMatrix(element)"><i
+            class="material-icons">group_add</i></button>
+            </mat-cell>
         </ng-container>
 
 
@@ -45,6 +39,6 @@
 </div>
 
 <button class="mdc-fab" aria-label="Favorite" [title]="'Agregar'" (click)="addCostCenter()">
-    <div class="mdc-fab__ripple"></div>
-    <span class="mdc-fab__icon material-icons">add</span>
+  <div class="mdc-fab__ripple"></div>
+  <span class="mdc-fab__icon material-icons">add</span>
 </button>
