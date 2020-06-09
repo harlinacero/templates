@@ -8,13 +8,24 @@
         .example-form-content {
             column-count: 2;
             width: 100%;
+            margin: auto;
+            .example-full-width {
+                margin: 0.5em;
+                width: 100%;
+            }
+            .btn-block {
+                margin: 1em;
+            }
         }
-        .example-full-width {
-            margin: 1em;
+        .buttons {
+            display: flex;
+            justify-content: flex-end;
             width: 100%;
-        }
-        .btn-block {
-            margin: 1em;
+            padding: 0;
+            button {
+                margin: 2px;
+                margin-bottom: 2em;
+            }
         }
     }
 }

@@ -4,12 +4,14 @@
 
 .box {
     .example-form {
-        text-align: center;
-        .example-full-width {
-            margin: 1em;
-        }
-        .btn-block {
-            margin: 1em;
+        .mat-dialog-content {
+            text-align: center;
+            .example-full-width {
+                margin: 0.5em;
+            }
+            .btn-block {
+                margin: 1em;
+            }
         }
         .buttons {
             display: flex;

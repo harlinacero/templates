@@ -26,6 +26,16 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Email Notificaciones</mat-label>
+                <input matInput [(ngModel)]="data.emailMistica" name="emailMistica">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
+                <mat-label>Email Notificaciones</mat-label>
+                <input matInput [(ngModel)]="data.passwordMistica" name="password" type="password" required>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Interfaz Contable</mat-label>
                 <!-- <input matInput [(ngModel)]="data.accountableInterface" name="accountableInterface"> -->
                 <mat-select [(value)]="data.accountableInterface" [(ngModel)]="data.accountableInterface" name="accountableInterface" required>

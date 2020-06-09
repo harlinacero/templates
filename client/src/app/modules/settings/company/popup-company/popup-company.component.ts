@@ -29,6 +29,8 @@ export class PopupCompanyComponent implements OnInit {
         datemodified: new Date(),
         emailCompany: '',
         emailTreasury: '',
+        emailMistica:'',
+        passwordMistica:'',
         logo: '',
         nit: '',
         userchange: 1
@@ -36,6 +38,7 @@ export class PopupCompanyComponent implements OnInit {
     }
 
     this.data = company;
+    this.data.passwordMistica = atob(this.data.passwordMistica);
 
   }
 
@@ -47,6 +50,7 @@ export class PopupCompanyComponent implements OnInit {
   }
 
   save() {
+    this.data.passwordMistica = btoa(this.data.passwordMistica);
     this.companyService.saveCompany(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('La información de la empresa ha sido actualizada');

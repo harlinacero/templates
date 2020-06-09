@@ -5,6 +5,8 @@ export interface Company {
   nit: string;
   emailCompany: string;
   emailTreasury: string;
+  emailMistica: string;
+  passwordMistica: string;
   accountableInterface: boolean;
   purchaseOrders: boolean;
   userchange: number;

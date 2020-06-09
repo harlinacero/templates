@@ -40,7 +40,7 @@ export class CompanyComponent implements OnInit {
   updateProduct(row) {
     const dialogRef = this.dialog.open(PopupCompanyComponent, {
       height: 'auto',
-      width: '600px',
+      width: 'auto',
       data: row
     });
 
@@ -53,7 +53,7 @@ export class CompanyComponent implements OnInit {
   saveCompany() {
     const dialogRef = this.dialog.open(PopupCompanyComponent, {
       height: 'auto',
-      width: '600px',
+      width: 'auto',
       data: this.company
     });
 

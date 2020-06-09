@@ -31,7 +31,7 @@ export class DetailbillingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceBase.validateSession();
+    this.serviceBase.validateSession('/billing');
     this.numberBilling = this.route.snapshot.paramMap.get('id');
     this.getDetailBilling(parseInt(this.numberBilling));
   }
