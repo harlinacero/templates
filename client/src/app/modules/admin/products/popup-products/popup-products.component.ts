@@ -37,6 +37,8 @@ export class PopupProductsComponent implements OnInit {
     this.userService.saveProduct(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Producto actualizado');
+      } else {
+        alert(res.message);
       }
     });
   }

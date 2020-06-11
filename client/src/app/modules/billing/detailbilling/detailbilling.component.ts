@@ -48,7 +48,7 @@ export class DetailbillingComponent implements OnInit {
           this.title = 'Detalle Factura Nro.: ' + this.detailBilling[0].numeroFactura;
           this.validateIfCanAproval(this.detailBilling);
         } else {
-
+          alert(res.message);
         }
       });
   }
@@ -82,7 +82,7 @@ export class DetailbillingComponent implements OnInit {
           this.getDetailBilling(parseInt(this.numberBilling));
           location.reload();
         } else {
-          console.log(res);
+          alert(res.message);
         }
       });
 
@@ -102,7 +102,7 @@ export class DetailbillingComponent implements OnInit {
           this.getDetailBilling(parseInt(this.numberBilling));
           location.reload();
         } else {
-          console.log(res);
+          alert(res.message);
         }
       });
 

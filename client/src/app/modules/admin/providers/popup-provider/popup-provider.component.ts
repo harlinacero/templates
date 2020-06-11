@@ -34,6 +34,8 @@ export class PopupProviderComponent implements OnInit {
     this.userService.saveProvider(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Proveedor actualizado');
+      }else {
+        alert(res.message);
       }
     });
   }

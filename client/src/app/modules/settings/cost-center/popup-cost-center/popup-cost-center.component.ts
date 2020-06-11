@@ -13,7 +13,7 @@ export class PopupCostCenterComponent implements OnInit {
   data: CostCenter;
 
   constructor(public dialogRef: MatDialogRef<PopupCostCenterComponent>,
-              @Inject(MAT_DIALOG_DATA) public costCenter: CostCenter, private userService: AdminService) {
+    @Inject(MAT_DIALOG_DATA) public costCenter: CostCenter, private userService: AdminService) {
     this.data = costCenter;
 
     if (this.data.id > 0) {
@@ -33,7 +33,8 @@ export class PopupCostCenterComponent implements OnInit {
     this.userService.saveCostCenter(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Centro de Costo actualizado');
-
+      } else {
+        alert(res.message);
       }
     });
   }

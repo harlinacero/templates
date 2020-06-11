@@ -42,6 +42,8 @@ export class ProvidersComponent implements OnInit {
           this.dataSource = new MatTableDataSource(res.result);
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
+        } else {
+          alert(res.message);
         }
       });
   }

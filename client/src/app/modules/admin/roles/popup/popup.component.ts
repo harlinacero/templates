@@ -137,6 +137,8 @@ export class PopupComponent implements OnInit {
       this.userService.saveRole(roleDTO).subscribe(res => {
         if (res.isSuccesfull) {
           alert(message);
+        } else {
+          alert(message);
         }
       });
     }

@@ -1,0 +1,25 @@
+<app-layout>
+    <app-title [title]="'Dashboard'" [icon]="'fa fa-file-text-o'"></app-title>
+
+    <div class="container-home">
+        <div class="cards">
+            <div class="card" *ngFor="let item of indicators">
+                <h5>{{item.name}}</h5>
+                <h1>{{item.numero| number}}</h1>
+                <h3>$ {{item.total | number}}</h3>
+            </div>
+
+        </div>
+        <div class="cards">
+            <div class="card">
+                <canvas id="chart">{{ chart }}</canvas>
+            </div>
+            <!-- <div class="card">
+                <canvas id="chart2">{{ chart2 }}</canvas>
+            </div> -->
+        </div>
+
+    </div>
+
+
+</app-layout>

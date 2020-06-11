@@ -56,6 +56,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(res.result);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      }else {
+        alert(res.message);
       }
     });
   }
@@ -65,6 +67,8 @@ export class UsersComponent implements OnInit, AfterViewInit {
       if (res.isSuccesfull) {
         this.documents = res.result;
         this.getRols();
+      }else {
+        alert(res.message);
       }
     });
   }

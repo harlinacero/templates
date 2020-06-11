@@ -72,13 +72,15 @@ export class PopupUsersComponent {
     this.userService.saveUser(person).subscribe(res => {
       if (res.isSuccesfull) {
         alert('Usuario actualizado');
+      } else {
+        alert(res.message);
       }
     });
   }
 
   getErrorMessage() {
-    return this.email.hasError('required') ? 'You must enter a value' :
-      this.email.hasError('email') ? 'Not a valid email' : '';
+    return this.email.hasError('required') ? 'Debe ingresar un correo válido' :
+      this.email.hasError('email') ? 'El email no es válido' : '';
   }
 
   getPerson(id: number, address: string, documentNumber: string, documentType: number, email: string,

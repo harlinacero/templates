@@ -214,11 +214,10 @@ export class PupupBillingComponent implements OnInit {
 
   }
 
-  convertValueBillToCOP(event, type) {
+  convertValueBillToCOP(event) {
     if (this.data.moneyId !== this.moneys.find(mo => mo.code === 'COP').id) {
       this.data.valueBill = event.target.value * this.data.exchangeRate;
     }
-
   }
 
   validateForm() {

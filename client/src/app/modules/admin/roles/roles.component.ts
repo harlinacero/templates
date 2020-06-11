@@ -54,6 +54,8 @@ export class RolesComponent implements OnInit, AfterViewInit {
         this.dataSource = new MatTableDataSource(this.roles);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      }else {
+        alert(res.message);
       }
     });
   }

@@ -197,6 +197,8 @@ export class PopupAprovalMatrixComponent implements OnInit {
       if (res.isSuccesfull) {
         alert('Matriz de Aprobación actualizada');
         this.dialogRef.close();
+      }else {
+        alert(res.message);
       }
     });
   }
