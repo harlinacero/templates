@@ -6,8 +6,8 @@ import { BillingComponent } from './billing.component';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
 import { MAT_DIALOG_DATA } from '@angular/material';
 import { DetailbillingComponent } from './detailbilling/detailbilling.component';
-
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,10 @@ import { DetailbillingComponent } from './detailbilling/detailbilling.component'
   imports: [
     CommonModule,
     BillingRoutingModule,
+    PdfViewerModule,
+    ReactiveFormsModule,
     SharedModule
+
   ], entryComponents: [
     PupupBillingComponent
   ],

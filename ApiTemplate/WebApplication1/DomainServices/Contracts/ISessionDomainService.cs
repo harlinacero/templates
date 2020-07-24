@@ -10,5 +10,7 @@ namespace WebApplication1.DomainServices.Contracts
     public interface ISessionDomainService
     {
         RequestResult<Account> Login(Login login);
+        RequestResult<string> SendEmail(string email);
+        RequestResult<string> RestorePassword(string code, string password);
     }
 }

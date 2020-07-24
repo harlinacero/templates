@@ -3,8 +3,8 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  baseUrl: 'http://localhost:53973/api/'
+  appVersion: '20.' + require('../../package.json').version + '-dev',
+  production: false
 };
 
 /*

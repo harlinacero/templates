@@ -28,12 +28,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.serviceBase.validateSession('/home');
     this.getIndicators();
     // this.router.navigate(['billing']);
-
-
-
-
     this.showData();
-
+    this.getAllBillingsByStatus();
 
   }
 
@@ -52,48 +48,50 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.homeService.getAllBillingsByMonth().subscribe(res => {
       if (res.isSuccesfull) {
         this.billingsByMonth = res.result;
-        // this.chart.data.labels.push(this.billingsByMonth.map(m => { return m.month }));
-        // this.chart.data.datasets[0].data.push(this.billingsByMonth.map(m => { return m.total }));
-        // this.chart.update();
         let data = this.billingsByMonth.map(m => { return m.total });
         let labels = this.billingsByMonth.map(m => { return m.month });
-        this.buildChart(data, labels);
+        this.buildChart('chart', 'bar', data, labels, 'Facturación diaria');
       } else {
         console.log(res);
       }
     });
   }
 
-  buildChart(data, labels) {
-    this.chart = new Chart('chart', {
-      type: 'bar',
+  getAllBillingsByStatus() {
+    this.homeService.getAllBillingsByStatus().subscribe(res => {
+      if (res.isSuccesfull) {
+        res.result;
+        let data = res.result.map(m => { return m.numer });
+        let data2 = res.result.map(m => { return m.estadoaprobacion });
+        let labels = res.result.map(m => { return m.costcenter });
+        this.buildChart('chart2', 'doughnut', data, labels, 'Facturas por Centro de Costo', data2, true);
+        // this.customBar();
+      } else {
+        console.log(res);
+      }
+    });
+  }
+
+  buildChart(idChart, style, data, labels, title, data2?, backgroundColor?: boolean) {
+    this.chart = new Chart(idChart, {
+      type: style,
       data: {
         labels: labels,
         datasets: [{
           label: '# de Facturas',
           data: data,
-          backgroundColor: 'rgba(54, 162, 235, 0.8)',
-          // [
-          //   'rgba(255, 99, 132, 0.8)',
-          //   'rgba(54, 162, 235, 0.8)',
-          //   'rgba(255, 206, 86, 0.)',
-          //   'rgba(75, 192, 192, 0.2)',
-          //   'rgba(153, 102, 255, 0.2)',
-          //   'rgba(255, 159, 64, 0.2)'
-          // ],
-          borderColor: 'rgba(54, 162, 235, 1)',
-          // [
-          //   'rgba(255, 99, 132, 1)',
-          //   'rgba(54, 162, 235, 1)',
-          //   'rgba(255, 206, 86, 1)',
-          //   'rgba(75, 192, 192, 1)',
-          //   'rgba(153, 102, 255, 1)',
-          //   'rgba(255, 159, 64, 1)'
-          // ],
+          backgroundColor: (backgroundColor) ?
+            this.getColors(data)
+            : 'rgba(54, 162, 235, 0.8)',
+          // borderColor: (backgroundColor) ? 'rgba(54, 162, 235, 1)' : '',
           borderWidth: 1
         }]
       },
       options: {
+        title: {
+          display: true,
+          text: title
+        },
         legend: {
           position: 'top',
           align: 'end'
@@ -101,14 +99,30 @@ export class HomeComponent implements OnInit, OnDestroy {
         scales: {
           yAxes: [{
             ticks: {
-              beginAtZero: true
+              beginAtZero: true,
+              stacked: true
             }
           }]
         }
       }
     });
   }
+  getColors(data: any) {
+    return ['rgba(54, 162, 235, 0.8)',
+      'rgba(54, 162, 0, 0.8)',
+      'rgba(54, 16, 165, 0.8)'];
+  }
 
+
+  customBar() {
+    this.chart = new Chart('chart2', {
+      type: 'line',
+      data: [20, 10],
+      options: {
+        spanGaps: true
+      }
+    });
+  }
   /**
 * Get the data from the API
 * @function getFromAPI

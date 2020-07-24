@@ -54,6 +54,7 @@ export class PopupCompanyComponent implements OnInit {
     this.companyService.saveCompany(this.data).subscribe(res => {
       if (res.isSuccesfull) {
         alert('La información de la empresa ha sido actualizada');
+        this.data = res.result;
       }else {
         alert(res.message);
       }

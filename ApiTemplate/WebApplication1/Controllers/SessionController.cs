@@ -28,6 +28,20 @@ namespace WebApplication1.Controllers
             return _sessionAppService.Login(login);
         }
 
+        [HttpGet]
+        [Route("SendEmail")]
+        public RequestResult<string> SendEmail(string email)
+        {
+            return _sessionAppService.SendEmail(email);
+        }
+
+        [HttpGet]
+        [Route("RestorePassword")]
+        public RequestResult<string> RestorePassword(string code, string password)
+        {
+            return _sessionAppService.RestorePassword(code, password);
+        }
+
 
     }
 }

@@ -19,15 +19,27 @@ namespace WebApplication1.AppServices
         }
 
 
-        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling()
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling(string startDate = null, string endDate = null)
         {
             try
             {
-                return _billingDomainService.GetAllBilling();
+                return _billingDomainService.GetAllBilling(startDate, endDate);
             }
             catch (Exception ex)
             {
 
+                return RequestResult<IEnumerable<Vw_billing>>.CreateUnSuccesfull(ex.Message);
+            }
+        }
+
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBillingWithParams(string numberBilling, string providerid, string billingtype, string producttype, string costcenterid)
+        {
+            try
+            {
+                return _billingDomainService.GetAllBillingWithParams(numberBilling, providerid, billingtype, producttype, costcenterid);
+            }
+            catch (Exception ex)
+            {
                 return RequestResult<IEnumerable<Vw_billing>>.CreateUnSuccesfull(ex.Message);
             }
         }
@@ -112,7 +124,7 @@ namespace WebApplication1.AppServices
             }
         }
 
-        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling)
+        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(string numberBilling)
         {
             try
             {

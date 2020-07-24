@@ -1,6 +1,6 @@
 #sidebar {
     /* don't forget to add all the previously mentioned styles here too */
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(2, 103, 103, 0.8);
     color: #fff;
     transition: all 0.3s;
     height: 100%;
@@ -37,6 +37,12 @@
                 cursor: pointer;
             }
         }
+    }
+    .version {
+        position: absolute;
+        bottom: 2em;
+        width: 100%;
+        left: 2em;
     }
 }
 

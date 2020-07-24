@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +29,7 @@ namespace WebApplication1.DomainServices
         //private readonly IRepository<Provider> _providerRepo;
         private readonly IRepository<Company> _companyRepo;
         private readonly IRepository<CostCenter> _costCenterRepo;
-
+        private IConfiguration _configuration;
         /// <summary>
         /// Current path repository of dashboards files
         /// </summary>
@@ -37,6 +38,7 @@ namespace WebApplication1.DomainServices
         /// Environment vars
         /// </summary>
         private readonly IHostingEnvironment _env;
+        private readonly string _REMOTE_URL;
         #endregion
 
         #region Builder
@@ -46,6 +48,7 @@ namespace WebApplication1.DomainServices
             IRepository<Provider> providerRepo, IRepository<Company> companyRepo,
             IRepository<CostCenter> costCenterRepo,
             IRepository<Vw_billing> billRepo,
+            IConfiguration configuration,
             IHostingEnvironment env)
         {
             _billingRepo = billingRepo;
@@ -58,6 +61,8 @@ namespace WebApplication1.DomainServices
             _companyRepo = companyRepo;
             _costCenterRepo = costCenterRepo;
             _env = env;
+            _configuration = configuration;
+            _REMOTE_URL = _configuration.GetValue<string>("RemoteUrl");
         }
         #endregion
 
@@ -65,12 +70,54 @@ namespace WebApplication1.DomainServices
         /// Get all billings
         /// </summary>
         /// <returns></returns>
-        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling()
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBilling(string startDate = null, string endDate = null)
         {
-            var list = _billRepo.ListAll();
+            endDate = endDate == null ? DateTime.Now.ToShortDateString() : endDate;
+            startDate = startDate == null ? DateTime.Now.AddDays(-15).ToShortDateString() : startDate;
+            var date1 = "TO_TIMESTAMP('" + DateTime.Parse(startDate) + "', 'DD/MM/YYYY')";
+            var date2 = "TO_TIMESTAMP('" + DateTime.Parse(endDate).AddDays(1) + "', 'DD/MM/YYYY')";
+            var list = _billRepo.ListByWhere($"{nameof(Vw_billing.DateCreated)} between {date1} and {date2}");
             return RequestResult<IEnumerable<Vw_billing>>.CreateSuccesfull(list);
         }
 
+
+        public RequestResult<IEnumerable<Vw_billing>> GetAllBillingWithParams(string numberBilling, string providerid, string billingtype, string producttype, string costcenterid)
+        {
+            List<string> where = new List<string>();
+            if (numberBilling != null && numberBilling != "")
+            {
+                where.Add($"{nameof(Vw_billing.NumeroFactura)}::text like '%{numberBilling}%' ");
+            }
+
+            if (providerid != null && providerid != "")
+            {
+                where.Add($"{nameof(Vw_billing.Proveedor)} = '{providerid}' ");
+            }
+
+            if (billingtype != null && billingtype != "")
+            {
+                where.Add($"{nameof(Vw_billing.TipoFactura)} = '{billingtype}' ");
+            }
+
+            if (producttype != null && producttype != "")
+            {
+                where.Add($"{nameof(Vw_billing.TipoProducto)} = '{producttype}' ");
+            }
+
+            if (costcenterid != null && costcenterid != "")
+            {
+                where.Add($"{nameof(Vw_billing.CostCenter)} = '{costcenterid}' ");
+            }
+
+            if (where.Count > 0)
+            {
+                var listWithParams = _billRepo.ListByWhere(string.Join("AND ", where));
+                return RequestResult<IEnumerable<Vw_billing>>.CreateSuccesfull(listWithParams);
+            }
+
+            var list = _billRepo.ListAll();
+            return RequestResult<IEnumerable<Vw_billing>>.CreateSuccesfull(list);
+        }
         /// <summary>
         /// Get list of billing
         /// </summary>
@@ -163,9 +210,9 @@ namespace WebApplication1.DomainServices
         }
 
 
-        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling)
+        public RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(string numberBilling)
         {
-            var list = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = {numberBilling}").ToList();
+            var list = _billingDataRepo.ListByWhere($"{nameof(VW_billing_data.NumeroFactura)} = '{numberBilling}'").ToList();
             if (list != null && list.Count > 0)
                 return RequestResult<IEnumerable<VW_billing_data>>.CreateSuccesfull(list);
 
@@ -229,7 +276,7 @@ namespace WebApplication1.DomainServices
             var nextProcessLevel = process.Find(pro => pro.LevelAprobation == currentProcessLevel.LevelAprobation + 1);
             AprovalBillingProcess aprovalProcess = _processAprovalRepo.GetById(currentProcessLevel.IdProces);
             //billing.CasueRejection = currentProcessLevel.Observaciones;
-            
+
             aprovalProcess.Observations = (billing.CasueRejection != null) ? billing.CasueRejection : "";
             aprovalProcess.PersonAprovalId = billing.UserChange;
             aprovalProcess.DateChange = DateTime.Now;
@@ -239,13 +286,13 @@ namespace WebApplication1.DomainServices
             if (nextProcessLevel == null)
             {
                 return FinishProcess(billing, aprovalProcess, currentProcessLevel);
-            }            
+            }
             else
             {
                 if (billing.ValueBill > currentProcessLevel.ValorMaximo)
                 {
                     billing.Stateid = (int)EnumStatusBilling.InAprovalProcess;
-                    return ContinueNextLevel(billing, aprovalProcess, currentProcessLevel, nextProcessLevel);                 
+                    return ContinueNextLevel(billing, aprovalProcess, currentProcessLevel, nextProcessLevel);
                 }
 
                 billing.CasueRejection = currentProcessLevel.Observaciones;
@@ -265,7 +312,7 @@ namespace WebApplication1.DomainServices
             // Actualizamos el nivel actual
             var responsedate = DateTime.Now - currentProcessLevel.FechaSolicitud;
             var newStatus = responsedate.Days < currentProcessLevel.DiasPactados ? (int)EnumStatusBilling.Aprobated : (int)EnumStatusBilling.Late;
-            
+
             aprovalProcess.Statusid = newStatus;
             aprovalProcess.DateModified = DateTime.Now;
             aprovalProcess.DateChange = DateTime.Now;
@@ -301,7 +348,7 @@ namespace WebApplication1.DomainServices
         {
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT * FROM fn_begin_process_aproval (");
-            sql.Append($"{billing.NumberBilling}, ");
+            sql.Append($"'{billing.NumberBilling}', ");
             sql.Append($"{billing.ProviderId}, ");
             sql.Append($"{billing.BillingType}, ");
             sql.Append($"{billing.ProductType}, ");
@@ -322,7 +369,7 @@ namespace WebApplication1.DomainServices
                 if (process != null)
                 {
                     string subject = GetSubject(billing);
-                    string bodyMessage = GetMessage(billing);
+                    string bodyMessage = subject + GetMessage(billing);
                     SendMail(subject, process.EmailAprobator, bodyMessage, newPath);
                 }
                 return RequestResult<Billing>.CreateSuccesfull(billing);
@@ -385,12 +432,10 @@ namespace WebApplication1.DomainServices
         private bool SendMail(string subject, string address, string bodyMessage, string path)
         {
             var company = _companyRepo.ListAll().FirstOrDefault();
-            var from = (company != null) ? "harlinacero@gmail.com" : "harlinacero@gmail.com";
-            var password = (company != null) ? "h4rl1n4cer0" : "h4rl1n4cer0";
 
             if (bodyMessage != null)
             {
-                Mail.SendEmail(from, address, password, subject, bodyMessage, path);
+                Mail.SendEmail(company, address, subject, bodyMessage, path);
                 return true;
             }
 
@@ -413,6 +458,7 @@ namespace WebApplication1.DomainServices
                 message.Append($"<p>Valor: {newBilling.Valor}</p>");
                 message.Append($"<p>Fecha Factura: {newBilling.FechaFactura.ToLongDateString()}</p>");
                 message.Append($"<p>Fecha Límite: {newBilling.FechaLimite.ToLongDateString()}</p>");
+                message.Append($"<p>Encuentre la factura ingresando a <a href='{_REMOTE_URL}'>Mistica Software</a></p>");
                 message.Append($"<p>Por favor actualizar el estado de la factura antes de {newBilling.DiasPactados} dias</p>");
             }
 
@@ -435,7 +481,7 @@ namespace WebApplication1.DomainServices
         }
 
 
-        private VW_billing_data GetBillingByNumber(int numberBilling, int levelAprobation = 0)
+        private VW_billing_data GetBillingByNumber(string numberBilling, int levelAprobation = 0)
         {
             StringBuilder sql = new StringBuilder();
 

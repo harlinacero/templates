@@ -30,5 +30,29 @@ namespace WebApplication1.AppServices
                 return RequestResult<Account>.CreateUnSuccesfull(ex.Message);
             }
         }
+
+        public RequestResult<string> SendEmail(string email)
+        {
+            try
+            {
+                return _sessionDomainService.SendEmail(email);
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<string>.CreateUnSuccesfull(ex.Message);
+            }
+        }
+
+        public RequestResult<string> RestorePassword(string code, string password)
+        {
+            try
+            {
+                return _sessionDomainService.RestorePassword(code, password);
+            }
+            catch (Exception ex)
+            {
+                return RequestResult<string>.CreateUnSuccesfull(ex.Message);
+            }
+        }
     }
 }

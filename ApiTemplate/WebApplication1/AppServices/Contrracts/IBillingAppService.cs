@@ -10,7 +10,7 @@ namespace WebApplication1.AppServices.Contrracts
 {
     public interface IBillingAppService
     {
-        RequestResult<IEnumerable<Vw_billing>> GetAllBilling();
+        RequestResult<IEnumerable<Vw_billing>> GetAllBilling(string startDate = null, string endDate = null);
         RequestResult<Billing> SaveBilling(Billing billing, IFormFile file);
         RequestResult<Billing> GetBillingById(int id);
         RequestResult<IEnumerable<Status>> GetStates();
@@ -18,6 +18,7 @@ namespace WebApplication1.AppServices.Contrracts
 
         RequestResult<byte[]> DownloadFile(string nameFile);
         RequestResult<string> ContinueAprovalProcess(string numberbilling, int userCode, int newStatus, string observations);
-        RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(int numberBilling);
+        RequestResult<IEnumerable<VW_billing_data>> GetDetailBilling(string numberBilling);
+        RequestResult<IEnumerable<Vw_billing>> GetAllBillingWithParams(string numberBilling, string providerid, string billingtype, string producttype, string costcenterid);
     }
 }

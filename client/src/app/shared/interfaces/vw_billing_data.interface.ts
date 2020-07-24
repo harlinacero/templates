@@ -40,5 +40,6 @@ export interface vw_billing_data {
   id: number;
   userChange: number;
   dateModified: Date;
+  file: string;
 }
 

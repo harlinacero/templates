@@ -1,5 +1,4 @@
-import { HttpParams } from '@angular/common/http';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ServiceBase } from 'src/app/shared/services/service.base';
 import { MatTableDataSource, MatDialog, MatPaginator, MatSort } from '@angular/material';
@@ -8,13 +7,12 @@ import { Product } from 'src/app/shared/interfaces/product.interface';
 import { CostCenter } from 'src/app/shared/interfaces/costCenter.interface';
 import { Money } from 'src/app/shared/interfaces/money.interface';
 import { BillingService } from 'src/app/shared/services/billing.service';
-import { AdminService } from 'src/app/shared/services/admin.service';
 import { Providers } from './../../shared/interfaces/providers.interface';
 import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.helper';
-import { AprovalMatrixService } from './../../shared/services/aprovalMatrix.service';
 import { Status } from 'src/app/shared/interfaces/status.interface';
 import { PupupBillingComponent } from './pupup-billing/pupup-billing.component';
 import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -30,6 +28,8 @@ export class BillingComponent implements OnInit, AfterViewInit {
   displayedColumns = ['numeroFactura', 'proveedor', 'tipoFactura', 'tipoProducto', 'costCenter',
     'fechaFactura', 'fechaLimite', 'fechaRadicado', 'valorText', 'estado', 'indicador'];
 
+  startDate = new FormControl(new Date());
+  endDate = new FormControl(new Date());
   providers: Providers[] = [];
   billings: Vw_billing[] = [];
   products: Product[] = [];
@@ -41,8 +41,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
   maxDate: Date;
 
 
-  constructor(private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
-    private helper: ControlErrorHelperService,
+  constructor(private serviceBase: ServiceBase, private billingService: BillingService, private helper: ControlErrorHelperService,
     public dialog: MatDialog, private router: Router) {
     this.getAllBillings();
     this.maxDate = new Date();
@@ -74,7 +73,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
     const startDate = (document.getElementById('startDate') as HTMLInputElement).value;
     const endDate = (document.getElementById('endDate') as HTMLInputElement).value;
     if (!!startDate && !!endDate) {
-     this.getAllBillings(new Date(startDate).toDateString(), new Date(endDate).toDateString());
+      this.getAllBillings(new Date(startDate).toDateString(), new Date(endDate).toDateString());
     } else {
       (document.getElementById('startDate') as HTMLInputElement).value = null;
       (document.getElementById('endDate') as HTMLInputElement).value = null;
@@ -100,7 +99,7 @@ export class BillingComponent implements OnInit, AfterViewInit {
       disableClose: true
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       this.getAllBillings();
     });
   }

@@ -17,26 +17,26 @@ export class BillingService {
 
 
 
-  private urls: Urls;
-  private session: Session;
+  // private urls: Urls;
+  // private session: Session;
 
   constructor(private http: HttpClient, private serviceBase: ServiceBase) {
-    this.urls = JSON.parse(localStorage.getItem(URLS));
-    this.session = JSON.parse(localStorage.getItem(SESSION));
-    if (this.urls === undefined || this.session === undefined) {
-      this.serviceBase.validateSession();
-    }
+    // this.urls = JSON.parse(localStorage.getItem(URLS));
+    // this.session = JSON.parse(localStorage.getItem(SESSION));
+    // if (this.urls === undefined || this.session === undefined) {
+    //   this.serviceBase.validateSession();
+    // }
   }
 
 
   GetAllBilling(startDate?: string, endDate?: string) {
     const params = (!!startDate && !!endDate) ? `?startDate=${startDate}&endDate=${endDate}` : '';
-    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBilling` + params);
+    return this.http.get<RequestResult<Vw_billing[]>>(`${this.serviceBase.urls.urlbase}Billing/GetAllBilling` + params);
   }
 
   GetAllBillingWithParams(numberBilling: string, providerid: string, billingtype: string, producttype: string, costcenterid: string) {
     const params = `?numberBilling=${numberBilling}&providerid=${providerid}&billingtype=${billingtype}&producttype=${producttype}&costcenterid=${costcenterid}`;
-    return this.http.get<RequestResult<Vw_billing[]>>(`${this.urls.urlbase}Billing/GetAllBillingWithParams` + params);
+    return this.http.get<RequestResult<Vw_billing[]>>(`${this.serviceBase.urls.urlbase}Billing/GetAllBillingWithParams` + params);
   }
 
 
@@ -48,30 +48,30 @@ export class BillingService {
 
 
   SaveBilling(billing: Billing, file: File) {
-    billing.userChange = this.session.person.id;
+    billing.userChange = this.serviceBase.session.person.id;
     let formData = new FormData()
     formData.set('uploadFile', file, file.name);
     let params = new HttpParams()
       .set('billing', JSON.stringify(billing))
 
-    return this.http.post<RequestResult<Billing>>(`${this.urls.urlbase}Billing/SaveBilling`, formData, { params });
+    return this.http.post<RequestResult<Billing>>(`${this.serviceBase.urls.urlbase}Billing/SaveBilling`, formData, { params });
   }
 
   GetAllStates() {
-    return this.http.get<RequestResult<Status[]>>(`${this.urls.urlbase}Billing/GetStates`);
+    return this.http.get<RequestResult<Status[]>>(`${this.serviceBase.urls.urlbase}Billing/GetStates`);
   }
 
   GetAllTypesBilling() {
-    return this.http.get<RequestResult<TypeBilling[]>>(`${this.urls.urlbase}Billing/GetAllTypeBilling`);
+    return this.http.get<RequestResult<TypeBilling[]>>(`${this.serviceBase.urls.urlbase}Billing/GetAllTypeBilling`);
   }
 
-  GetDetailBilling(numberbilling: number) {
-    return this.http.get<RequestResult<vw_billing_data[]>>(`${this.urls.urlbase}Billing/GetDetailBilling?numberBilling=` + numberbilling);
+  GetDetailBilling(numberbilling: string) {
+    return this.http.get<RequestResult<vw_billing_data[]>>(`${this.serviceBase.urls.urlbase}Billing/GetDetailBilling?numberBilling=` + numberbilling);
   }
 
   ContinueAprovalProcess(numberbilling: string, newStatus: number, observations: string) {
-    const params = `numberbilling=${numberbilling}&userCode=${this.session.person.id}&newStatus=${newStatus}&observations=${observations}`;
-    return this.http.get<RequestResult<string>>(`${this.urls.urlbase}Billing/ContinueAprovalProcess?${params}`);
+    const params = `numberbilling=${numberbilling}&userCode=${this.serviceBase.session.person.id}&newStatus=${newStatus}&observations=${observations}`;
+    return this.http.get<RequestResult<string>>(`${this.serviceBase.urls.urlbase}Billing/ContinueAprovalProcess?${params}`);
   }
 
 

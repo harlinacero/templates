@@ -189,3 +189,150 @@ Fecha: 20/04/2020 10:23:25 p. m.
 -------------------
 Dato: The connection is already in state 'Connecting'
 Fecha: 20/04/2020 10:24:52 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «12»
+Fecha: 22/04/2020 9:18:57 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «12»
+Fecha: 22/04/2020 9:22:53 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «9»
+Fecha: 22/04/2020 9:27:07 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «9»
+Fecha: 22/04/2020 9:32:50 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «9»
+Fecha: 22/04/2020 9:33:17 p. m.
+-------------------
+Dato: 42601: error de sintaxis en o cerca de «ANDTipoProducto»
+Fecha: 27/04/2020 10:21:18 p. m.
+-------------------
+Dato: 42703: no existe la columna «claro»
+Fecha: 27/04/2020 10:22:13 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:22:51 p. m.
+-------------------
+Dato: 42703: no existe la columna «ecopetrol»
+Fecha: 27/04/2020 10:23:55 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:42 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:43 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:43 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:47 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:48 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:48 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:29:48 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:30:00 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:30:47 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:31:04 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:31:09 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:31:13 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:32:03 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:32:08 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:32:36 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:33:18 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:33:59 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 27/04/2020 10:48:49 p. m.
+-------------------
+Dato: 42601: error de sintaxis al final de la entrada
+Fecha: 28/04/2020 8:54:31 p. m.
+-------------------
+Dato: 42883: el operador no existe: integer ~~ unknown
+Fecha: 28/04/2020 9:02:56 p. m.
+-------------------
+Dato: 42883: el operador no existe: integer ~~ unknown
+Fecha: 28/04/2020 9:03:22 p. m.
+-------------------
+Dato: 42883: el operador no existe: integer ~~ unknown
+Fecha: 28/04/2020 9:04:34 p. m.
+-------------------
+Dato: 22023: el huso horario «p.» no es reconocido
+Fecha: 5/05/2020 9:12:05 p. m.
+-------------------
+Dato: 22023: el huso horario «p.» no es reconocido
+Fecha: 5/05/2020 9:13:59 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:16:37 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:17:42 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:18:41 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:19:24 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:19:34 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 5/05/2020 10:20:32 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:22:52 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:22:56 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:23:01 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:23:06 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:23:13 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:23:17 p. m.
+-------------------
+Dato: 42883: el operador no existe: character varying = integer
+Fecha: 21/07/2020 8:24:44 p. m.
+-------------------
+Dato: 42703: no existe la columna «gfdd»
+Fecha: 21/07/2020 9:46:44 p. m.
+-------------------
+Dato: 22P02: la sintaxis de entrada no es válida para integer: «gfdd»
+Fecha: 21/07/2020 9:52:45 p. m.
+-------------------
+Dato: 42703: no existe la columna «gfdd»
+Fecha: 21/07/2020 9:56:47 p. m.

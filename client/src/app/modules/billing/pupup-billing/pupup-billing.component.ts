@@ -1,8 +1,6 @@
 import { Component, OnInit, Inject, ViewChild, ElementRef } from '@angular/core';
-import { HttpEventType, HttpErrorResponse, HttpClient } from '@angular/common/http';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Billing } from 'src/app/shared/interfaces/billing.interface';
-import { ServiceBase } from 'src/app/shared/services/service.base';
 import { BillingService } from 'src/app/shared/services/billing.service';
 import { AdminService } from 'src/app/shared/services/admin.service';
 import { Providers } from 'src/app/shared/interfaces/providers.interface';
@@ -14,12 +12,8 @@ import { ControlErrorHelperService } from 'src/app/shared/helpers/controlError.h
 import { AprovalMatrixService } from 'src/app/shared/services/aprovalMatrix.service';
 import { TypeBilling } from 'src/app/shared/interfaces/typeBilling.interface';
 import { StatusBillingEnum } from 'src/app/shared/enums/statesBilling.enum';
-import { of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
-import { FileValidator } from 'ngx-material-file-input';
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { FormControl, FormGroup, FormArray } from '@angular/forms';
 import { AprovalMatrix } from 'src/app/shared/interfaces/aprovalMatrix.interface';
-import { ArraySortPipe } from './../../../shared/pipes/arraySort.pipe';
 
 @Component({
   selector: 'app-pupup-billing',
@@ -45,17 +39,17 @@ export class PupupBillingComponent implements OnInit {
   aprovalMatrices: AprovalMatrix[] = [];
   canCreate = false;
 
+  dateBilling: FormControl = new FormControl(new Date());
+  datefiled: FormControl = new FormControl(new Date());
   MONEY = 'MoneyId';
 
+  myGroup: FormGroup;
   constructor(public dialogRef: MatDialogRef<PupupBillingComponent>,
     // tslint:disable-next-line: align
     @Inject(MAT_DIALOG_DATA) public bill: Billing, private helper: ControlErrorHelperService,
     // tslint:disable-next-line: align
     private aprovalMatrixService: AprovalMatrixService,
-    // tslint:disable-next-line: align
-    private serviceBase: ServiceBase, private billingService: BillingService, private adminService: AdminService,
-    // tslint:disable-next-line: align
-    private formBuilder: FormBuilder, private httpClient: HttpClient) {
+    private billingService: BillingService, private adminService: AdminService) {
     this.data = bill;
     dialogRef.disableClose = true;
     this.getAllProviders();
@@ -76,6 +70,22 @@ export class PupupBillingComponent implements OnInit {
       this.setFieldsVisible(this.data.stateid);
     }
 
+    this.myGroup = new FormGroup({
+      numberBilling: new FormControl(),
+      providerId: new FormControl(),
+      billingType: new FormControl(),
+      productType: new FormControl(),
+      costcenterId: new FormControl(),
+      moneyId: new FormControl(),
+      exchangeRate: new FormControl(),
+      valueBillExangeRate: new FormControl(),
+      valueBill: new FormControl(),
+      dateBilling: new FormControl(),
+      datelimit: new FormControl(),
+      datefiled: new FormControl(),
+      casueRejection: new FormControl(),
+      file: new FormControl()
+    });
   }
 
   ngOnInit() {
@@ -205,7 +215,7 @@ export class PupupBillingComponent implements OnInit {
 
   }
 
-  toggleExchangeRate(event, type) {
+  toggleExchangeRate() {
     if (this.data.moneyId !== this.moneys.find(mo => mo.code === 'COP').id) {
       this.exchaneRateVisible = true;
     } else {
@@ -264,7 +274,7 @@ export class PupupBillingComponent implements OnInit {
       this.canCreate = false;
     }
 
-    this.validateMaxValue(this.data.costcenterId, this.data.valueBill);
+    this.validateMaxValue(this.data.costcenterId);
 
     if (this.canCreate) {
       this.save();
@@ -274,7 +284,7 @@ export class PupupBillingComponent implements OnInit {
     }
   }
 
-  validateMaxValue(costcenterId: any, valueBill: number) {
+  validateMaxValue(costcenterId: any) {
     let currentmatrix = [];
     for (const matrix of this.aprovalMatrices) {
       if (matrix.costCenterId === costcenterId) {
@@ -299,52 +309,18 @@ export class PupupBillingComponent implements OnInit {
   }
 
   save() {
-    this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
-    this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
-      if (res.isSuccesfull) {
-        alert('Se ha agregado la factura');
-        location.reload();
-      } else {
-        this.helper.controlErros(res);
-      }
-    });
+    if(this.fileValues) {
+      this.data.stateid = (!!this.data.id || this.data.id === 0) ? this.data.stateid : StatusBillingEnum['En Proceso Aprobación'];
+      this.billingService.SaveBilling(this.data, this.fileValues).subscribe(res => {
+        if (res.isSuccesfull) {
+          alert('Se ha agregado la factura');
+          location.reload();
+        } else {
+          this.helper.controlErros(res);
+        }
+      });
+    }else {
+      alert('El archivo adjunto es obligatorio');
+    }
   }
-
-
-
-
-
-
-
-
-  // getBilling() {
-
-  //   const stateId = (!!this.data.id || this.data.id === 0) ? this.data.id : StatusBillingEnum['En Proceso Aprobación'];
-
-  //   const billing: Billing = {
-  //     billingtype: this.data.billingtype,
-  //     casuerejection: this.data.casuerejection,
-  //     costcenterid: this.data.costcenterid,
-  //     dateaprovalrejection: this.data.dateaprovalrejection,
-  //     datebilling: this.data.datebilling,
-  //     datecreated: this.data.datecreated,
-  //     datefiled: this.data.datefiled,
-  //     datelimit: this.data.datelimit,
-  //     exchangerate: this.data.exchangerate,
-  //     moneyid: this.data.moneyid,
-  //     numberbilling: this.data.numberbilling,
-  //     producttype: this.data.producttype,
-  //     providerid: this.data.providerid,
-  //     routefile: this.data.routefile,
-  //     stateid: stateId,
-  //     userchange: this.data.userchange,
-  //     userrejection: this.data.userrejection,
-  //     valuebill: this.data.valuebill,
-  //     id: this.data.id
-  //   };
-
-  //   return billing;
-
-  // }
-
 }

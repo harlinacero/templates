@@ -4,40 +4,55 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.AppServices.Contrracts;
+using WebApplication1.DomainServices.Entities;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly IHomeAppService _homeAppService;
+
+        public HomeController(IHomeAppService homeAppService)
         {
-            return View();
+            _homeAppService = homeAppService;
         }
 
-        public IActionResult About()
+        /// <summary>
+        /// Get all billing
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllIndicators")]
+        public RequestResult<IEnumerable<Vw_totalBillings>> GetAllIndicators()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
+            return _homeAppService.GetAllIndicators();
         }
 
-        public IActionResult Contact()
+        
+        /// <summary>
+        /// Get all billing
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllBillingsByMonth")]
+        public RequestResult<IEnumerable<Vw_total_billing_by_month>> GetAllBillingsByMonth()
         {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
+            return _homeAppService.GetAllBillingsByMonth();
         }
 
-        public IActionResult Privacy()
+        /// <summary>
+        /// Get all billing
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("GetAllBillingsByStatus")]
+        public RequestResult<IEnumerable<Vw_total_billing_by_status>> GetAllBillingsByStatus()
         {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return _homeAppService.GetAllBillingsByStatus();
         }
     }
 }

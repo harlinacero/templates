@@ -39,8 +39,8 @@
                 <div class="value-group">{{detailBilling[0].costCenter}}</div>
             </div>
         </div>
+        <!-- <pdf-viewer [src]="detailBilling[0].file" [render-text]="true"></pdf-viewer> -->
     </div>
-
 
     <div class="example-container" *ngIf="!!dataSource">
         <mat-table [dataSource]="dataSource" matSort>
@@ -98,6 +98,7 @@
 
         <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
+
 
     <div mat-dialog-actions class="buttons" *ngIf="isRequestAvailable">
         <button mat-button type="button" class="btn btn-danger" data-toggle="modal" data-target="#rejectedlModal">
@@ -165,3 +166,4 @@
 
 
 </app-layout>
+<img src="assets/images/loading.gif" alt="cargando...">

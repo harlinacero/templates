@@ -27,13 +27,13 @@ namespace WebApplication1.DomainServices
         #region Public Methods      
         public RequestResult<Company> GetCompany()
         {
-            var company = _companyRepo.ListAll().FirstOrDefault();
+            var company = _companyRepo.GetById(1);
             return RequestResult<Company>.CreateSuccesfull(company);
         }
 
         public RequestResult<Company> SaveCompany(Company company)
         {
-            var oldCompany = _companyRepo.GetById(company.Id);
+            var oldCompany = _companyRepo.GetById(1);
             if (oldCompany != null)
                 return UpdateCompany(company);
 

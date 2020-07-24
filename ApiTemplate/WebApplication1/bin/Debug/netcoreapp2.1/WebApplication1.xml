@@ -184,10 +184,21 @@
             <param name="matrices"></param>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.BillingController.GetAllBilling">
+        <member name="M:WebApplication1.Controllers.BillingController.GetAllBilling(System.String,System.String)">
             <summary>
             Get all billing
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.BillingController.GetAllBillingWithParams(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Get billings by filters
+            </summary>
+            <param name="numberBilling"></param>
+            <param name="providerid"></param>
+            <param name="billingtype"></param>
+            <param name="producttype"></param>
+            <param name="costcenterid"></param>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.Controllers.BillingController.DownloadFile(System.String)">
@@ -217,7 +228,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:WebApplication1.Controllers.BillingController.GetDetailBilling(System.Int32)">
+        <member name="M:WebApplication1.Controllers.BillingController.GetDetailBilling(System.String)">
             <summary>
             Get all billing
             </summary>
@@ -254,6 +265,24 @@
             Get cost center by ID
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.HomeController.GetAllIndicators">
+            <summary>
+            Get all billing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.HomeController.GetAllBillingsByMonth">
+            <summary>
+            Get all billing
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:WebApplication1.Controllers.HomeController.GetAllBillingsByStatus">
+            <summary>
+            Get all billing
+            </summary>
             <returns></returns>
         </member>
         <member name="M:WebApplication1.Controllers.ProductController.GetAll">
@@ -306,7 +335,7 @@
             Environment vars
             </summary>
         </member>
-        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetAllBilling">
+        <member name="M:WebApplication1.DomainServices.BillingDomainService.GetAllBilling(System.String,System.String)">
             <summary>
             Get all billings
             </summary>

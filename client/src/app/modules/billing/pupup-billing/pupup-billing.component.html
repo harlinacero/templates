@@ -4,24 +4,19 @@
     </mat-card-header>
 
     <!-- enctype="multipart/form-data" method="post"  -->
-    <form class="example-form" enctype="multipart/form-data" method="post">
+    <form [formGroup]="myGroup" class="example-form" enctype="multipart/form-data" (ngSubmit)="save(myGroup.value, myGroup.valid)" method="post">
         <div mat-dialog-content>
-
-            <div *ngIf="data.id > 0">
-                <a href="{{data.routeFile}}"></a>
-            </div>
-
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>No. Factura</mat-label>
-                <input type="number" min="0" matInput [(ngModel)]="data.numberBilling" name="numberBilling" required>
+                <input type="text" matInput [(ngModel)]="data.numberBilling" formControlName="numberBilling" required="true">
                 <span style="color: red;" id="numberBilling-error"></span>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Proveedor</mat-label>
                 <!-- <input matInput [(ngModel)]="data.providerid" name="businessName" disabled="disabled" required> -->
-                <mat-select [(value)]="data.providerId" [(ngModel)]="data.providerId" name="providerid" required>
+                <mat-select [(value)]="data.providerId" [(ngModel)]="data.providerId" formControlName="providerId" required="true">
                     <mat-option *ngFor="let pro of providers" [(value)]="pro.id">
                         {{pro.businessName}}
                     </mat-option>
@@ -32,7 +27,7 @@
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo Factura</mat-label>
                 <!-- <input matInput [(ngModel)]="data.billingtype" name="billingtype" disabled="disabled" required> -->
-                <mat-select [(value)]="data.billingType" [(ngModel)]="data.billingType" name="billingtype" required>
+                <mat-select [(value)]="data.billingType" [(ngModel)]="data.billingType" formControlName="billingType" required="true">
                     <mat-option *ngFor="let type of typesBilling" [(value)]="type.id">
                         {{type.name}}
                     </mat-option>
@@ -41,7 +36,7 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Tipo Producto</mat-label>
-                <mat-select [(value)]="data.productType" [(ngModel)]="data.productType" name="producttype" matNativeControl required>
+                <mat-select [(value)]="data.productType" [(ngModel)]="data.productType" formControlName="productType" matNativeControl required="true">
                     <mat-option value=1>Producto </mat-option>
                     <mat-option value=2>Servicio </mat-option>
                 </mat-select>
@@ -49,7 +44,7 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Centro de Costo</mat-label>
-                <mat-select [(value)]="data.costcenterId" [(ngModel)]="data.costcenterId" name="costcenterid" required (selectionChange)="validateCostCenter($event.value)">
+                <mat-select [(value)]="data.costcenterId" [(ngModel)]="data.costcenterId" formControlName="costcenterId" required="true" (selectionChange)="validateCostCenter($event.value)">
                     <mat-option *ngFor="let pro of costCenters" [(value)]="pro.id">
                         {{pro.name}}
                     </mat-option>
@@ -58,7 +53,7 @@
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Moneda</mat-label>
-                <mat-select [(value)]="data.moneyId" [(ngModel)]="data.moneyId" name="moneyId" id="moneyId" (selectionChange)="toggleExchangeRate($event, MONEY)" required>
+                <mat-select [(value)]="data.moneyId" [(ngModel)]="data.moneyId" formControlName="moneyId" id="moneyId" (selectionChange)="toggleExchangeRate()" required="true">
                     <mat-option *ngFor="let pro of moneys" [(value)]="pro.id">
                         {{pro.unitymoney}}
                     </mat-option>
@@ -67,37 +62,37 @@
 
             <mat-form-field appearance="outline" class="example-full-width" *ngIf="exchaneRateVisible">
                 <mat-label>Tasa de Cambio</mat-label>
-                <input type="number" min="0" matInput [(ngModel)]="data.exchangeRate" id="exchangerate" name="exchangerate" value="{{data.exchangeRate }}">
+                <input type="number" min="0" matInput [(ngModel)]="data.exchangeRate" id="exchangerate" formControlName="exchangerate" value="{{data.exchangeRate }}" required="true">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width" *ngIf="exchaneRateVisible">
                 <mat-label>Valor Factura</mat-label>
-                <input type="number" currencyMask min="0" matInput name="valueBillExangeRate" id="valueBillExangeRate" (keyup)="convertValueBillToCOP($event)">
+                <input type="number" currencyMask min="0" matInput formControlName="valueBillExangeRate" id="valueBillExangeRate" (keyup)="convertValueBillToCOP($event)" required="true">
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Valor COP</mat-label>
-                <input type="number" currencyMask min="0" matInput [(ngModel)]="data.valueBill" name="valueBill" value="{{ data.valueBill }}" [readOnly]="exchaneRateVisible">
+                <input type="number" currencyMask min="0" matInput matInputCommified [(ngModel)]="data.valueBill" formControlName="valueBill" value="{{ data.valueBill}}" [readOnly]="exchaneRateVisible" required="true">
             </mat-form-field>
 
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha factura</mat-label>
-                <input matInput [matDatepicker]="datebilling" [(ngModel)]="data.dateBilling" name="datebilling">
-                <mat-datepicker-toggle matSuffix [for]="datebilling"></mat-datepicker-toggle>
-                <mat-datepicker #datebilling [startAt]="datebilling"></mat-datepicker>
+                <input matInput [matDatepicker]="dateBilling" [(ngModel)]="data.dateBilling" formControlName="dateBilling" id="dateBilling" required="true">
+                <mat-datepicker-toggle matSuffix [for]="dateBilling"></mat-datepicker-toggle>
+                <mat-datepicker #dateBilling [startAt]="dateBilling"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha Límite</mat-label>
-                <input matInput [matDatepicker]="datelimit" [(ngModel)]="data.dateLimit" name="datelimit">
+                <input #datelimit matInput [matDatepicker]="datelimit" [(ngModel)]="data.dateLimit" formControlName="datelimit" required="true">
                 <mat-datepicker-toggle matSuffix [for]="datelimit"></mat-datepicker-toggle>
                 <mat-datepicker #datelimit [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="example-full-width">
                 <mat-label>Fecha Radicado</mat-label>
-                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.dateFiled" name="datefiled">
+                <input matInput [matDatepicker]="datefiled" [(ngModel)]="data.dateFiled" formControlName="datefiled" id="datefiled" required="true">
                 <mat-datepicker-toggle matSuffix [for]="datefiled"></mat-datepicker-toggle>
                 <mat-datepicker #datefiled [startAt]="datelimit"></mat-datepicker>
             </mat-form-field>
@@ -105,7 +100,7 @@
 
             <mat-form-field appearance="outline" class="example-full-width" *ngIf="isVisible">
                 <mat-label>Causal de Rechazo</mat-label>
-                <input matInput [(ngModel)]="data.casueRejection" name="casueRejection" [width]="100" [disabled]="!disabled">
+                <input matInput [(ngModel)]="data.casueRejection" formControlName="casueRejection" [width]="100" [disabled]="!disabled">
             </mat-form-field>
 
             <div class="file-content">
@@ -113,13 +108,13 @@
                 <button type="button" mat-raised-button (click)="fileInput.click()" *ngIf="!disabled"> <i
             class="fa fa-file-pdf-o"></i>
           Adjuntar Factura</button>
-                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" accept="application/pdf">
+                <input hidden (change)="onFileSelected()" #fileInput type="file" id="file" formControlName="file" accept="application/pdf" required="true">
             </div>
 
         </div>
         <div mat-dialog-actions class="buttons">
             <button mat-button class="btn btn-light" (click)="onNoClick()">Cancelar</button>
-            <button mat-button class="btn btn-success" [mat-dialog-close]="data" cdkFocusInitial (click)="validateForm()">Guardar</button>
+            <button mat-button class="btn btn-success" cdkFocusInitial type="submit">Guardar</button>
         </div>
 
 

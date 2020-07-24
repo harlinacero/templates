@@ -10,5 +10,7 @@ namespace WebApplication1.AppServices.Contrracts
     public interface ISessionAppService
     {
         RequestResult<Account> Login(Login login);
+        RequestResult<string> SendEmail(string email);
+        RequestResult<string> RestorePassword(string code, string password);
     }
 }

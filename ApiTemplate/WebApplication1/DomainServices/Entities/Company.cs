@@ -12,6 +12,8 @@ namespace WebApplication1.DomainServices.Entities
         public string Nit { get; set; }
         public string EmailCompany { get; set; }
         public string EmailTreasury { get; set; }
+        public string EmailMistica { get; set; }
+        public string PasswordMistica{ get; set; }
         public bool AccountableInterface { get; set; }
         public bool PurchaseOrders { get; set; }
     }

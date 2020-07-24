@@ -13,3 +13,9 @@ export interface Vw_total_billing_by_month {
   month: string;
   total: number;
 }
+
+export interface Vw_total_billing_by_status {
+  estadoaprobacion: string;
+  costcenter: string;
+  numer: number;
+}

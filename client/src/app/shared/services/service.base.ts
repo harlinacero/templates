@@ -9,8 +9,24 @@ import { URLS, SESSION } from '../globals/localStorage.const';
   providedIn: 'root',
 })
 export class ServiceBase {
-  urls: any;
-  session: Session;
+
+
+  get urls(): any {
+    const data = localStorage.getItem(URLS);
+    if (data && data !== '') {
+      return JSON.parse(data);
+    }
+    return this.getUrls();
+  }
+
+  get session(): Session {
+    const data = localStorage.getItem(SESSION);
+    if (data && data !== '') {
+      return JSON.parse(data);
+    }
+    return this.validateSession();
+  }
+
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -23,11 +39,10 @@ export class ServiceBase {
     this.getUrls();
   }
 
-  getUrls() {
-    this.http.get('./assets/config/urls.json').subscribe(res => {
-      this.urls = res;
-      localStorage.setItem(URLS, JSON.stringify(this.urls));
-    });
+  async getUrls() {
+    const config = await this.http.get('./assets/config/urls.json').toPromise();
+    localStorage.setItem(URLS, JSON.stringify(config));
+    return config;
   }
 
   validateSession(menu: string = null) {
@@ -35,11 +50,11 @@ export class ServiceBase {
     if (!session) {
       this.router.navigate(['login']);
     } else {
-      this.session = JSON.parse(session);
-      if(!this.session.menus.find(me => me.component === menu)) {
-        this.router.navigate(['/']);
+      const newSession = JSON.parse(session);
+      if (!this.session.menus.find(me => me.component === menu)) {
+        this.router.navigate([this.session.menus[0].component]);
       }
-
+      return newSession;
     }
   }
 }

@@ -62,6 +62,9 @@ namespace WebApplication1.DomainServices
 
         private RequestResult<Person> AddPerson(Person person)
         {
+            var email = _personRepo.ListByWhere($"{nameof(Person.Email)}='{person.Email}'");
+            if(email != null)
+                return RequestResult<Person>.CreateUnSuccesfull("El email ya se encuentra registrado");
             if (_personRepo.Add(person))
                 return RequestResult<Person>.CreateSuccesfull(person);
             return RequestResult<Person>.CreateUnSuccesfull("No se pudo crear");

@@ -92,33 +92,10 @@ namespace WebApplication1
             app.UseSwagger();
             app.UseSwaggerUI(s =>
             {
-                s.RoutePrefix = "api";
-                s.SwaggerEndpoint(swaggerEndPoint, "Appointment Template API Documentation V1");
+                s.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                s.RoutePrefix = string.Empty;
             });
 
-
-            //// Enable middleware to serve generated Swagger as a JSON endpoint.
-            //app.UseSwagger();
-
-            //// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            //// specifying the Swagger JSON endpoint.
-            //app.UseSwaggerUI(c =>
-            //{
-            //    c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-            //    c.RoutePrefix = string.Empty;
-            //});
-
-            //app.UseCors("AllowAllHeaders");
-            //app.UseHttpsRedirection();
-            //app.UseStaticFiles();
-            //app.UseCookiePolicy();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
-            //});
         }
     }
 }

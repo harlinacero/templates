@@ -33,11 +33,11 @@ export class DetailbillingComponent implements OnInit {
   ngOnInit() {
     this.serviceBase.validateSession('/billing');
     this.numberBilling = this.route.snapshot.paramMap.get('id');
-    this.getDetailBilling(parseInt(this.numberBilling));
+    this.getDetailBilling(this.numberBilling);
   }
 
 
-  getDetailBilling(numberBilling: number) {
+  getDetailBilling(numberBilling: string) {
     this.detailBillingSubscription = this.billingService.GetDetailBilling(numberBilling)
       .subscribe(res => {
         if (res.isSuccesfull) {
@@ -79,7 +79,7 @@ export class DetailbillingComponent implements OnInit {
       this.billingService.ContinueAprovalProcess(this.numberBilling, StatusBillingEnum.Rechazada, textAtrea).subscribe(res => {
         if (res.isSuccesfull) {
           alert(res.result);
-          this.getDetailBilling(parseInt(this.numberBilling));
+          this.getDetailBilling(this.numberBilling);
           location.reload();
         } else {
           alert(res.message);
@@ -99,7 +99,7 @@ export class DetailbillingComponent implements OnInit {
       this.billingService.ContinueAprovalProcess(this.numberBilling, StatusBillingEnum.Aprobada, this.observations).subscribe(res => {
         if (res.isSuccesfull) {
           alert(res.result);
-          this.getDetailBilling(parseInt(this.numberBilling));
+          this.getDetailBilling(this.numberBilling);
           location.reload();
         } else {
           alert(res.message);

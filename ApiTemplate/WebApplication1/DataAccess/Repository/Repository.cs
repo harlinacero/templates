@@ -88,6 +88,9 @@ namespace WebApplication1.DataAccess.Repository
             {
                 var newValue = props[i].GetValue(entity, null);
 
+                if (newValue == null)
+                    continue;
+
                 if (newValue.GetType().Equals(typeof(string)))
                     sql.Append(props[i].Name + " = '" + newValue + "'");
                 else if (newValue.GetType().Equals(typeof(int)))

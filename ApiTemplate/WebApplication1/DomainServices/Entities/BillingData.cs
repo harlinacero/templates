@@ -8,7 +8,7 @@ namespace WebApplication1.DomainServices.Entities
     public class VW_billing_data : EntityBase
     {
         public int IdProces { get; set; }
-        public int NumeroFactura { get; set; }
+        public string NumeroFactura { get; set; }
         public int LevelAprobation { get; set; }
         public int EstadoFacturaId { get; set; }
         public string EstadoAprobacion { get; set; }
@@ -45,6 +45,7 @@ namespace WebApplication1.DomainServices.Entities
         public string EmailProveedor { get; set; }
         public string EmailCompany { get; set; }
         public string Observaciones { get; set; }
+        public string File { get; set; }
 
 
     }

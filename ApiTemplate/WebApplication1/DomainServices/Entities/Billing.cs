@@ -9,7 +9,7 @@ namespace WebApplication1.DomainServices.Entities
 {
     public class Billing : EntityBase
     {
-        public int NumberBilling { get; set; }
+        public string NumberBilling { get; set; }
         public int ProviderId { get; set; }
         public int BillingType { get; set; }
         public int ProductType { get; set; }

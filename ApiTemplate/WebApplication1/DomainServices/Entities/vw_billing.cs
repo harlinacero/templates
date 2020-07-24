@@ -7,7 +7,7 @@ namespace WebApplication1.DomainServices.Entities
 {
     public class Vw_billing : EntityBase
     {
-        public int NumeroFactura { get; set; }
+        public string NumeroFactura { get; set; }
         public string Proveedor { get; set; }
         public string TipoFactura { get; set; }
         public string TipoProducto { get; set; }
@@ -15,10 +15,12 @@ namespace WebApplication1.DomainServices.Entities
         public DateTime FechaFactura { get; set; }
         public DateTime FechaLimite { get; set; }
         public DateTime FechaRadicado { get; set; }
+        public DateTime DateCreated { get; set; }
         public string ValorText { get; set; }
         public string Estado { get; set; }
         public string ColorFactura { get; set; }
         public string Indicador { get; set; }
         public string ColorIndicador { get; set; }
+        public string File { get; set; }
     }
 }

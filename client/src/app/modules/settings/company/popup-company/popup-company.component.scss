@@ -3,29 +3,33 @@
 }
 
 .box {
-    padding: 1em;
     .example-form {
-        .example-form-content {
-            column-count: 2;
-            width: 100%;
+        .mat-dialog-content {
             margin: auto;
             .example-full-width {
                 margin: 0.5em;
-                width: 100%;
+                width: 282px;
             }
-            .btn-block {
-                margin: 1em;
+            .file-content {
+                display: contents;
+                border: 1px solid #e0e0e0;
+                padding: 2em;
+                margin: 0.5em;
+                border-radius: 5px;
             }
         }
-        .buttons {
-            display: flex;
-            justify-content: flex-end;
-            width: 100%;
-            padding: 0;
-            button {
-                margin: 2px;
-                margin-bottom: 2em;
-            }
+    }
+    .btn-block {
+        margin: 1em;
+    }
+    .buttons {
+        display: flex;
+        justify-content: flex-end;
+        width: 100%;
+        padding: 0;
+        button {
+            margin: 2px;
+            margin-bottom: 2em;
         }
     }
 }

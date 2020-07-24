@@ -1,6 +1,6 @@
 export interface Billing {
   id?: number;
-  numberBilling: number;
+  numberBilling: string;
   providerId: number;
   billingType: number;
   productType: number;

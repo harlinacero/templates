@@ -15,14 +15,14 @@
         <div class="right">
             <mat-form-field>
                 <mat-label>Fecha factura desde</mat-label>
-                <input matInput [max]="maxDate" [matDatepicker]="picker" id="startDate">
+                <input matInput [max]="maxDate" [matDatepicker]="picker" id="startDate" [formControl]="startDate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field>
                 <mat-label>Fecha factura hasta</mat-label>
-                <input matInput [max]="maxDate" [matDatepicker]="picker1" id="endDate">
+                <input matInput [max]="maxDate" [matDatepicker]="picker1" id="endDate" [formControl]="endDate">
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
@@ -107,6 +107,7 @@
                     {{ row.indicador }}
                 </mat-cell>
             </ng-container>
+
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setAprovalMatrix(row)">
